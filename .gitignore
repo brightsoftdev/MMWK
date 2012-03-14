@@ -1,3 +1,4 @@
+# Xcode
 ## Xcode
 build/*
 *.pbxuser
@@ -14,3 +15,4 @@ xcuserdata
 profile
 *.moved-aside
 *.sawp
+*.swpdsfdgdshfhdhgdjdgjhghj
