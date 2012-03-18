@@ -26,7 +26,7 @@ class Character : public Object {
 	void releaseTextures();
 	
 	public:
-	Character(GLfloat x, GLfloat y);
+	Character(GLfloat x, GLfloat y, GLfloat sizex = 1.0f, GLfloat sizey = 1.0f);
 	~Character();
 	
 	void initializeTextures(Texture *textures[], uint numOfTextures);

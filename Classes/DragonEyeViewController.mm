@@ -21,7 +21,7 @@ using namespace std;
 
 //C++ objects undefinable in .h file
 static Program program;
-static Character obj(0, 0.5f);
+static Character obj(0, 0, 2.0, 2.0);
 
 @interface DragonEyeViewController ()
 @property (nonatomic, retain) EAGLContext *context;
@@ -151,7 +151,7 @@ static Character obj(0, 0.5f);
 	UITouch *touch = [[touches allObjects] objectAtIndex:0];
 	CGPoint point = [touch locationInView:self.view];
 	NSLog(@"Point touched %.2f, %.2f", point.x, point.y);
-	obj.moveTo(point.x, point.y);
+	//obj.moveTo(point.x, point.y);
 }
 
 - (void)drawFrame
@@ -175,7 +175,6 @@ static Character obj(0, 0.5f);
     glUseProgram(program.getProgramId());
     
     // Update attribute values.
-    //glActiveTexture(GL_TEXTURE0);
 	obj.draw();   
 	obj.animate();
     
@@ -296,6 +295,8 @@ static Character obj(0, 0.5f);
     // Get uniform locations.
 	ShaderConstants::uniforms[UNIFORM_TEXTURE_SAMPLER] = glGetUniformLocation(program.getProgramId(), "textureSampler");
 	ShaderConstants::uniforms[UNIFORM_TRANSLATE] = glGetUniformLocation(program.getProgramId(), "translate");
+	ShaderConstants::uniforms[UNIFORM_SCALE] = glGetUniformLocation(program.getProgramId(), "scale");
+	
     
     // Set vertex and fragment shaders up for deletion when glDetachShader gets called.
     if (vertShader)
@@ -308,7 +309,8 @@ static Character obj(0, 0.5f);
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation 
 {
-    if (interfaceOrientation==UIInterfaceOrientationLandscapeLeft || interfaceOrientation==UIInterfaceOrientationLandscapeRight)
+    if (interfaceOrientation == UIInterfaceOrientationLandscapeLeft || 
+		interfaceOrientation == UIInterfaceOrientationLandscapeRight)
         return YES;
     
     return NO;

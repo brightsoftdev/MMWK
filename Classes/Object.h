@@ -16,9 +16,11 @@ class Object {
 	protected:
 	GLfloat x;
 	GLfloat y;
+	GLfloat sizex;
+	GLfloat sizey;
 	
 	public:
-	Object(GLfloat x, GLfloat y);
+	Object(GLfloat x, GLfloat y, GLfloat sizex = 1.0f, GLfloat sizey = 1.0f);
 	virtual ~Object();
 	virtual void move(GLfloat diffX, GLfloat diffY);
 	virtual void moveTo(GLfloat x, GLfloat y);
@@ -26,6 +28,8 @@ class Object {
 	
     GLfloat getX();
     GLfloat getY();
+	GLfloat getSizex();
+	GLfloat getSizey();
 };
 
 #endif

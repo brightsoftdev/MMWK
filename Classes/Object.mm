@@ -9,9 +9,11 @@
 
 #include "Object.h"
 
-Object::Object(GLfloat x, GLfloat y) {
+Object::Object(GLfloat x, GLfloat y, GLfloat sizex, GLfloat sizey) {
 	this->x = x;
     this->y = y;
+	this->sizex = sizex;
+	this->sizey = sizey;
 }
 
 Object::~Object() {
@@ -34,4 +36,12 @@ GLfloat Object::getX() {
 
 GLfloat Object::getY() {
     return this->y;
+}
+
+GLfloat Object::getSizex() {
+	return this->sizex;
+}
+
+GLfloat Object::getSizey() {
+	return this->sizey;
 }

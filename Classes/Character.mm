@@ -9,7 +9,7 @@
 
 #import "Character.h"
 
-Character::Character(GLfloat x, GLfloat y) : Object(x, y){
+Character::Character(GLfloat x, GLfloat y, GLfloat sizex, GLfloat sizey) : Object(x, y, sizex, sizey){
 	textures = NULL;
 	frameCount = 0;
 	numOfTextures = 0;
@@ -55,11 +55,11 @@ void Character::animate() {
 void Character::draw() {
 	
     // Replace the implementation of this method to do your own custom drawing.
-    static const GLfloat squareVertices[] = {
-        -0.2f, 0.2f,
-        0.2f, 0.2f,
-        -0.2f, -0.2f,
-        0.2f,  -0.2f,
+	static const GLfloat squareVertices[] = {
+        -0.1f, 0.1f,
+        0.1f, 0.1f,
+        -0.1f, -0.1f,
+        0.1f,  -0.1f,
     };
     
     static const GLfloat textureVertices[] = {
@@ -70,12 +70,15 @@ void Character::draw() {
     };
 	
 	glBindTexture(GL_TEXTURE_2D, getActiveTexture()->getTextureId());
-    glUniform1i(ShaderConstants::uniforms[UNIFORM_TEXTURE_SAMPLER], 0);
+
+	//glUniform1i(ShaderConstants::uniforms[UNIFORM_TEXTURE_SAMPLER], 0);
+	glUniform2f(ShaderConstants::uniforms[UNIFORM_TRANSLATE], getX(), getY());
+	glUniform2f(ShaderConstants::uniforms[UNIFORM_SCALE], getSizex(), getSizey());
     glVertexAttribPointer(ATTRIB_VERTEX, 2, GL_FLOAT, GL_FALSE, 0, squareVertices);
     glEnableVertexAttribArray(ATTRIB_VERTEX);
     glVertexAttribPointer(ATTRIB_TEXTURE, 2, GL_FLOAT, GL_FALSE, 0, textureVertices);
     glEnableVertexAttribArray(ATTRIB_TEXTURE);
-	glUniform2f(ShaderConstants::uniforms[UNIFORM_TRANSLATE], getX(), getY());
+
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);	
 }
 

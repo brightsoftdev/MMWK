@@ -15,6 +15,7 @@
 //Shader Uniform index.
 enum {
     UNIFORM_TRANSLATE,
+	UNIFORM_SCALE,
     UNIFORM_TEXTURE_SAMPLER,
     NUM_UNIFORMS
 };
