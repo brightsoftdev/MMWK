@@ -29,6 +29,6 @@
 	<key>UIStatusBarHidden</key>
 	<true/>
 	<key>UIInterfaceOrientation</key>
-	<string>Landscape</string>
+	<string>UIInterfaceOrientationLandscapeRight</string>
 </dict>
 </plist>

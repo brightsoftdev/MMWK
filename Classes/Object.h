@@ -25,6 +25,7 @@ class Object {
 	virtual void move(GLfloat diffX, GLfloat diffY);
 	virtual void moveTo(GLfloat x, GLfloat y);
 	virtual void draw() = 0;
+	virtual void animate() = 0;
 	
     GLfloat getX();
     GLfloat getY();

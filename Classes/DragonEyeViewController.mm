@@ -15,13 +15,14 @@
 #import "Object.h"
 #import "Character.h"
 #import "ShaderConstants.h"
+#import "ObjectContainer.h"
 
 #include <iostream>
 using namespace std;
 
 //C++ objects undefinable in .h file
 static Program program;
-static Character obj(0, 0, 2.0, 2.0);
+static Character obj(0, 0, 1.0, 1.0);
 
 @interface DragonEyeViewController ()
 @property (nonatomic, retain) EAGLContext *context;
@@ -60,6 +61,9 @@ static Character obj(0, 0, 2.0, 2.0);
     animating = FALSE;
     animationFrameInterval = 1;
     self.displayLink = nil;
+	
+	NSValue *val = [NSValue valueWithPointer:(const void *)(&obj)];
+	[[ObjectContainer singleton] addObject:val];
 }
 
 - (void)dealloc
@@ -150,7 +154,22 @@ static Character obj(0, 0, 2.0, 2.0);
 {
 	UITouch *touch = [[touches allObjects] objectAtIndex:0];
 	CGPoint point = [touch locationInView:self.view];
+	//EAGLView *eaglView = (EAGLView *) self.view;
+	//CGPoint dpadPoint = [touch locationInView:eaglView.dpadButton];
 	NSLog(@"Point touched %.2f, %.2f", point.x, point.y);
+	
+	/*CGRect frame = eaglView.dpadButton.frame;
+	if (CGRectContainsPoint(frame, point)) {
+		NSLog(@"Dpad touched %.2f, %.2f", dpadPoint.x, dpadPoint.y);
+		
+		if (dpadPoint.x < frame.size.width/2) {
+			obj.move(-0.01f, 0.0f);
+		} else {
+			obj.move(0.01f, 0.0f);
+		}
+	}*/
+	//NSLog(@"Origin %f, size %f", eaglView.dpadButton.frame.origin.x, eaglView.dpadButton.frame.size.width);
+	[super touchesBegan:touches withEvent:event];
 	//obj.moveTo(point.x, point.y);
 }
 
@@ -174,9 +193,13 @@ static Character obj(0, 0, 2.0, 2.0);
     // Use shader program.
     glUseProgram(program.getProgramId());
     
-    // Update attribute values.
-	obj.draw();   
-	obj.animate();
+    // Animate and draw all objects
+	for (NSValue *val in [ObjectContainer singleton].objArray) {
+		Object *obj = (Object *)[val pointerValue];
+		obj->draw();   
+		obj->animate();
+	}
+
     
     
     // Validate program before drawing. This is a good check, but only really necessary in a debug build.

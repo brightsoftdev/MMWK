@@ -29,6 +29,22 @@ void Character::releaseTextures() {
 	curTextureIndex = 0;
 }
 
+void Character::moveTowards(Direction dir) {
+	// TODO: Use masks instead of switch case statements to incorporate diagonals
+	switch(dir) {
+		case LEFT:
+			move(-0.01f, 0.0f);
+			break;
+			
+		case RIGHT:
+			move(0.01f, 0.0f);
+			break;
+			
+		default:
+			break;
+	}
+}
+
 void Character::initializeTextures(Texture *textures[], uint numOfTextures) {
 	releaseTextures();
 	this->textures = new Texture *[numOfTextures];
@@ -44,12 +60,20 @@ bool Character::hasTextures() {
 }
 
 void Character::animate() {
+	switch(currentState) {
+		case MOVING_STATE:
+			moveTowards(currentDirection);
+			break;
+			
+		default:
+			break;
+	}
 	// TODO: throw error if textures == NULL?
-	if(!(frameCount++ % 10)) {
+	/*if(!(frameCount++ % 10)) {
 		if(++curTextureIndex >= numOfTextures) {
 			curTextureIndex = 0;
 		}
-	}
+	}*/
 }
 
 void Character::draw() {
@@ -86,4 +110,11 @@ Texture * Character::getActiveTexture() {
 	return textures[curTextureIndex];
 }
 
+void Character::startMoving(Direction dir) {
+	currentState = MOVING_STATE;
+	currentDirection = dir;
+}
 
+void Character::stopMoving() {
+	currentState = STOP_STATE;
+}

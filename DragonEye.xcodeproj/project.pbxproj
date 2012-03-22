@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+<<<<<<< HEAD
+=======
+		042A9BD315198A6D00916A89 /* DpadButton.mm in Sources */ = {isa = PBXBuildFile; fileRef = 042A9BD215198A6D00916A89 /* DpadButton.mm */; };
+		042A9BFC15199CFB00916A89 /* ObjectContainer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 042A9BFB15199CFB00916A89 /* ObjectContainer.mm */; };
+>>>>>>> Implemented movement using dpad
 		0458D8F414F09EC800238E13 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0458D8F314F09EC800238E13 /* CoreGraphics.framework */; };
 		0480038C14F1C9B000440480 /* Program.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0480038B14F1C9B000440480 /* Program.mm */; };
 		0480044314F2180300440480 /* Object.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0480044214F2180300440480 /* Object.mm */; };
@@ -14,6 +19,8 @@
 		048004FF14FC749F00440480 /* cabban2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 048004FD14FC749F00440480 /* cabban2.jpg */; };
 		0480052414FC7A3A00440480 /* Character.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0480052314FC7A3A00440480 /* Character.mm */; };
 		04893EB914F17E7400AAB4BC /* Texture.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04893EB814F17E7400AAB4BC /* Texture.mm */; };
+		04A88BD31516BDAA001E944F /* dpad.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 04A88BD21516BDAA001E944F /* dpad.jpg */; };
+		04A88BF71516C322001E944F /* DpadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A88BF61516C322001E944F /* DpadViewController.m */; };
 		04B93986150D96200099B10B /* ShaderConstants.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04B93985150D96200099B10B /* ShaderConstants.mm */; };
 		1D3623260D0F684500981E51 /* DragonEyeAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* DragonEyeAppDelegate.mm */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
@@ -30,6 +37,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+<<<<<<< HEAD
+=======
+		042A9BD115198A6D00916A89 /* DpadButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DpadButton.h; sourceTree = "<group>"; };
+		042A9BD215198A6D00916A89 /* DpadButton.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DpadButton.mm; sourceTree = "<group>"; };
+		042A9BFA15199CFB00916A89 /* ObjectContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectContainer.h; sourceTree = "<group>"; };
+		042A9BFB15199CFB00916A89 /* ObjectContainer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ObjectContainer.mm; sourceTree = "<group>"; };
+		042A9D34151B03BC00916A89 /* PropState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropState.h; sourceTree = "<group>"; };
+>>>>>>> Implemented movement using dpad
 		0458D8F314F09EC800238E13 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		0480038A14F1C9B000440480 /* Program.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Program.h; sourceTree = "<group>"; };
 		0480038B14F1C9B000440480 /* Program.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Program.mm; sourceTree = "<group>"; };
@@ -41,6 +56,9 @@
 		0480052314FC7A3A00440480 /* Character.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Character.mm; sourceTree = "<group>"; };
 		04893EB714F17E7400AAB4BC /* Texture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Texture.h; sourceTree = "<group>"; };
 		04893EB814F17E7400AAB4BC /* Texture.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Texture.mm; sourceTree = "<group>"; };
+		04A88BD21516BDAA001E944F /* dpad.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = dpad.jpg; sourceTree = "<group>"; };
+		04A88BF51516C322001E944F /* DpadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DpadViewController.h; sourceTree = "<group>"; };
+		04A88BF61516C322001E944F /* DpadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DpadViewController.m; sourceTree = "<group>"; };
 		04B938F5150C6BDC0099B10B /* Typedefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Typedefs.h; sourceTree = "<group>"; };
 		04B93946150D8A520099B10B /* ShaderConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaderConstants.h; sourceTree = "<group>"; };
 		04B93985150D96200099B10B /* ShaderConstants.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ShaderConstants.mm; sourceTree = "<group>"; };
@@ -80,15 +98,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		080E96DDFE201D6D7F000001 /* Classes */ = {
+		042A9BD415198A9700916A89 /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				28FD14FC0DC6FC130079059D /* EAGLView.h */,
 				28FD14FD0DC6FC130079059D /* EAGLView.m */,
-				1D3623240D0F684500981E51 /* DragonEyeAppDelegate.h */,
-				1D3623250D0F684500981E51 /* DragonEyeAppDelegate.mm */,
-				28EC4C5611D54ECE0027AA9F /* DragonEyeViewController.h */,
-				28EC4C5711D54ECE0027AA9F /* DragonEyeViewController.mm */,
+				042A9BD115198A6D00916A89 /* DpadButton.h */,
+				042A9BD215198A6D00916A89 /* DpadButton.mm */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		042A9BD515198ABB00916A89 /* Objects */ = {
+			isa = PBXGroup;
+			children = (
 				04893EB714F17E7400AAB4BC /* Texture.h */,
 				04893EB814F17E7400AAB4BC /* Texture.mm */,
 				0480038A14F1C9B000440480 /* Program.h */,
@@ -97,9 +120,35 @@
 				0480044214F2180300440480 /* Object.mm */,
 				0480052214FC7A3A00440480 /* Character.h */,
 				0480052314FC7A3A00440480 /* Character.mm */,
+				042A9BFA15199CFB00916A89 /* ObjectContainer.h */,
+				042A9BFB15199CFB00916A89 /* ObjectContainer.mm */,
+			);
+			name = Objects;
+			sourceTree = "<group>";
+		};
+		042A9D33151B038C00916A89 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
 				04B938F5150C6BDC0099B10B /* Typedefs.h */,
 				04B93946150D8A520099B10B /* ShaderConstants.h */,
 				04B93985150D96200099B10B /* ShaderConstants.mm */,
+				042A9D34151B03BC00916A89 /* PropState.h */,
+			);
+			name = Constants;
+			sourceTree = "<group>";
+		};
+		080E96DDFE201D6D7F000001 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				042A9D33151B038C00916A89 /* Constants */,
+				042A9BD515198ABB00916A89 /* Objects */,
+				042A9BD415198A9700916A89 /* Views */,
+				1D3623240D0F684500981E51 /* DragonEyeAppDelegate.h */,
+				1D3623250D0F684500981E51 /* DragonEyeAppDelegate.mm */,
+				28EC4C5611D54ECE0027AA9F /* DragonEyeViewController.h */,
+				28EC4C5711D54ECE0027AA9F /* DragonEyeViewController.mm */,
+				04A88BF51516C322001E944F /* DpadViewController.h */,
+				04A88BF61516C322001E944F /* DpadViewController.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -146,6 +195,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				04A88BD21516BDAA001E944F /* dpad.jpg */,
 				048004FC14FC749F00440480 /* cabban1.jpg */,
 				048004FD14FC749F00440480 /* cabban2.jpg */,
 				28EC4C5811D54ECE0027AA9F /* DragonEyeViewController.xib */,
@@ -222,6 +272,7 @@
 				28EC4C5A11D54ECE0027AA9F /* DragonEyeViewController.xib in Resources */,
 				048004FE14FC749F00440480 /* cabban1.jpg in Resources */,
 				048004FF14FC749F00440480 /* cabban2.jpg in Resources */,
+				04A88BD31516BDAA001E944F /* dpad.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -241,6 +292,9 @@
 				0480044314F2180300440480 /* Object.mm in Sources */,
 				0480052414FC7A3A00440480 /* Character.mm in Sources */,
 				04B93986150D96200099B10B /* ShaderConstants.mm in Sources */,
+				04A88BF71516C322001E944F /* DpadViewController.m in Sources */,
+				042A9BD315198A6D00916A89 /* DpadButton.mm in Sources */,
+				042A9BFC15199CFB00916A89 /* ObjectContainer.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
