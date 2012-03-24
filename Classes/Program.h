@@ -1,5 +1,3 @@
-#ifndef PROGRAM_H
-#define PROGRAM_H
 /*
  *  Program.h
  *  DragonEye
@@ -11,19 +9,17 @@
 #import <OpenGLES/ES2/gl.h>
 #import <OpenGLES/ES2/glext.h>
 
-class Program {
-	private:
+@interface Program : NSObject {
 	GLuint programId;
-	
-	public:
-	Program();
-	~Program();
-	
-	GLuint getProgramId();
-	void createProgram();
-	bool linkProgram();
-	bool validateProgram();
-	bool dispose();
-};
+}
 
-#endif
+@property (nonatomic) GLuint programId;
+
++ (id) getProgram; //function to return a single instance of program
+
+- (void) createProgram;
+- (BOOL) linkProgram;
+- (BOOL) validateProgram;
+- (BOOL) dispose;
+
+@end

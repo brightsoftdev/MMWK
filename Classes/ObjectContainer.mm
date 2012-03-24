@@ -39,7 +39,6 @@ static ObjectContainer *singleContainer;
 }
 
 - (id) getObject:(NSUInteger)index {
-	NSLog(@"Count %d", [objArray count]);
 	return [objArray objectAtIndex:index];
 }
 @end

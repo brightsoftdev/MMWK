@@ -10,6 +10,14 @@
 #import <OpenGLES/EAGL.h>
 #import <OpenGLES/ES2/gl.h>
 #import <OpenGLES/ES2/glext.h>
+#import <QuartzCore/QuartzCore.h>
+#import "EAGLView.h"
+#import "Texture.h"
+#import "Program.h"
+#import "Player.h"
+#import "ShaderConstants.h"
+#import "ObjectContainer.h"
+
 
 @interface DragonEyeViewController : UIViewController
 {

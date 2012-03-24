@@ -7,73 +7,68 @@
  *
  */
 
-#include "Program.h"
+#import "Program.h"
 
-Program::Program() {
-	this->programId = 0;
+static Program * program = nil;
+
+@implementation Program
+@synthesize programId;
+
++ (id) getProgram {
+	if(!program) {
+		program = [[Program alloc] init];
+		program.programId = 0;
+	}
+	return program;
 }
 
-Program::~Program() {
-	dispose();
+- (void) createProgram {
+	self.programId = glCreateProgram();
 }
 
-GLuint Program::getProgramId() {
-	return this->programId;
-}
-
-void Program::createProgram() {
-	this->programId = glCreateProgram();
-}
-
-bool Program::linkProgram() {
+- (BOOL) linkProgram {
 	GLint status;
     
-    glLinkProgram(this->programId);
+    glLinkProgram(self.programId);
     
 #if defined(DEBUG)
     GLint logLength;
-    glGetProgramiv(this->programId, GL_INFO_LOG_LENGTH, &logLength);
-    if (logLength > 0)
-    {
+    glGetProgramiv(self.programId, GL_INFO_LOG_LENGTH, &logLength);
+    if (logLength > 0) {
         GLchar *log = (GLchar *)malloc(logLength);
-        glGetProgramInfoLog(this->programId, logLength, &logLength, log);
+        glGetProgramInfoLog(self.programId, logLength, &logLength, log);
         NSLog(@"Program link log:\n%s", log);
         free(log);
     }
 #endif
     
-    glGetProgramiv(this->programId, GL_LINK_STATUS, &status);
-    if (status == 0)
-        return FALSE;
-    
-    return TRUE;
-	
-};
+    glGetProgramiv(self.programId, GL_LINK_STATUS, &status);
+	return status != 0;
+}
 
-bool Program::validateProgram() {
+- (BOOL) validateProgram {
 	GLint logLength, status;
     
-    glValidateProgram(this->programId);
-    glGetProgramiv(this->programId, GL_INFO_LOG_LENGTH, &logLength);
+    glValidateProgram(self.programId);
+    glGetProgramiv(self.programId, GL_INFO_LOG_LENGTH, &logLength);
     if (logLength > 0)
     {
         GLchar *log = (GLchar *)malloc(logLength);
-        glGetProgramInfoLog(this->programId, logLength, &logLength, log);
+        glGetProgramInfoLog(self.programId, logLength, &logLength, log);
         NSLog(@"Program validate log:\n%s", log);
         free(log);
     }
     
-    glGetProgramiv(this->programId, GL_VALIDATE_STATUS, &status);
-    if (status == 0)
-        return FALSE;
-    
-    return TRUE;
+    glGetProgramiv(self.programId, GL_VALIDATE_STATUS, &status);
+    return status != 0;
 }
 
-bool Program::dispose() {
-	if (this->programId) {
-		glDeleteProgram(this->programId);
-		this->programId = 0;
+- (BOOL) dispose {
+	if (self.programId) {
+		glDeleteProgram(self.programId);
+		self.programId = 0;
 	}
 	return true;
 }
+
+@end

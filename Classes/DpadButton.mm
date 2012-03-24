@@ -17,20 +17,19 @@
 	NSLog(@"DpadPoint touched %.2f, %.2f", point.x, point.y);
 	
 	ObjectContainer *singleton = [ObjectContainer singleton];
-	NSValue *val = [singleton getObject:0];
-	Character *obj = (Character *)[val pointerValue];
+	Player *obj = [singleton getObject:0];
 	
 	if (point.x < self.frame.size.width/2) {
-		obj->startMoving(LEFT);
+		[obj startMoving:LEFT];
 	} else {
-		obj->startMoving(RIGHT);
+		[obj startMoving:RIGHT];
 	}
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
 	ObjectContainer *singleton = [ObjectContainer singleton];
-	NSValue *val = [singleton getObject:0];
-	Character *obj = (Character *)[val pointerValue];
-	obj->stopMoving();
+	Player *obj = [singleton getObject:0];
+	
+	[obj stopMoving];
 }
 @end

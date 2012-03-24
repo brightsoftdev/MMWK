@@ -8,8 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "ObjectContainer.h"
-#import "Object.h"
-#import "Character.h"
+#import "Player.h"
 
 @interface DpadButton : UIImageView {
 

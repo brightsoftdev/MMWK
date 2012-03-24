@@ -6,23 +6,12 @@
 //  Copyright 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import <QuartzCore/QuartzCore.h>
 
 #import "DragonEyeViewController.h"
-#import "EAGLView.h"
-#import "Texture.h"
-#import "Program.h"
-#import "Object.h"
-#import "Character.h"
-#import "ShaderConstants.h"
-#import "ObjectContainer.h"
-
-#include <iostream>
-using namespace std;
 
 //C++ objects undefinable in .h file
-static Program program;
-static Character obj(0, 0, 1.0, 1.0);
+
+static Program * program = [Program getProgram];
 
 @interface DragonEyeViewController ()
 @property (nonatomic, retain) EAGLContext *context;
@@ -62,8 +51,14 @@ static Character obj(0, 0, 1.0, 1.0);
     animationFrameInterval = 1;
     self.displayLink = nil;
 	
-	NSValue *val = [NSValue valueWithPointer:(const void *)(&obj)];
-	[[ObjectContainer singleton] addObject:val];
+	//NSValue *val = [NSValue valueWithPointer:(const void *)(&obj)];
+	Texture *texture1 = [Texture textureWithFilename:[[NSBundle mainBundle] pathForResource:@"cabban1" ofType:@"jpg"]];
+	Texture *texture2 = [Texture textureWithFilename:[[NSBundle mainBundle] pathForResource:@"cabban2" ofType:@"jpg"]];
+	
+	Sprite *sprite = [Sprite spriteWithTextures:texture1, texture2, nil];
+	Player *player = [Player playerAtPosition:CGPointMake(0, 0) withSize:CGSizeMake(1, 1)];
+	[player initSprite:sprite];
+	[[ObjectContainer singleton] addObject:player];
 }
 
 - (void)dealloc
@@ -180,34 +175,23 @@ static Character obj(0, 0, 1.0, 1.0);
     
     glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
-	static Texture texture1([[NSBundle mainBundle] pathForResource:@"cabban1" ofType:@"jpg"]);
-	static Texture texture2([[NSBundle mainBundle] pathForResource:@"cabban2" ofType:@"jpg"]);
-    static Texture *textures[] = { &texture1, 
-								  &texture2
-								};
-	
-	if (!obj.hasTextures()) {
-		obj.initializeTextures(textures, 2);
-	}
  
     // Use shader program.
-    glUseProgram(program.getProgramId());
+    glUseProgram(program.programId);  //program.getProgramId());
     
     // Animate and draw all objects
-	for (NSValue *val in [ObjectContainer singleton].objArray) {
-		Object *obj = (Object *)[val pointerValue];
-		obj->draw();   
-		obj->animate();
+	for (Player *obj in [ObjectContainer singleton].objArray) {
+		[obj draw];   
+		[obj animate];
 	}
 
-    
     
     // Validate program before drawing. This is a good check, but only really necessary in a debug build.
     // DEBUG macro must be defined in your debug configurations if that's not already the case.
 #if defined(DEBUG)
-    if (!program.validateProgram())
+    if (![program validateProgram])
     {
-        NSLog(@"Failed to validate program: %d", program.getProgramId());
+        NSLog(@"Failed to validate program: %d", program.programId);
         return;
     }
 #endif
@@ -267,7 +251,8 @@ static Character obj(0, 0, 1.0, 1.0);
     NSString *vertShaderPathname, *fragShaderPathname;
     
     // Create shader program.
-    program.createProgram();
+    [program createProgram];
+	GLuint programId = program.programId;
     
     // Create and compile vertex shader.
     vertShaderPathname = [[NSBundle mainBundle] pathForResource:@"Shader" ofType:@"vsh"];
@@ -286,28 +271,25 @@ static Character obj(0, 0, 1.0, 1.0);
     }
     
     // Attach vertex shader to program.
-    glAttachShader(program.getProgramId(), vertShader);
+    glAttachShader(programId, vertShader);
     
     // Attach fragment shader to program.
-    glAttachShader(program.getProgramId(), fragShader);
+    glAttachShader(programId, fragShader);
     
     // Bind attribute locations.
     // This needs to be done prior to linking.
-    glBindAttribLocation(program.getProgramId(), ATTRIB_VERTEX, "position");
-    glBindAttribLocation(program.getProgramId(), ATTRIB_TEXTURE, "texture_coord");
+    glBindAttribLocation(programId, ATTRIB_VERTEX, "position");
+    glBindAttribLocation(programId, ATTRIB_TEXTURE, "texture_coord");
     
     // Link program.
-    if (!program.linkProgram())
-    {
-        NSLog(@"Failed to link program: %d", program.getProgramId());
+    if (![program linkProgram]) {
+        NSLog(@"Failed to link program: %d", programId);
         
-        if (vertShader)
-        {
+        if (vertShader) {
             glDeleteShader(vertShader);
             vertShader = 0;
         }
-        if (fragShader)
-        {
+        if (fragShader) {
             glDeleteShader(fragShader);
             fragShader = 0;
         }
@@ -316,16 +298,18 @@ static Character obj(0, 0, 1.0, 1.0);
     }
     
     // Get uniform locations.
-	ShaderConstants::uniforms[UNIFORM_TEXTURE_SAMPLER] = glGetUniformLocation(program.getProgramId(), "textureSampler");
-	ShaderConstants::uniforms[UNIFORM_TRANSLATE] = glGetUniformLocation(program.getProgramId(), "translate");
-	ShaderConstants::uniforms[UNIFORM_SCALE] = glGetUniformLocation(program.getProgramId(), "scale");
+	ShaderConstants::uniforms[UNIFORM_TEXTURE_SAMPLER] = glGetUniformLocation(programId, "textureSampler");
+	ShaderConstants::uniforms[UNIFORM_TRANSLATE] = glGetUniformLocation(programId, "translate");
+	ShaderConstants::uniforms[UNIFORM_SCALE] = glGetUniformLocation(programId, "scale");
 	
     
     // Set vertex and fragment shaders up for deletion when glDetachShader gets called.
-    if (vertShader)
+    if (vertShader) {
         glDeleteShader(vertShader);
-    if (fragShader)
+	}
+    if (fragShader) {
         glDeleteShader(fragShader);
+	}
     
     return TRUE;
 }

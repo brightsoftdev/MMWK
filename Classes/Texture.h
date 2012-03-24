@@ -1,6 +1,3 @@
-#ifndef TEXTURE_H
-#define TEXTURE_H
-
 /*
  *  Texture.h
  *  DragonEye
@@ -13,31 +10,12 @@
 #import <OpenGLES/ES2/gl.h>
 #import <OpenGLES/ES2/glext.h>
 
-class Texture {
-    private:
-	/*static const GLfloat squareVertices[] = {
-        -0.5f, 0.33f,
-        0.5f, 0.33f,
-        -0.5f, -0.33f,
-        0.5f,  -0.33f,
-    };
-	
-	static const GLfloat textureVertices[] = {
-        0.0f, 0.0f,
-        1.0f, 0.0f,
-        0.0f,  1.0f,
-        1.0f,  1.0f,
-    };*/
-	
+@interface Texture : NSObject {
     GLuint textureId;
- 
-    GLuint setupTexture(NSString *filename);
+}
 
-    public:
-        Texture(NSString *filename);
-        GLuint getTextureId();
-        
-		~Texture();
-		bool dispose();
-};
-#endif
+@property (nonatomic, assign) GLuint textureId;
+
++ (Texture *) textureWithFilename: (NSString *)filename,...;
+
+@end

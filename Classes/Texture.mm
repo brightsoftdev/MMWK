@@ -7,13 +7,19 @@
  *
  */
 
-#include "Texture.h"
+#import "Texture.h"
 
-GLuint Texture::setupTexture(NSString *fileName) {
+@implementation Texture
+
+@synthesize textureId;
+
++ (Texture *) textureWithFilename: (NSString *)filename,... {
+	Texture *texture = [[Texture alloc] init];
+	
 	// 1
-    CGImageRef spriteImage = [UIImage imageWithContentsOfFile:fileName].CGImage;
+    CGImageRef spriteImage = [UIImage imageWithContentsOfFile:filename].CGImage;
     if (!spriteImage) {
-        NSLog(@"Failed to load image %@", fileName);
+        NSLog(@"Failed to load image %@", filename);
         exit(1);
     }
 	
@@ -42,22 +48,9 @@ GLuint Texture::setupTexture(NSString *fileName) {
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, spriteData);
 	
     free(spriteData);        
-    return texName; 
+    
+	[texture setTextureId:texName]; 
+	return texture;
 }
 
-Texture::Texture(NSString *filename) {
-    this->textureId = setupTexture(filename);
-}
-
-GLuint Texture::getTextureId() {
-    return this->textureId;
-}
-
-Texture::~Texture() {
-    dispose();
-}
-
-bool Texture::dispose() {
-	// To be written
-	return true;
-}
+@end
