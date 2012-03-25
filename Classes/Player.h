@@ -9,27 +9,36 @@
 #import <Foundation/Foundation.h>
 #import <OpenGLES/ES2/gl.h>
 #import <OpenGLES/ES2/glext.h>
+#import <QuartzCore/QuartzCore.h>
 #import "ShaderConstants.h"
 #import "PropState.h"
 #import "Typedefs.h"
-#import "Sprite.h"
+#import "SpriteSheet.h"
 
 @interface Player : NSObject {
 	CGPoint position;
 	CGSize size;
+	
 	PlayerState currentState;
 	Direction currentDirection;
-	Sprite *sprite;
+	SpriteSheet *sprite;
+	CADisplayLink *displayLink;
+	
+	// Current matrix index in the sprite sheet
+	uint spsheetRowInd, spsheetColInd;
 }
 
+@property (nonatomic, assign) PlayerState currentState;
 @property (nonatomic, assign) CGPoint position;
 @property (nonatomic, assign) CGSize size;
-@property (nonatomic, retain) Sprite *sprite;
+@property (nonatomic, retain) SpriteSheet *sprite;
+@property (nonatomic, assign) uint spsheetRowInd, spsheetColInd;
+@property (nonatomic, assign) CADisplayLink *displayLink;
 
-+ (Player *) playerAtPosition:(CGPoint)position withSize:(CGSize)size;
++ (Player *) playerAtPosition:(CGPoint)position size:(CGSize)size spriteSheet:(SpriteSheet *)spriteSheet;
 
-- (void) initSprite:(Sprite *)spriteParam;
-- (bool) hasSprite;
+- (void) startAnimation;- (bool) hasSprite;
+- (void) update;
 - (void) animate;
 - (void) draw;
 

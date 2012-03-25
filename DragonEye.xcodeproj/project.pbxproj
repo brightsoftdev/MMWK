@@ -13,6 +13,9 @@
 		042A9D7B151C2E4100916A89 /* Sprite.mm in Sources */ = {isa = PBXBuildFile; fileRef = 042A9D7A151C2E4100916A89 /* Sprite.mm */; };
 		0458D8F414F09EC800238E13 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0458D8F314F09EC800238E13 /* CoreGraphics.framework */; };
 		047B17E5151D8A6100DA4662 /* Prop.m in Sources */ = {isa = PBXBuildFile; fileRef = 047B17E4151D8A6100DA4662 /* Prop.m */; };
+		047B19F3151E915A00DA4662 /* megamanSpSheet.png in Resources */ = {isa = PBXBuildFile; fileRef = 047B19F2151E915A00DA4662 /* megamanSpSheet.png */; };
+		047B19FB151E937300DA4662 /* megamanSpSheetNoAlpha.png in Resources */ = {isa = PBXBuildFile; fileRef = 047B19FA151E937300DA4662 /* megamanSpSheetNoAlpha.png */; };
+		047B1A67151EA80100DA4662 /* SpriteSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 047B1A66151EA80100DA4662 /* SpriteSheet.m */; };
 		0480038C14F1C9B000440480 /* Program.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0480038B14F1C9B000440480 /* Program.mm */; };
 		048004FE14FC749F00440480 /* cabban1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 048004FC14FC749F00440480 /* cabban1.jpg */; };
 		048004FF14FC749F00440480 /* cabban2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 048004FD14FC749F00440480 /* cabban2.jpg */; };
@@ -46,6 +49,10 @@
 		0458D8F314F09EC800238E13 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		047B17E3151D8A6100DA4662 /* Prop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Prop.h; sourceTree = "<group>"; };
 		047B17E4151D8A6100DA4662 /* Prop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Prop.m; sourceTree = "<group>"; };
+		047B19F2151E915A00DA4662 /* megamanSpSheet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = megamanSpSheet.png; sourceTree = "<group>"; };
+		047B19FA151E937300DA4662 /* megamanSpSheetNoAlpha.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = megamanSpSheetNoAlpha.png; sourceTree = "<group>"; };
+		047B1A65151EA80100DA4662 /* SpriteSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpriteSheet.h; sourceTree = "<group>"; };
+		047B1A66151EA80100DA4662 /* SpriteSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpriteSheet.m; sourceTree = "<group>"; };
 		0480038A14F1C9B000440480 /* Program.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Program.h; sourceTree = "<group>"; };
 		0480038B14F1C9B000440480 /* Program.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Program.mm; sourceTree = "<group>"; };
 		048004FC14FC749F00440480 /* cabban1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cabban1.jpg; sourceTree = "<group>"; };
@@ -106,16 +113,12 @@
 		042A9BD515198ABB00916A89 /* Objects */ = {
 			isa = PBXGroup;
 			children = (
-				04893EB714F17E7400AAB4BC /* Texture.h */,
-				04893EB814F17E7400AAB4BC /* Texture.mm */,
 				0480038A14F1C9B000440480 /* Program.h */,
 				0480038B14F1C9B000440480 /* Program.mm */,
 				042A9BFA15199CFB00916A89 /* ObjectContainer.h */,
 				042A9BFB15199CFB00916A89 /* ObjectContainer.mm */,
 				042A9D76151C28B100916A89 /* Player.h */,
 				042A9D77151C28B100916A89 /* Player.mm */,
-				042A9D79151C2E4100916A89 /* Sprite.h */,
-				042A9D7A151C2E4100916A89 /* Sprite.mm */,
 				047B17E3151D8A6100DA4662 /* Prop.h */,
 				047B17E4151D8A6100DA4662 /* Prop.m */,
 			);
@@ -133,9 +136,23 @@
 			name = Constants;
 			sourceTree = "<group>";
 		};
+		047B1A64151EA7EA00DA4662 /* Graphics */ = {
+			isa = PBXGroup;
+			children = (
+				04893EB714F17E7400AAB4BC /* Texture.h */,
+				04893EB814F17E7400AAB4BC /* Texture.mm */,
+				042A9D79151C2E4100916A89 /* Sprite.h */,
+				042A9D7A151C2E4100916A89 /* Sprite.mm */,
+				047B1A65151EA80100DA4662 /* SpriteSheet.h */,
+				047B1A66151EA80100DA4662 /* SpriteSheet.m */,
+			);
+			name = Graphics;
+			sourceTree = "<group>";
+		};
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				047B1A64151EA7EA00DA4662 /* Graphics */,
 				042A9D33151B038C00916A89 /* Constants */,
 				042A9BD515198ABB00916A89 /* Objects */,
 				042A9BD415198A9700916A89 /* Views */,
@@ -189,6 +206,8 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				047B19FA151E937300DA4662 /* megamanSpSheetNoAlpha.png */,
+				047B19F2151E915A00DA4662 /* megamanSpSheet.png */,
 				04A88BD21516BDAA001E944F /* dpad.jpg */,
 				048004FC14FC749F00440480 /* cabban1.jpg */,
 				048004FD14FC749F00440480 /* cabban2.jpg */,
@@ -267,6 +286,8 @@
 				048004FE14FC749F00440480 /* cabban1.jpg in Resources */,
 				048004FF14FC749F00440480 /* cabban2.jpg in Resources */,
 				04A88BD31516BDAA001E944F /* dpad.jpg in Resources */,
+				047B19F3151E915A00DA4662 /* megamanSpSheet.png in Resources */,
+				047B19FB151E937300DA4662 /* megamanSpSheetNoAlpha.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -289,6 +310,7 @@
 				042A9D78151C28B100916A89 /* Player.mm in Sources */,
 				042A9D7B151C2E4100916A89 /* Sprite.mm in Sources */,
 				047B17E5151D8A6100DA4662 /* Prop.m in Sources */,
+				047B1A67151EA80100DA4662 /* SpriteSheet.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

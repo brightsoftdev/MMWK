@@ -10,31 +10,54 @@
 
 @implementation Player
 
-@synthesize position, size, sprite;
+@synthesize position, size, sprite, spsheetRowInd, spsheetColInd, displayLink, currentState;
 
-+ (Player *) playerAtPosition:(CGPoint)position withSize:(CGSize)size {
+// Texture row indexes in the sprite sheet
+static const uint STANDING_ROW_INDEX = 0; 
+static const uint MOVEMENT_ROW_INDEX = 3;
+static const uint MAX_COLUMNS = 8;
+
++ (Player *) playerAtPosition:(CGPoint)position size:(CGSize)size spriteSheet:(SpriteSheet *)spriteSheet {
 	Player *player = [[Player alloc] init];
 	player.position = position;
 	player.size = size;
+	player.sprite = spriteSheet;
+	player.spsheetRowInd = STANDING_ROW_INDEX;
+	player.spsheetColInd = 0;
+	player.currentState = STOP_STATE;
+	
+	[player startAnimation];
+	
 	return player;
 }
 
-- (void) initSprite:(Sprite *)spriteParam {
-	self.sprite = spriteParam;
+- (void) startAnimation {
+	CADisplayLink *aDisplayLink = [[CADisplayLink displayLinkWithTarget:self selector:@selector(animate)] retain];
+	//[self.displayLink setFrameInterval:4];
+	[aDisplayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+	self.displayLink = aDisplayLink;
 }
 
 - (bool) hasSprite {
 	return sprite != nil;
 }
 
-- (void) animate {
+-(void) update {
 	switch(currentState) {
 		case MOVING_STATE:
 			[self moveTowards:currentDirection];
+			[self.displayLink setFrameInterval:2];
 			break;
 			
 		default:
+			[self.displayLink setFrameInterval:8];
 			break;
+	}
+}
+
+- (void) animate {
+	if (spsheetColInd++ >= MAX_COLUMNS) {
+		spsheetColInd = 0;
 	}
 }
 
@@ -46,14 +69,15 @@
         0.1f,  -0.1f,
     };
     
-    static const GLfloat textureVertices[] = {
-        0.0f, 0.0f,
-        1.0f, 0.0f,
-        0.0f,  1.0f,
-        1.0f,  1.0f,
+	CGPoint texCoords = [sprite getTextureCoordsWithRowInd:spsheetRowInd colInd:spsheetColInd];
+	const GLfloat textureVertices[] = {
+        texCoords.x, texCoords.y,
+        texCoords.x + sprite.sizeTexX, texCoords.y,
+        texCoords.x,  texCoords.y + sprite.sizeTexY,
+        texCoords.x + sprite.sizeTexX,  texCoords.y + sprite.sizeTexY,
     };
 	
-	glBindTexture(GL_TEXTURE_2D, [self.sprite getActiveTexture].textureId);
+	glBindTexture(GL_TEXTURE_2D, sprite.sheet.textureId);
 	
 	//glUniform1i(ShaderConstants::uniforms[UNIFORM_TEXTURE_SAMPLER], 0);
 	glUniform2f(ShaderConstants::uniforms[UNIFORM_TRANSLATE], position.x, position.y);
@@ -69,10 +93,14 @@
 - (void) startMoving:(Direction) dir {
 	currentState = MOVING_STATE;
 	currentDirection = dir;
+	spsheetRowInd = MOVEMENT_ROW_INDEX;
+	spsheetColInd = 0;
 }
 
 - (void) stopMoving {
 	currentState = STOP_STATE;
+	spsheetRowInd = STANDING_ROW_INDEX;
+	spsheetColInd = 0;
 }
 
 - (void) moveTowards:(Direction) dir{
