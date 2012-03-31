@@ -7,7 +7,8 @@
 //
 
 #import "DragonEyeAppDelegate.h"
-#import "DragonEyeViewController.h"
+#import "GameController.h"
+#import "macros.h"
 
 @implementation DragonEyeAppDelegate
 
@@ -22,17 +23,19 @@
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
-    [self.viewController stopAnimation];
+    [self.viewController stopGame];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-    [self.viewController startAnimation];
+	LOGGER("Calling startGame");
+    [self.viewController startGame];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
-    [self.viewController stopAnimation];
+	LOGGER("Calling stopGame");
+    [self.viewController stopGame];
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application

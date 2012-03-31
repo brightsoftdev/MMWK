@@ -7,15 +7,33 @@
 //
 
 #import "Player.h"
+#import "macros.h"
 
+#import <Foundation/NSDictionary.h>
+
+static CGPoint cgPoints[16]; 
+
+//NSDictionary * directionToPointMovement = [NSDictionary dictionaryWithObjects:<#(NSArray *)objects#> forKeys:<#(NSArray *)keys#>
 @implementation Player
 
-@synthesize position, size, sprite;
+@synthesize position, size, sprite, currentState;
 
 + (Player *) playerAtPosition:(CGPoint)position withSize:(CGSize)size {
 	Player *player = [[Player alloc] init];
 	player.position = position;
 	player.size = size;
+	player.currentState  = STOP_STATE;
+	
+	//change to map, and use enum.
+	cgPoints[RIGHT]      = CGPointMake( 0.01f, 0); 
+	cgPoints[LEFT]       = CGPointMake(-0.01f, 0); 
+	cgPoints[UP]         = CGPointMake(0,       0.01f); 
+	cgPoints[DOWN]       = CGPointMake(0,      -0.01f); 
+	cgPoints[UP|RIGHT]   = CGPointMake( 0.01f,  0.01f); 
+	cgPoints[UP|LEFT]    = CGPointMake(-0.01f,  0.01f); 
+	cgPoints[DOWN|RIGHT] = CGPointMake( 0.01f, -0.01f); 
+	cgPoints[DOWN|LEFT]  = CGPointMake(-0.01f, -0.01f); 
+	
 	return player;
 }
 
@@ -28,6 +46,7 @@
 }
 
 - (void) animate {
+	LOGGER("current state ?= %d\n", currentState);
 	switch(currentState) {
 		case MOVING_STATE:
 			[self moveTowards:currentDirection];
@@ -66,7 +85,7 @@
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);	
 }
 
-- (void) startMoving:(Direction) dir {
+- (void) startMoving:(int) dir {
 	currentState = MOVING_STATE;
 	currentDirection = dir;
 }
@@ -75,19 +94,9 @@
 	currentState = STOP_STATE;
 }
 
-- (void) moveTowards:(Direction) dir{
-	switch(dir) {
-		case RIGHT:
-		    [self move:CGPointMake(0.01f, 0)];
-		    break;
-			 
-		case LEFT:
-			[self move:CGPointMake(-0.01f, 0)];
-			break;
-			 
-		default:
-			break;	 
-	}
+- (void) moveTowards:(int) dir{
+	LOGGER("dir ?= %d\n", dir);
+	[self move:cgPoints[dir]];
 }
 
 - (void) move:(CGPoint)movement {

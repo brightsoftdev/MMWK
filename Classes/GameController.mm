@@ -7,25 +7,18 @@
 //
 
 
-#import "DragonEyeViewController.h"
-
-//C++ objects undefinable in .h file
+#import "GameController.h"
+#import "macros.h"
 
 static Program * program = [Program getProgram];
 
-@interface DragonEyeViewController ()
-@property (nonatomic, retain) EAGLContext *context;
-@property (nonatomic, assign) CADisplayLink *displayLink;
-- (BOOL)loadShaders;
-- (BOOL)compileShader:(GLuint *)shader type:(GLenum)type file:(NSString *)file;
-@end
-
-@implementation DragonEyeViewController
+@implementation GameController
 
 @synthesize animating, context, displayLink;
 
 - (void)awakeFromNib
 {
+	LOGGER("what is this?!?!?!");
     EAGLContext *aContext = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
     
     if (!aContext)
@@ -51,13 +44,16 @@ static Program * program = [Program getProgram];
     animationFrameInterval = 1;
     self.displayLink = nil;
 	
-	//NSValue *val = [NSValue valueWithPointer:(const void *)(&obj)];
-	Texture *texture1 = [Texture textureWithFilename:[[NSBundle mainBundle] pathForResource:@"cabban1" ofType:@"jpg"]];
-	Texture *texture2 = [Texture textureWithFilename:[[NSBundle mainBundle] pathForResource:@"cabban2" ofType:@"jpg"]];
+	Texture *texture1 = [Texture textureWithFilename:[[NSBundle mainBundle] pathForResource:@"cabban1" 
+																					 ofType:@"jpg"]];
+	Texture *texture2 = [Texture textureWithFilename:[[NSBundle mainBundle] pathForResource:@"cabban2" 
+																					 ofType:@"jpg"]];
 	
 	Sprite *sprite = [Sprite spriteWithTextures:texture1, texture2, nil];
-	Player *player = [Player playerAtPosition:CGPointMake(0, 0) withSize:CGSizeMake(1, 1)];
+	Player *player = [Player playerAtPosition:CGPointMake(0, 0) 
+									 withSize:CGSizeMake(1, 1)];
 	[player initSprite:sprite];
+	
 	[[ObjectContainer singleton] addObject:player];
 }
 
@@ -74,15 +70,13 @@ static Program * program = [Program getProgram];
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    [self startAnimation];
-    
+    [self startGame];
     [super viewWillAppear:animated];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-    [self stopAnimation];
-    
+    [self stopGame];
     [super viewWillDisappear:animated];
 }
 
@@ -91,8 +85,9 @@ static Program * program = [Program getProgram];
     [super viewDidUnload];
 
     // Tear down context.
-    if ([EAGLContext currentContext] == context)
+    if ([EAGLContext currentContext] == context) {
         [EAGLContext setCurrentContext:nil];
+	}
     self.context = nil; 
 }
 
@@ -112,35 +107,34 @@ static Program * program = [Program getProgram];
     if (frameInterval >= 1)
     {
         animationFrameInterval = frameInterval;
-        
-        if (animating)
-        {
-            [self stopAnimation];
-            [self startAnimation];
+        if (animating) {
+            [self stopGame];
+            [self startGame];
         }
     }
 }
 
-- (void)startAnimation
+- (void) startGame
 {
-    if (!animating)
-    {
-        CADisplayLink *aDisplayLink = [[UIScreen mainScreen] displayLinkWithTarget:self selector:@selector(drawFrame)];
+	LOGGER("calling start game...");
+    if (!animating) {
+        CADisplayLink *aDisplayLink = [[UIScreen mainScreen] displayLinkWithTarget:self 
+																		  selector:@selector(gameLoop)];
         [aDisplayLink setFrameInterval:animationFrameInterval];
-        [aDisplayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+        [aDisplayLink addToRunLoop:[NSRunLoop currentRunLoop] 
+						   forMode:NSDefaultRunLoopMode];
         self.displayLink = aDisplayLink;
         
         animating = TRUE;
     }
 }
 
-- (void)stopAnimation
+- (void) stopGame
 {
-    if (animating)
-    {
-        [self.displayLink invalidate];
-        self.displayLink = nil;
-        animating = FALSE;
+    if (animating) {
+	  [self.displayLink invalidate];
+	  self.displayLink = nil;
+	  animating = FALSE;
     }
 }
 
@@ -149,35 +143,21 @@ static Program * program = [Program getProgram];
 {
 	UITouch *touch = [[touches allObjects] objectAtIndex:0];
 	CGPoint point = [touch locationInView:self.view];
-	//EAGLView *eaglView = (EAGLView *) self.view;
-	//CGPoint dpadPoint = [touch locationInView:eaglView.dpadButton];
-	NSLog(@"Point touched %.2f, %.2f", point.x, point.y);
 	
-	/*CGRect frame = eaglView.dpadButton.frame;
-	if (CGRectContainsPoint(frame, point)) {
-		NSLog(@"Dpad touched %.2f, %.2f", dpadPoint.x, dpadPoint.y);
-		
-		if (dpadPoint.x < frame.size.width/2) {
-			obj.move(-0.01f, 0.0f);
-		} else {
-			obj.move(0.01f, 0.0f);
-		}
-	}*/
-	//NSLog(@"Origin %f, size %f", eaglView.dpadButton.frame.origin.x, eaglView.dpadButton.frame.size.width);
+	LOGGER(@"Point touched %.2f, %.2f", point.x, point.y);
 	[super touchesBegan:touches withEvent:event];
-	//obj.moveTo(point.x, point.y);
+	
 }
 
-- (void)drawFrame
+- (void) gameLoop
 {
     [(EAGLView *)self.view setFramebuffer];
-
     
     glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
  
     // Use shader program.
-    glUseProgram(program.programId);  //program.getProgramId());
+    glUseProgram(program.programId);
     
     // Animate and draw all objects
 	for (Player *obj in [ObjectContainer singleton].objArray) {
@@ -191,7 +171,7 @@ static Program * program = [Program getProgram];
 #if defined(DEBUG)
     if (![program validateProgram])
     {
-        NSLog(@"Failed to validate program: %d", program.programId);
+        LOGGER(@"Failed to validate program: %d", program.programId);
         return;
     }
 #endif
@@ -258,7 +238,7 @@ static Program * program = [Program getProgram];
     vertShaderPathname = [[NSBundle mainBundle] pathForResource:@"Shader" ofType:@"vsh"];
     if (![self compileShader:&vertShader type:GL_VERTEX_SHADER file:vertShaderPathname])
     {
-        NSLog(@"Failed to compile vertex shader");
+        LOGGER("Failed to compile vertex shader");
         return FALSE;
     }
     
@@ -266,7 +246,7 @@ static Program * program = [Program getProgram];
     fragShaderPathname = [[NSBundle mainBundle] pathForResource:@"Shader" ofType:@"fsh"];
     if (![self compileShader:&fragShader type:GL_FRAGMENT_SHADER file:fragShaderPathname])
     {
-        NSLog(@"Failed to compile fragment shader");
+        LOGGER("Failed to compile fragment shader");
         return FALSE;
     }
     
@@ -283,7 +263,7 @@ static Program * program = [Program getProgram];
     
     // Link program.
     if (![program linkProgram]) {
-        NSLog(@"Failed to link program: %d", programId);
+        LOGGER("Failed to link program: %d", programId);
         
         if (vertShader) {
             glDeleteShader(vertShader);
@@ -316,11 +296,8 @@ static Program * program = [Program getProgram];
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation 
 {
-    if (interfaceOrientation == UIInterfaceOrientationLandscapeLeft || 
-		interfaceOrientation == UIInterfaceOrientationLandscapeRight)
-        return YES;
-    
-    return NO;
+	return (interfaceOrientation == UIInterfaceOrientationLandscapeLeft 
+		    || interfaceOrientation == UIInterfaceOrientationLandscapeRight);
 }
 
 @end

@@ -14,17 +14,19 @@
 #import "Typedefs.h"
 #import "Sprite.h"
 
+
 @interface Player : NSObject {
 	CGPoint position;
 	CGSize size;
 	PlayerState currentState;
-	Direction currentDirection;
+	int currentDirection;
 	Sprite *sprite;
 }
 
 @property (nonatomic, assign) CGPoint position;
 @property (nonatomic, assign) CGSize size;
 @property (nonatomic, retain) Sprite *sprite;
+@property (nonatomic, assign) PlayerState currentState;
 
 + (Player *) playerAtPosition:(CGPoint)position withSize:(CGSize)size;
 
@@ -34,9 +36,9 @@
 - (void) draw;
 
 // Actions
-- (void) startMoving:(Direction) dir;
+- (void) startMoving:(int) dir;
 - (void) stopMoving;
-- (void) moveTowards:(Direction) dir;
+- (void) moveTowards:(int) dir;
 - (void) move:(CGPoint)movement;
 
 @end

@@ -18,11 +18,9 @@
 #import "ShaderConstants.h"
 #import "ObjectContainer.h"
 
-
-@interface DragonEyeViewController : UIViewController
+@interface GameController : UIViewController
 {
     EAGLContext *context;
-    
     BOOL animating;
     NSInteger animationFrameInterval;
     CADisplayLink *displayLink;
@@ -30,8 +28,15 @@
 
 @property (readonly, nonatomic, getter=isAnimating) BOOL animating;
 @property (nonatomic) NSInteger animationFrameInterval;
+@property (nonatomic, retain) EAGLContext *context;
+@property (nonatomic, assign) CADisplayLink *displayLink;
 
-- (void)startAnimation;
-- (void)stopAnimation;
+- (void) startGame;
+- (void) stopGame;
+- (void) gameLoop;
+- (BOOL) loadShaders;
+- (BOOL) compileShader:(GLuint *)shader 
+				  type:(GLenum)type 
+				  file:(NSString *)file;
 
 @end

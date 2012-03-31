@@ -8,15 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
-@class DragonEyeViewController;
+@class GameController;
 
 @interface DragonEyeAppDelegate : NSObject <UIApplicationDelegate> {
     UIWindow *window;
-    DragonEyeViewController *viewController;
+    GameController *viewController;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
-@property (nonatomic, retain) IBOutlet DragonEyeViewController *viewController;
+@property (nonatomic, retain) IBOutlet GameController *viewController;
 
 @end
 
