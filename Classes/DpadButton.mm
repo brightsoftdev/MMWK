@@ -34,12 +34,12 @@ bool (^between)(double, double, double) =  ^(double x, double a, double b) { ret
 	LOGGER("DpadPoint touched %.2f, %.2f", point.x, point.y);
 	
 			
-	double angle = atan(point.y / point.x);
-	
+	float angle = atan(point.y / point.x);
+
 	LOGGER("Polar in degrees: ?= %lf\n", TO_DEGREES(angle));
 	
-	double degrees = 0; //[NSNumber numberWithDouble:0];
-	
+	//TODO: use factory NSNumber.
+	double degrees = 0;	
 	if(FIRST_QUADRANT(point.x, point.y)) {
 		degrees = TO_DEGREES(angle);
 	} else if(SECOND_QUADRANT(point.x, point.y) || THIRD_QUADRANT(point.x, point.y)) {
@@ -50,19 +50,19 @@ bool (^between)(double, double, double) =  ^(double x, double a, double b) { ret
 		
 	
 	if (between(degrees, 25, 70)) {
-		[player startMoving:(UP | RIGHT)];
+		[player startMoving:(UP_RIGHT)];
 	} else if (degrees > 70 && degrees <= 115) {
 		[player startMoving:UP];
 	} else if (degrees > 115 && degrees <= 150) {
-		[player startMoving:(UP | LEFT)];
+		[player startMoving:(UP_LEFT)];
 	} else if (degrees > 150 && degrees <= 195) {
 		[player startMoving:LEFT];
 	} else if (degrees > 195 && degrees <= 240) {
-		[player startMoving:(DOWN | LEFT)];
+		[player startMoving:(DOWN_LEFT)];
 	} else if (degrees > 240 && degrees <= 295) {
 		[player startMoving:DOWN];
 	} else if (degrees > 295 && degrees <= 340) {
-		[player startMoving:(DOWN | RIGHT)];
+		[player startMoving:(DOWN_RIGHT)];
 	} else {
 		[player startMoving:RIGHT];
 	}

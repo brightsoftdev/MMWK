@@ -11,7 +11,7 @@
 
 #import <Foundation/NSDictionary.h>
 
-static CGPoint cgPoints[16]; 
+static CGPoint cgPoints[8]; 
 
 //NSDictionary * directionToPointMovement = [NSDictionary dictionaryWithObjects:<#(NSArray *)objects#> forKeys:<#(NSArray *)keys#>
 @implementation Player
@@ -41,10 +41,10 @@ static const uint MAX_COLUMNS = 8;
 	cgPoints[LEFT]       = CGPointMake(-0.01f, 0); 
 	cgPoints[UP]         = CGPointMake(0,       0.01f); 
 	cgPoints[DOWN]       = CGPointMake(0,      -0.01f); 
-	cgPoints[UP|RIGHT]   = CGPointMake( 0.01f,  0.01f); 
-	cgPoints[UP|LEFT]    = CGPointMake(-0.01f,  0.01f); 
-	cgPoints[DOWN|RIGHT] = CGPointMake( 0.01f, -0.01f); 
-	cgPoints[DOWN|LEFT]  = CGPointMake(-0.01f, -0.01f); 
+	cgPoints[UP_RIGHT]   = CGPointMake( 0.01f,  0.01f); 
+	cgPoints[UP_LEFT]    = CGPointMake(-0.01f,  0.01f); 
+	cgPoints[DOWN_RIGHT] = CGPointMake( 0.01f, -0.01f); 
+	cgPoints[DOWN_LEFT]  = CGPointMake(-0.01f, -0.01f); 
 	
 	return player;
 }
@@ -121,7 +121,7 @@ static const uint MAX_COLUMNS = 8;
 	spsheetColInd = 0;
 }
 
-- (void) moveTowards:(int) dir{
+- (void) moveTowards:(Direction) dir{
 	LOGGER("dir ?= %d\n", dir);
 	[self move:cgPoints[dir]];
 }
