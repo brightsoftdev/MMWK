@@ -18,11 +18,11 @@ static Program * program = [Program getProgram];
 
 - (void)awakeFromNib
 {
-	LOGGER("what is this?!?!?!");
     EAGLContext *aContext = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
     
     if (!aContext)
     {
+		// TODO: Throw an error, GLES1 not supported
         aContext = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES1];
     }
     
@@ -44,16 +44,10 @@ static Program * program = [Program getProgram];
     animationFrameInterval = 1;
     self.displayLink = nil;
 	
-	Texture *texture1 = [Texture textureWithFilename:[[NSBundle mainBundle] pathForResource:@"cabban1" 
-																					 ofType:@"jpg"]];
-	Texture *texture2 = [Texture textureWithFilename:[[NSBundle mainBundle] pathForResource:@"cabban2" 
-																					 ofType:@"jpg"]];
-	
-	Sprite *sprite = [Sprite spriteWithTextures:texture1, texture2, nil];
-	Player *player = [Player playerAtPosition:CGPointMake(0, 0) 
-									 withSize:CGSizeMake(1, 1)];
-	[player initSprite:sprite];
-	
+	//TODO: Move to separate game initialization code
+	Texture *texture1 = [Texture textureWithFilename:[[NSBundle mainBundle] pathForResource:@"megamanSpSheet" ofType:@"png"]];
+	SpriteSheet *sprite = [SpriteSheet createWithTexture:texture1 numOfCols:8 numOfRows:6 ];
+	Player *player = [Player playerAtPosition:CGPointMake(0, 0) size:CGSizeMake(2, 2) spriteSheet:sprite];
 	[[ObjectContainer singleton] addObject:player];
 }
 
@@ -162,7 +156,7 @@ static Program * program = [Program getProgram];
     // Animate and draw all objects
 	for (Player *obj in [ObjectContainer singleton].objArray) {
 		[obj draw];   
-		[obj animate];
+		[obj update];
 	}
 
     
