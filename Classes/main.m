@@ -7,12 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "macros.h"
-
 int main(int argc, char *argv[]) {
-    
-	LOGGER("The beginning!");	
-	LOGGER("Main arguments: %s", *argv);
+	
     NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
     int retVal = UIApplicationMain(argc, argv, nil, nil);
     [pool release];

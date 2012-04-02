@@ -7,13 +7,11 @@
 //
 
 #import "Player.h"
-#import "macros.h"
-
+#import "Loggers.h"
 #import <Foundation/NSDictionary.h>
 
-static CGPoint cgPoints[8]; 
+static CGPoint cgPoints[NUM_OF_DIRECTIONS]; 
 
-//NSDictionary * directionToPointMovement = [NSDictionary dictionaryWithObjects:<#(NSArray *)objects#> forKeys:<#(NSArray *)keys#>
 @implementation Player
 
 @synthesize position, size, sprite, spsheetRowInd, spsheetColInd, displayLink, currentState;
@@ -33,10 +31,9 @@ static const uint MAX_COLUMNS = 8;
 	player.currentState = STOP_STATE;
 	
 	[player startAnimation];
-	
-	player.currentState  = STOP_STATE;
-	
+		
 	//change to map, and use enum.
+	cgPoints[NO_WHERE]   = CGPointMake(0, 0);
 	cgPoints[RIGHT]      = CGPointMake( 0.01f, 0); 
 	cgPoints[LEFT]       = CGPointMake(-0.01f, 0); 
 	cgPoints[UP]         = CGPointMake(0,       0.01f); 
@@ -50,7 +47,9 @@ static const uint MAX_COLUMNS = 8;
 }
 
 - (void) startAnimation {
-	CADisplayLink *aDisplayLink = [[CADisplayLink displayLinkWithTarget:self selector:@selector(animate)] retain];
+	CADisplayLink *aDisplayLink = [[CADisplayLink displayLinkWithTarget:self 
+															   selector:@selector(animate)] 
+								   retain];
 	//[self.displayLink setFrameInterval:4];
 	[aDisplayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
 	self.displayLink = aDisplayLink;
@@ -87,7 +86,8 @@ static const uint MAX_COLUMNS = 8;
         0.1f,  -0.1f,
     };
     
-	CGPoint texCoords = [sprite getTextureCoordsWithRowInd:spsheetRowInd colInd:spsheetColInd];
+	CGPoint texCoords = [sprite getTextureCoordsWithRowInd:spsheetRowInd 
+													colInd:spsheetColInd];
 	const GLfloat textureVertices[] = {
         texCoords.x, texCoords.y,
         texCoords.x + sprite.sizeTexX, texCoords.y,
@@ -121,8 +121,20 @@ static const uint MAX_COLUMNS = 8;
 	spsheetColInd = 0;
 }
 
+//Willy
+- (void) keepMoving:(Direction) dir {
+	currentState = MOVING_STATE;
+	currentDirection = dir;
+	spsheetRowInd = MOVEMENT_ROW_INDEX;
+	//don't reset spsheet.
+}
+
+- (void) stand {
+	currentState = STOP_STATE;
+	spsheetRowInd = STANDING_ROW_INDEX;
+}
+
 - (void) moveTowards:(Direction) dir{
-	LOGGER("dir ?= %d\n", dir);
 	[self move:cgPoints[dir]];
 }
 

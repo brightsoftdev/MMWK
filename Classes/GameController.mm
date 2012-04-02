@@ -8,8 +8,7 @@
 
 
 #import "GameController.h"
-#import "macros.h"
-
+#import "Loggers.h"
 static Program * program = [Program getProgram];
 
 @implementation GameController
@@ -45,9 +44,18 @@ static Program * program = [Program getProgram];
     self.displayLink = nil;
 	
 	//TODO: Move to separate game initialization code
-	Texture *texture1 = [Texture textureWithFilename:[[NSBundle mainBundle] pathForResource:@"megamanSpSheet" ofType:@"png"]];
-	SpriteSheet *sprite = [SpriteSheet createWithTexture:texture1 numOfCols:8 numOfRows:6 ];
-	Player *player = [Player playerAtPosition:CGPointMake(0, 0) size:CGSizeMake(2, 2) spriteSheet:sprite];
+	Texture *texture1 = [Texture textureWithFilename:[[NSBundle mainBundle] 
+													  pathForResource:@"megamanSpSheet" 
+													  ofType:@"png"]];
+	
+	SpriteSheet *sprite = [SpriteSheet createWithTexture:texture1 
+											   numOfCols:8 
+											   numOfRows:6 ];
+	
+	Player *player = [Player playerAtPosition:CGPointMake(0, 0) 
+										 size:CGSizeMake(2, 2) 
+								  spriteSheet:sprite];
+	
 	[[ObjectContainer singleton] addObject:player];
 }
 
@@ -110,7 +118,7 @@ static Program * program = [Program getProgram];
 
 - (void) startGame
 {
-	LOGGER("calling start game...");
+	DLOG("calling start game...");
     if (!animating) {
         CADisplayLink *aDisplayLink = [[UIScreen mainScreen] displayLinkWithTarget:self 
 																		  selector:@selector(gameLoop)];
@@ -138,7 +146,7 @@ static Program * program = [Program getProgram];
 	UITouch *touch = [[touches allObjects] objectAtIndex:0];
 	CGPoint point = [touch locationInView:self.view];
 	
-	LOGGER(@"Point touched %.2f, %.2f", point.x, point.y);
+	DLOG(@"Point touched %.2f, %.2f", point.x, point.y);
 	[super touchesBegan:touches withEvent:event];
 	
 }
@@ -165,7 +173,7 @@ static Program * program = [Program getProgram];
 #if defined(DEBUG)
     if (![program validateProgram])
     {
-        LOGGER(@"Failed to validate program: %d", program.programId);
+        DLOG(@"Failed to validate program: %d", program.programId);
         return;
     }
 #endif
@@ -232,7 +240,7 @@ static Program * program = [Program getProgram];
     vertShaderPathname = [[NSBundle mainBundle] pathForResource:@"Shader" ofType:@"vsh"];
     if (![self compileShader:&vertShader type:GL_VERTEX_SHADER file:vertShaderPathname])
     {
-        LOGGER("Failed to compile vertex shader");
+        DLOG("Failed to compile vertex shader");
         return FALSE;
     }
     
@@ -240,7 +248,7 @@ static Program * program = [Program getProgram];
     fragShaderPathname = [[NSBundle mainBundle] pathForResource:@"Shader" ofType:@"fsh"];
     if (![self compileShader:&fragShader type:GL_FRAGMENT_SHADER file:fragShaderPathname])
     {
-        LOGGER("Failed to compile fragment shader");
+        DLOG("Failed to compile fragment shader");
         return FALSE;
     }
     
@@ -257,7 +265,7 @@ static Program * program = [Program getProgram];
     
     // Link program.
     if (![program linkProgram]) {
-        LOGGER("Failed to link program: %d", programId);
+        DLOG("Failed to link program: %d", programId);
         
         if (vertShader) {
             glDeleteShader(vertShader);

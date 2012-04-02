@@ -16,6 +16,8 @@
 #import "SpriteSheet.h"
 
 @interface Player : NSObject {
+	
+		
 	CGPoint position;
 	CGSize size;
 	
@@ -35,7 +37,9 @@
 @property (nonatomic, assign) uint spsheetRowInd, spsheetColInd;
 @property (nonatomic, assign) CADisplayLink *displayLink;
 
-+ (Player *) playerAtPosition:(CGPoint)position size:(CGSize)size spriteSheet:(SpriteSheet *)spriteSheet;
++ (Player *) playerAtPosition:(CGPoint)position 
+						 size:(CGSize)size 
+				  spriteSheet:(SpriteSheet *)spriteSheet;
 
 - (void) startAnimation;- (bool) hasSprite;
 - (void) update;
@@ -45,6 +49,8 @@
 // Actions
 - (void) startMoving:(Direction) dir;
 - (void) stopMoving;
+- (void) stand;
+- (void) keepMoving:(Direction) dir;
 - (void) moveTowards:(Direction) dir;
 - (void) move:(CGPoint)movement;
 

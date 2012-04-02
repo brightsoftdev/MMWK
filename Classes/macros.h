@@ -6,10 +6,12 @@
 //  Copyright 2012 __MyCompanyName__. All rights reserved.
 //
 
-#define LOGGER(format, ...) NSLog(@"%s:%d " @ @format, __FUNCTION__, __LINE__, ##__VA_ARGS__);
+//TODO: rename this file.
 
-//#define DLOGGER..
-#define TO_DEGREES(radians) ((radians) * 180 / M_PI)
+#define HALF_CYCLE_IN_DEGREES 180
+#define FULL_CYCLE_IN_DEGREES 360
+
+#define TO_DEGREES(radians) ((radians) * HALF_CYCLE_IN_DEGREES / M_PI)
 
 #define FIRST_QUADRANT(x, y)  ((x) > 0 && ((y) > 0))
 #define SECOND_QUADRANT(x, y) ((x) < 0 && ((y) > 0))

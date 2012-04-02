@@ -8,8 +8,7 @@
 
 #import "DragonEyeAppDelegate.h"
 #import "GameController.h"
-#import "macros.h"
-
+#import "Loggers.h"
 @implementation DragonEyeAppDelegate
 
 @synthesize window;
@@ -28,13 +27,13 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-	LOGGER("Calling startGame");
+	DLOG("Calling startGame");
     [self.viewController startGame];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
-	LOGGER("Calling stopGame");
+	DLOG("Calling stopGame");
     [self.viewController stopGame];
 }
 

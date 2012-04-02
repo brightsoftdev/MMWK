@@ -9,7 +9,11 @@
 #ifndef PROP_STATE_H
 #define PROP_STATE_H
 
+#define NUM_OF_DIRECTIONS 9
+#define COMPASS_DIRECTIONS 8
+
 typedef enum {
+	NO_WHERE,
 	UP,
 	DOWN,
 	LEFT,
