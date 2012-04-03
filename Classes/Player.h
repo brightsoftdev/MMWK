@@ -47,11 +47,8 @@
 - (void) draw;
 
 // Actions
-- (void) startMoving:(Direction) dir;
-- (void) stopMoving;
 - (void) stand;
-- (void) keepMoving:(Direction) dir;
-- (void) moveTowards:(Direction) dir;
+- (void) runTo:(Direction) dir;
 - (void) move:(CGPoint)movement;
 
 @end

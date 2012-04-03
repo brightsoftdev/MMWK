@@ -9,14 +9,13 @@
 #import <QuartzCore/QuartzCore.h>
 
 #import "EAGLView.h"
-
+#import "Loggers.h"
 @interface EAGLView (PrivateMethods)
 - (void)createFramebuffer;
 - (void)deleteFramebuffer;
 @end
 
 @implementation EAGLView
-
 @dynamic context;
 
 // You must implement this method
@@ -30,15 +29,14 @@
 {
     self = [super initWithCoder:coder];
 	if (self)
-    {
+    {		
         CAEAGLLayer *eaglLayer = (CAEAGLLayer *)self.layer;
-        
         eaglLayer.opaque = TRUE;
         eaglLayer.drawableProperties = [NSDictionary dictionaryWithObjectsAndKeys:
                                         [NSNumber numberWithBool:FALSE], kEAGLDrawablePropertyRetainedBacking,
                                         kEAGLColorFormatRGBA8, kEAGLDrawablePropertyColorFormat,
                                         nil];
-    }
+	}
     
     return self;
 }
@@ -125,7 +123,8 @@
             [self createFramebuffer];
         
         glBindFramebuffer(GL_FRAMEBUFFER, defaultFramebuffer);
-        
+		//Willy
+        self.backgroundColor = [UIColor whiteColor];
         glViewport(0, 0, framebufferWidth, framebufferHeight);
     }
 }

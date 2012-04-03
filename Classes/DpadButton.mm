@@ -46,7 +46,7 @@ static void decideHowPlayerShouldMove(CGPoint, NSInteger, NSInteger);
 	ObjectContainer *singleton = [ObjectContainer singleton];
 	Player *obj = [singleton getObject:0];
 	
-	[obj stopMoving];
+	[obj stand];
 }
 
 //pure C-style to how private functions within in a file.
@@ -64,7 +64,7 @@ static void decideHowPlayerShouldMove(CGPoint point, NSInteger width, NSInteger 
 	if (direction == NO_WHERE) {
 		[player stand];
 	} else {
-		[player keepMoving:direction];
+		[player runTo:direction];
 	}	
 }
 @end

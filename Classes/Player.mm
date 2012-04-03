@@ -14,12 +14,18 @@ static CGPoint cgPoints[NUM_OF_DIRECTIONS];
 
 @implementation Player
 
+
 @synthesize position, size, sprite, spsheetRowInd, spsheetColInd, displayLink, currentState;
 
 // Texture row indexes in the sprite sheet
 static const uint STANDING_ROW_INDEX = 0; 
 static const uint MOVEMENT_ROW_INDEX = 3;
 static const uint MAX_COLUMNS = 8;
+
+//Private method
+- (void) moveTowards:(Direction) dir{
+	[self move:cgPoints[dir]];
+}
 
 + (Player *) playerAtPosition:(CGPoint)position size:(CGSize)size spriteSheet:(SpriteSheet *)spriteSheet {
 	Player *player = [[Player alloc] init];
@@ -108,21 +114,7 @@ static const uint MAX_COLUMNS = 8;
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);	
 }
 
-- (void) startMoving:(Direction) dir {
-	currentState = MOVING_STATE;
-	currentDirection = dir;
-	spsheetRowInd = MOVEMENT_ROW_INDEX;
-	spsheetColInd = 0;
-}
-
-- (void) stopMoving {
-	currentState = STOP_STATE;
-	spsheetRowInd = STANDING_ROW_INDEX;
-	spsheetColInd = 0;
-}
-
-//Willy
-- (void) keepMoving:(Direction) dir {
+- (void) runTo:(Direction) dir {
 	currentState = MOVING_STATE;
 	currentDirection = dir;
 	spsheetRowInd = MOVEMENT_ROW_INDEX;
@@ -132,10 +124,6 @@ static const uint MAX_COLUMNS = 8;
 - (void) stand {
 	currentState = STOP_STATE;
 	spsheetRowInd = STANDING_ROW_INDEX;
-}
-
-- (void) moveTowards:(Direction) dir{
-	[self move:cgPoints[dir]];
 }
 
 - (void) move:(CGPoint)movement {

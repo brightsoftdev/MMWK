@@ -10,7 +10,7 @@
 #import "PropState.h"
 
 //Tweak these parameters to get the feel of the joystick/dpad correct.
-//TODO: these can make possibly be parameters to a setter or factory method.
+//TODO: these can be made as parameters to a setter or a factory method.
 #define DEGREES_PER_DIRECTION 45
 #define UP_RIGHT_DIRECTION_STARTS_AT_DEGREE 25
 #define RADIUS_PCT_TO_STAND_STILL_IN_CENTER 0.20

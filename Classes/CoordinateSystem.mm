@@ -21,7 +21,7 @@ static BOOL withinCenterOfDPad(float, float, float);
 - (id) init:(NSInteger)imgWidth imgHeight:(NSInteger)imgHeight {
 	
 	if (self = [super init]) {
-		self.dPadWidth = imgWidth / 2;
+		self.dPadWidth  = imgWidth / 2;
 		self.dPadHeight = imgHeight / 2;
 		return self;
 	}
@@ -61,46 +61,27 @@ static BOOL withinCenterOfDPad(float, float, float);
 	//normalize y to origin by flipping substraction
 	float pointY = self.dPadHeight - yCoordinate;
 	
-	//find radius using pythagarus thm
+	//find radius using pythagoras thm
 	float radius = sqrt(pow(self.dPadWidth, 2) + pow(self.dPadHeight, 2));
 	double degrees = 0; 
 
 	DLOG("point x: %lf, point y: %lf", pointX, pointY);
 	
-	NSNumber * angle = [NSNumber numberWithFloat:atan(pointY / pointX)];
-
-	if(FIRST_QUADRANT(pointX, pointY)) {
-		degrees = TO_DEGREES([angle floatValue]);
-		
-	} else if(SECOND_QUADRANT(pointX, pointY) || 
-			  THIRD_QUADRANT(pointX, pointY)) {
-		degrees = TO_DEGREES([angle floatValue]) + HALF_CYCLE_IN_DEGREES;
-		
-	} else {
-		degrees = TO_DEGREES([angle floatValue]) + FULL_CYCLE_IN_DEGREES;
+	NSNumber * angle = [NSNumber numberWithFloat:atan2f(pointY, pointX)];
+    degrees = TO_DEGREES([angle floatValue]);
+	degrees += UP_RIGHT_DIRECTION_STARTS_AT_DEGREE;
+	
+	if (degrees < 0) {
+		degrees += FULL_CYCLE_IN_DEGREES;
 	}
 	
 	DLOG("Polar in degrees: ?= %lf\n", degrees);
 
 	if (withinCenterOfDPad(pointX, pointY, radius)) {
-		//do nothing, because we are to close to the center of the dpad.
 		return NO_WHERE;
-		
-	} else if (pointX < 0 && pointY == 0) {
-		return LEFT;
-		
-	} else if (pointX == 0 && pointY < 0) {
-		return DOWN;
-		
-	} else if (pointX == 0 && pointY > 0) {
-		return UP;
-		
-	} else if (pointX == 0 && pointY > 0) {
-		return RIGHT;
-		
 	} else {
 		//This will find the correct direction to go to including diagonals.
-		int index = (degrees + (DEGREES_PER_DIRECTION - UP_RIGHT_DIRECTION_STARTS_AT_DEGREE)) / DEGREES_PER_DIRECTION;
+	    NSInteger index = ((int) degrees) / DEGREES_PER_DIRECTION;
 		return indexToDirection[index];
 	}
 }
@@ -109,5 +90,5 @@ static BOOL withinCenterOfDPad(float, float, float);
 
 static BOOL withinCenterOfDPad(float pointX, float pointY, float radius) {
 	float radiusPrime = RADIUS_PCT_TO_STAND_STILL_IN_CENTER * radius;
-	return abs(pointX) < radiusPrime && abs(pointY) < radiusPrime;
+	return fabsf(pointX) < radiusPrime && fabsf(pointY) < radiusPrime;
 }

@@ -44,7 +44,7 @@
 					<object class="IBUIImageView" id="451601839">
 						<reference key="NSNextResponder" ref="184854543"/>
 						<int key="NSvFlags">274</int>
-						<string key="NSFrame">{{69, 214}, {65, 64}}</string>
+						<string key="NSFrame">{{20, 240}, {65, 64}}</string>
 						<reference key="NSSuperview" ref="184854543"/>
 						<reference key="NSWindow"/>
 						<bool key="IBUIAutoresizesSubviews">NO</bool>
@@ -54,21 +54,25 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<object class="NSCustomResource" key="IBUIImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">dpad.jpg</string>
+							<string key="NSResourceName">dpadNintendo.jpg</string>
 						</object>
 					</object>
 				</object>
-				<string key="NSFrameSize">{461, 322}</string>
+				<string key="NSFrameSize">{463, 324}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
-					<int key="NSColorSpace">3</int>
-					<bytes key="NSWhite">MQA</bytes>
+					<int key="NSColorSpace">1</int>
+					<bytes key="NSRGB">MC4yODAyMzg3ODI5IDAuMjc1Njk2NzgzIDEAA</bytes>
 				</object>
 				<bool key="IBUIAutoresizesSubviews">NO</bool>
 				<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
 				<object class="IBUISimulatedOrientationMetrics" key="IBUISimulatedOrientationMetrics">
 					<int key="interfaceOrientation">3</int>
+				</object>
+				<object class="IBUIAccessibilityConfiguration" key="IBUIAccessibilityConfiguration">
+					<integer value="4" key="IBUIAccessibilityTraits"/>
+					<boolean value="YES" key="IBUIIsAccessibilityElement"/>
 				</object>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 			</object>
@@ -82,7 +86,7 @@
 						<reference key="source" ref="841351856"/>
 						<reference key="destination" ref="184854543"/>
 					</object>
-					<int key="connectionID">24</int>
+					<int key="connectionID">36</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -130,6 +134,7 @@
 					<string>2.CustomClassName</string>
 					<string>2.IBEditorWindowLastContentRect</string>
 					<string>2.IBPluginDependency</string>
+					<string>2.IBViewBoundsToFrameTransform</string>
 					<string>32.CustomClassName</string>
 					<string>32.IBPluginDependency</string>
 					<string>32.IBViewBoundsToFrameTransform</string>
@@ -139,8 +144,11 @@
 					<string>GameController</string>
 					<string>UIResponder</string>
 					<string>EAGLView</string>
-					<string>{{411, 321}, {461, 322}}</string>
+					<string>{{443, 343}, {463, 324}}</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+					<object class="NSAffineTransform">
+						<bytes key="NSTransformStruct">P4AAAL+AAAAAAAAAw6AAAA</bytes>
+					</object>
 					<string>DpadButton</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<object class="NSAffineTransform">
@@ -164,7 +172,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">35</int>
+			<int key="maxID">36</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -404,8 +412,8 @@
 		<string key="IBDocument.LastKnownRelativeProjectPath">DragonEye.xcodeproj</string>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<object class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="NS.key.0">dpad.jpg</string>
-			<string key="NS.object.0">{600, 600}</string>
+			<string key="NS.key.0">dpadNintendo.jpg</string>
+			<string key="NS.object.0">{109, 118}</string>
 		</object>
 		<string key="IBCocoaTouchPluginVersion">141</string>
 	</data>

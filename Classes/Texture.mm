@@ -49,11 +49,14 @@
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	
 	glEnable(GL_BLEND);
+	//source factor -- the color you want.
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	//load image data into memory -- referenced by texName
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, spriteData);
 	
     free(spriteData);        
-    
+    spriteData = NULL;
+	
 	texture.textureId = texName; 
 	texture.width = width;
 	texture.height = height;
