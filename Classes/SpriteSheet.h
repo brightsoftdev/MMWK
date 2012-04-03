@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "Texture.h"
+#import "PropState.h"
 
 @interface SpriteSheet : NSObject {
 	// The texture containing the sprite sheet

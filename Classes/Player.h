@@ -14,15 +14,16 @@
 #import "PropState.h"
 #import "Typedefs.h"
 #import "SpriteSheet.h"
+#import "GraphicsEngine.h"
 
 @interface Player : NSObject {
-	
-		
 	CGPoint position;
 	CGSize size;
 	
 	PlayerState currentState;
 	Direction currentDirection;
+	Orientation currentOrientation;
+	
 	SpriteSheet *sprite;
 	CADisplayLink *displayLink;
 	
@@ -31,6 +32,8 @@
 }
 
 @property (nonatomic, assign) PlayerState currentState;
+@property (nonatomic, assign) Direction currentDirection;
+@property (nonatomic, assign) Orientation currentOrientation;
 @property (nonatomic, assign) CGPoint position;
 @property (nonatomic, assign) CGSize size;
 @property (nonatomic, retain) SpriteSheet *sprite;
@@ -41,7 +44,8 @@
 						 size:(CGSize)size 
 				  spriteSheet:(SpriteSheet *)spriteSheet;
 
-- (void) startAnimation;- (bool) hasSprite;
+- (void) startAnimation;
+- (bool) hasSprite;
 - (void) update;
 - (void) animate;
 - (void) draw;

@@ -15,7 +15,8 @@ static CGPoint cgPoints[NUM_OF_DIRECTIONS];
 @implementation Player
 
 
-@synthesize position, size, sprite, spsheetRowInd, spsheetColInd, displayLink, currentState;
+@synthesize position, size, sprite, spsheetRowInd, spsheetColInd, displayLink, 
+			currentState, currentDirection, currentOrientation;
 
 // Texture row indexes in the sprite sheet
 static const uint STANDING_ROW_INDEX = 0; 
@@ -35,6 +36,8 @@ static const uint MAX_COLUMNS = 8;
 	player.spsheetRowInd = STANDING_ROW_INDEX;
 	player.spsheetColInd = 0;
 	player.currentState = STOP_STATE;
+	player.currentDirection = RIGHT;
+	player.currentOrientation = ORIENTATION_FORWARD;
 	
 	[player startAnimation];
 		
@@ -85,40 +88,18 @@ static const uint MAX_COLUMNS = 8;
 }
 
 - (void) draw {
-	static const GLfloat squareVertices[] = {
-        -0.1f, 0.1f,
-        0.1f, 0.1f,
-        -0.1f, -0.1f,
-        0.1f,  -0.1f,
-    };
-    
-	CGPoint texCoords = [sprite getTextureCoordsWithRowInd:spsheetRowInd 
-													colInd:spsheetColInd];
-	const GLfloat textureVertices[] = {
-        texCoords.x, texCoords.y,
-        texCoords.x + sprite.sizeTexX, texCoords.y,
-        texCoords.x,  texCoords.y + sprite.sizeTexY,
-        texCoords.x + sprite.sizeTexX,  texCoords.y + sprite.sizeTexY,
-    };
-	
-	glBindTexture(GL_TEXTURE_2D, sprite.sheet.textureId);
-	
-	//glUniform1i(ShaderConstants::uniforms[UNIFORM_TEXTURE_SAMPLER], 0);
-	glUniform2f(ShaderConstants::uniforms[UNIFORM_TRANSLATE], position.x, position.y);
-	glUniform2f(ShaderConstants::uniforms[UNIFORM_SCALE], size.width, size.height);
-    glVertexAttribPointer(ATTRIB_VERTEX, 2, GL_FLOAT, GL_FALSE, 0, squareVertices);
-    glEnableVertexAttribArray(ATTRIB_VERTEX);
-    glVertexAttribPointer(ATTRIB_TEXTURE, 2, GL_FLOAT, GL_FALSE, 0, textureVertices);
-    glEnableVertexAttribArray(ATTRIB_TEXTURE);
-	
-    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);	
+	[GraphicsEngine drawCharacter:self];
 }
 
 - (void) runTo:(Direction) dir {
 	currentState = MOVING_STATE;
 	currentDirection = dir;
+	
+	if (currentDirection != UP && currentDirection != DOWN) {
+		currentOrientation = getOrientationFromDirection(currentDirection);
+	}
+	
 	spsheetRowInd = MOVEMENT_ROW_INDEX;
-	//don't reset spsheet.
 }
 
 - (void) stand {

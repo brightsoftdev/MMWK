@@ -29,4 +29,16 @@ typedef enum {
 	STOP_STATE
 } PlayerState;
 
+typedef enum {
+	ORIENTATION_FORWARD,
+	ORIENTATION_BACKWARDS
+} Orientation;
+
+extern bool isDirectionRight(Direction direction);
+
+extern bool isDirectionLeft(Direction direction);
+
+// TODO: Only handle LEFT and RIGHT directions
+extern Orientation getOrientationFromDirection(Direction direction);
+
 #endif
