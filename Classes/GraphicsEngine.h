@@ -22,5 +22,7 @@
 
 // Does not support UP and DOWN
 + (void) drawCharacter:(Player *) character;
++ (void) drawTexture:(Texture *) texture texCoords:(NSArray *) texCoords
+			position:(CGPoint)position size:(CGSize)size orientation:(Orientation)orientation;
 
 @end

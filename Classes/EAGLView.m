@@ -124,7 +124,7 @@
         
         glBindFramebuffer(GL_FRAMEBUFFER, defaultFramebuffer);
 		//Willy
-        self.backgroundColor = [UIColor whiteColor];
+        //self.backgroundColor = [UIColor whiteColor];
         glViewport(0, 0, framebufferWidth, framebufferHeight);
     }
 }

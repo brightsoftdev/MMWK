@@ -15,8 +15,9 @@
 #import "Typedefs.h"
 #import "SpriteSheet.h"
 #import "GraphicsEngine.h"
+#import "GraphicsContext.h"
 
-@interface Player : NSObject {
+@interface Player : NSObject <GraphicsContext> {
 	CGPoint position;
 	CGSize size;
 	
@@ -38,7 +39,7 @@
 @property (nonatomic, assign) CGSize size;
 @property (nonatomic, retain) SpriteSheet *sprite;
 @property (nonatomic, assign) uint spsheetRowInd, spsheetColInd;
-@property (nonatomic, assign) CADisplayLink *displayLink;
+@property (nonatomic, retain) CADisplayLink *displayLink;
 
 + (Player *) playerAtPosition:(CGPoint)position 
 						 size:(CGSize)size 
@@ -46,9 +47,12 @@
 
 - (void) startAnimation;
 - (bool) hasSprite;
+
+// from GraphicsContext protocol
+- (void) draw;
 - (void) update;
 - (void) animate;
-- (void) draw;
+
 
 // Actions
 - (void) stand;

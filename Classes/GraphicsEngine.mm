@@ -12,44 +12,48 @@
 
 + (void) drawCharacter:(Player *)character {
 
-	static const GLfloat squareVertices[] = {
-		-0.1f, 0.1f,
-		0.1f, 0.1f,
-		-0.1f, -0.1f,
-		0.1f,  -0.1f,
-	};
-
 	SpriteSheet *sprite = character.sprite;
-	CGPoint texCoords = [sprite getTextureCoordsWithRowInd:character.spsheetRowInd 
+	NSArray *texCoords = [sprite getTextureCoordsWithRowInd:character.spsheetRowInd 
 													colInd:character.spsheetColInd];
-	GLfloat textureVertices[8]; 
-	textureVertices[1] = texCoords.y;
-	textureVertices[3] = texCoords.y;
-	textureVertices[5] = texCoords.y + sprite.sizeTexY;
-	textureVertices[7] = texCoords.y + sprite.sizeTexY;
+	
+	[self drawTexture:sprite.sheet texCoords:texCoords 
+								   position:character.position
+								   size:character.size
+								   orientation:character.currentOrientation];
+}
 
-	if (character.currentOrientation == ORIENTATION_FORWARD) {
-		textureVertices[0] = texCoords.x;
-		textureVertices[2] = texCoords.x + sprite.sizeTexX;
-		textureVertices[4] = texCoords.x; 
-		textureVertices[6] = texCoords.x + sprite.sizeTexX;
-	} else if (character.currentOrientation == ORIENTATION_BACKWARDS) {
-		textureVertices[0] = texCoords.x + sprite.sizeTexX;
-		textureVertices[2] = texCoords.x;
-		textureVertices[4] = texCoords.x + sprite.sizeTexX;
-		textureVertices[6] = texCoords.x;
++ (void) drawTexture:(Texture *) texture texCoords:(NSArray *) texCoords
+			position:(CGPoint)position size:(CGSize)size orientation:(Orientation)orientation {
+		
+	static const GLfloat squareVertices[] = {
+		 -0.1f, 0.1f,
+		 0.1f, 0.1f,
+		 -0.1f, -0.1f,
+		 0.1f,  -0.1f,
+	};
+	
+	GLfloat textureVertices[8];
+	for (int i = 0; i < 8; i++) {
+		textureVertices[i] = [[texCoords objectAtIndex:i] floatValue];
 	}
-
-	glBindTexture(GL_TEXTURE_2D, sprite.sheet.textureId);
-
+	
+	// Swap left and right side 
+	if (orientation == ORIENTATION_BACKWARDS) {
+		textureVertices[0] = textureVertices[4] = [[texCoords objectAtIndex:2] floatValue];
+		textureVertices[2] = textureVertices[6] = [[texCoords objectAtIndex:0] floatValue];
+	}
+	
+	glBindTexture(GL_TEXTURE_2D, texture.textureId);
+	
 	//glUniform1i(ShaderConstants::uniforms[UNIFORM_TEXTURE_SAMPLER], 0);
-	glUniform2f(ShaderConstants::uniforms[UNIFORM_TRANSLATE], character.position.x, character.position.y);
-	glUniform2f(ShaderConstants::uniforms[UNIFORM_SCALE], character.size.width, character.size.height);
+	glUniform2f(ShaderConstants::uniforms[UNIFORM_TRANSLATE], position.x, position.y);
+	glUniform2f(ShaderConstants::uniforms[UNIFORM_SCALE], size.width, size.height);
 	glVertexAttribPointer(ATTRIB_VERTEX, 2, GL_FLOAT, GL_FALSE, 0, squareVertices);
 	glEnableVertexAttribArray(ATTRIB_VERTEX);
 	glVertexAttribPointer(ATTRIB_TEXTURE, 2, GL_FLOAT, GL_FALSE, 0, textureVertices);
 	glEnableVertexAttribArray(ATTRIB_TEXTURE);
-
+	
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);	
 }
+
 @end

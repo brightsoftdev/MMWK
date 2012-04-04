@@ -1,5 +1,5 @@
 //
-//  Prop.h
+//  GraphicsContext.h
 //  DragonEye
 //
 //  Created by alkaiser on 4/3/12.
@@ -9,8 +9,11 @@
 #import <UIKit/UIKit.h>
 
 
-@interface Prop {
-}
+@protocol GraphicsContext <NSObject>
 
+@required
+- (void) draw;
+- (void) animate;
+- (void) update;
 
 @end

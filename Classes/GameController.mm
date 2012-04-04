@@ -8,7 +8,7 @@
 
 
 #import "GameController.h"
-#import "Loggers.h"
+
 static Program * program = [Program getProgram];
 
 @implementation GameController
@@ -48,15 +48,28 @@ static Program * program = [Program getProgram];
 													  pathForResource:@"megamanSpSheet" 
 													  ofType:@"png"]];
 	
+	Texture *overlayTexture = [Texture textureWithFilename:[[NSBundle mainBundle] 
+															pathForResource:@"node" 
+															ofType:@"png"]];
+	
 	SpriteSheet *sprite = [SpriteSheet createWithTexture:texture1 
 											   numOfCols:8 
-											   numOfRows:6 ];
+											   numOfRows:6];
+	
+	SpriteSheet *overlaySprite = [SpriteSheet createWithTexture:overlayTexture 
+											   numOfCols:1 
+											   numOfRows:1];
 	
 	Player *player = [Player playerAtPosition:CGPointMake(0, 0) 
 										 size:CGSizeMake(2, 2) 
-								  spriteSheet:sprite];
+								         spriteSheet:sprite];
+	
+	Overlay *node = [Overlay overlayAtPosition:CGPointMake(0.5, 0.5) 
+										  size:CGSizeMake(1, 1)
+								   spriteSheet:overlaySprite];
 	
 	[[ObjectContainer singleton] addObject:player];
+	[[ObjectContainer singleton] addObject:node];
 }
 
 - (void)dealloc
@@ -162,7 +175,7 @@ static Program * program = [Program getProgram];
     glUseProgram(program.programId);
     
     // Animate and draw all objects
-	for (Player *obj in [ObjectContainer singleton].objArray) {
+	for (id<GraphicsContext> obj in [ObjectContainer singleton].objArray) {
 		[obj draw];   
 		[obj update];
 	}

@@ -7,6 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <OpenGLES/ES2/gl.h>
+#import <OpenGLES/ES2/glext.h>
 #import "Texture.h"
 #import "PropState.h"
 
@@ -29,7 +31,7 @@
 
 
 + (SpriteSheet *) createWithTexture:(Texture *) texture numOfCols:(uint)columns numOfRows:(uint)rows;
-- (CGPoint) getTextureCoordsWithRowInd:(uint)rowIndex colInd:(uint)colInd;
+- (NSArray *) getTextureCoordsWithRowInd:(uint)rowIndex colInd:(uint)colInd;
 
 @end
 

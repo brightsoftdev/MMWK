@@ -23,8 +23,17 @@
 	return spriteSheet;
 }
 
-- (CGPoint) getTextureCoordsWithRowInd:(uint)rowInd colInd:(uint)colInd {
-	return CGPointMake(colInd * sizeTexX, rowInd * sizeTexY);
+- (NSArray *) getTextureCoordsWithRowInd:(uint)rowInd colInd:(uint)colInd {
+	NSNumber *s1 = [NSNumber numberWithFloat:(colInd * sizeTexX)];
+	NSNumber *t1 = [NSNumber numberWithFloat:(rowInd * sizeTexY)];
+	NSNumber *s2 = [NSNumber numberWithFloat:((colInd+1) * sizeTexX)];
+	NSNumber *t2 = [NSNumber numberWithFloat:((rowInd+1) * sizeTexY)];
+	
+	return [NSArray arrayWithObjects:s1,t1,
+							         s2,t1,
+							         s1,t2,
+							         s2,t2,
+									 nil];
 }
 
 @end

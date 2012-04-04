@@ -15,6 +15,8 @@
 #import "Texture.h"
 #import "Program.h"
 #import "Player.h"
+#import "Overlay.h"
+#import "Loggers.h"
 #import "ShaderConstants.h"
 #import "ObjectContainer.h"
 

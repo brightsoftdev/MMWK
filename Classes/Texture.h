@@ -21,5 +21,6 @@
 @property (nonatomic, assign) size_t height;
 
 + (Texture *) textureWithFilename: (NSString *)filename;
++ (NSArray *) createDefaultTexCoords;
 
 @end
