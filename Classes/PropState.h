@@ -30,6 +30,11 @@ typedef enum {
 } PlayerState;
 
 typedef enum {
+	OVERLAY_HIDDEN,
+	OVERLAY_SHOWN
+} OverlayState;
+
+typedef enum {
 	ORIENTATION_FORWARD,
 	ORIENTATION_BACKWARDS
 } Orientation;

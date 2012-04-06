@@ -15,9 +15,9 @@
 #import "Typedefs.h"
 #import "SpriteSheet.h"
 #import "GraphicsEngine.h"
-#import "GraphicsContext.h"
+#import "Drawable.h"
 
-@interface Player : NSObject <GraphicsContext> {
+@interface Player : NSObject <Drawable> {
 	CGPoint position;
 	CGSize size;
 	

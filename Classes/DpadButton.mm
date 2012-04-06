@@ -44,16 +44,16 @@ static void decideHowPlayerShouldMove(CGPoint, NSInteger, NSInteger);
 		   withEvent:(UIEvent *)event {
 	
 	ObjectContainer *singleton = [ObjectContainer singleton];
-	Player *obj = [singleton getObject:0];
+	Player *player = [singleton getPlayer];
 	
-	[obj stand];
+	[player stand];
 }
 
 //pure C-style to how private functions within in a file.
 static void decideHowPlayerShouldMove(CGPoint point, NSInteger width, NSInteger height) {
 	
 	ObjectContainer *singleton = [ObjectContainer singleton];
-	Player *player = [singleton getObject:0];
+	Player *player = [singleton getPlayer];
 	
 	CoordinateSystem * coordinateSystem = [CoordinateSystem initWithDimensions:width 
 																	 imgHeight:height];

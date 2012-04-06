@@ -16,6 +16,7 @@
 #import "Program.h"
 #import "Player.h"
 #import "Overlay.h"
+#import "Node.h"
 #import "Loggers.h"
 #import "ShaderConstants.h"
 #import "ObjectContainer.h"

@@ -56,4 +56,12 @@
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);	
 }
 
++ (CGPoint) convertPointToGl:(CGPoint)point screenSize:(CGSize) screenSize {
+	CGFloat halfwidth = screenSize.width/2;
+	CGFloat halfheight = screenSize.height/2;
+	CGFloat newX = (point.x - halfwidth) / halfwidth;
+	CGFloat newY = (halfheight - point.y) / halfheight;
+	return CGPointMake(newX, newY); 
+}
+
 @end

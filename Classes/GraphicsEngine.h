@@ -24,5 +24,6 @@
 + (void) drawCharacter:(Player *) character;
 + (void) drawTexture:(Texture *) texture texCoords:(NSArray *) texCoords
 			position:(CGPoint)position size:(CGSize)size orientation:(Orientation)orientation;
++ (CGPoint) convertPointToGl:(CGPoint)point screenSize:(CGSize) screenSize;
 
 @end

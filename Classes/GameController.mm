@@ -10,6 +10,7 @@
 #import "GameController.h"
 
 static Program * program = [Program getProgram];
+static Node *node = nil;
 
 @implementation GameController
 
@@ -52,6 +53,10 @@ static Program * program = [Program getProgram];
 															pathForResource:@"node" 
 															ofType:@"png"]];
 	
+	Texture *backgroundTexture = [Texture textureWithFilename:[[NSBundle mainBundle] 
+															   pathForResource:@"background" 
+															   ofType:@"png"]];
+	
 	SpriteSheet *sprite = [SpriteSheet createWithTexture:texture1 
 											   numOfCols:8 
 											   numOfRows:6];
@@ -60,14 +65,23 @@ static Program * program = [Program getProgram];
 											   numOfCols:1 
 											   numOfRows:1];
 	
+	SpriteSheet *backgroundSprite = [SpriteSheet createWithTexture:backgroundTexture 
+													  numOfCols:1 
+													  numOfRows:1];
+	
 	Player *player = [Player playerAtPosition:CGPointMake(0, 0) 
 										 size:CGSizeMake(2, 2) 
 								         spriteSheet:sprite];
 	
-	Overlay *node = [Overlay overlayAtPosition:CGPointMake(0.5, 0.5) 
+	node = [Overlay nodeAtPosition:CGPointMake(0.5, 0.5) 
 										  size:CGSizeMake(1, 1)
 								   spriteSheet:overlaySprite];
 	
+	Overlay *background = [Overlay overlayAtPosition:CGPointMake(0, 0) 
+												size:CGSizeMake(10, 10)
+										 spriteSheet:backgroundSprite];
+	
+	[[ObjectContainer singleton] addObject:background];
 	[[ObjectContainer singleton] addObject:player];
 	[[ObjectContainer singleton] addObject:node];
 }
@@ -154,13 +168,21 @@ static Program * program = [Program getProgram];
 }
 
 
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
 	UITouch *touch = [[touches allObjects] objectAtIndex:0];
 	CGPoint point = [touch locationInView:self.view];
 	
 	DLOG(@"Point touched %.2f, %.2f", point.x, point.y);
-	[super touchesBegan:touches withEvent:event];
+	
+	GLint screenWidth = ((EAGLView *)self.view).framebufferWidth;
+	GLint screenHeight = ((EAGLView *)self.view).framebufferHeight;
+	CGSize screenSize = CGSizeMake(screenWidth, screenHeight);
+	CGPoint glPoint = [GraphicsEngine convertPointToGl:point 
+											screenSize:screenSize];
+	
+	if ([node isPressed:glPoint]) {
+		[node hide];
+	}
 	
 }
 
@@ -175,7 +197,7 @@ static Program * program = [Program getProgram];
     glUseProgram(program.programId);
     
     // Animate and draw all objects
-	for (id<GraphicsContext> obj in [ObjectContainer singleton].objArray) {
+	for (id<Drawable> obj in [ObjectContainer singleton].objArray) {
 		[obj draw];   
 		[obj update];
 	}

@@ -28,7 +28,7 @@ static ObjectContainer *singleContainer;
 						   
 - (id) init {
 	if (self = [super init]) {
-		[self setObjArray:[NSMutableArray arrayWithCapacity:10]];
+		self.objArray = [NSMutableArray arrayWithCapacity:10];
 	}
 	return self;
 }
@@ -40,4 +40,9 @@ static ObjectContainer *singleContainer;
 - (id) getObject:(NSUInteger)index {
 	return [objArray objectAtIndex:index];
 }
+
+- (Player *) getPlayer {
+	return [objArray objectAtIndex:1];
+}
+
 @end

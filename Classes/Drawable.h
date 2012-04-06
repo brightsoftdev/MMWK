@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 
-@protocol GraphicsContext <NSObject>
+@protocol Drawable <NSObject>
 
 @required
 - (void) draw;

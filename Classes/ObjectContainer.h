@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Player.h"
 
 @interface ObjectContainer : NSObject {
 	NSMutableArray *objArray;
@@ -18,6 +19,7 @@
 - (id) init;
 - (void) addObject:(id)object;
 - (id) getObject:(NSUInteger) index;
+- (Player *) getPlayer;
 
 
 @end
