@@ -15,11 +15,16 @@
 #import "Typedefs.h"
 #import "SpriteSheet.h"
 
-@interface Player : NSObject {
+//Under review
+#import "PhysicsContext.h"
+#import "PhysicsEngine.h"
+#import "Prop.h"
+
+@class PhysicsEngine;
+
+@interface Player : Prop <PhysicsContext> {
 	
-		
-	CGPoint position;
-	CGSize size;
+	PhysicsEngine * physicsEngine;
 	
 	PlayerState currentState;
 	Direction currentDirection;
@@ -36,12 +41,14 @@
 @property (nonatomic, retain) SpriteSheet *sprite;
 @property (nonatomic, assign) uint spsheetRowInd, spsheetColInd;
 @property (nonatomic, assign) CADisplayLink *displayLink;
+@property (nonatomic, retain) PhysicsEngine *physicsEngine;
 
 + (Player *) playerAtPosition:(CGPoint)position 
 						 size:(CGSize)size 
 				  spriteSheet:(SpriteSheet *)spriteSheet;
 
-- (void) startAnimation;- (bool) hasSprite;
+- (void) startAnimation;
+- (bool) hasSprite;
 - (void) update;
 - (void) animate;
 - (void) draw;
@@ -50,5 +57,5 @@
 - (void) stand;
 - (void) runTo:(Direction) dir;
 - (void) move:(CGPoint)movement;
-
+- (void) resolveCollisions;
 @end

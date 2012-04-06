@@ -27,13 +27,11 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-	DLOG("Calling startGame");
     [self.viewController startGame];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
-	DLOG("Calling stopGame");
     [self.viewController stopGame];
 }
 

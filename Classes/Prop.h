@@ -7,10 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Collidable.h"
 
-
-@interface Prop : NSObject {
+@interface Prop : NSObject <Collidable> {
 	CGPoint position;
+	CGSize  size;
 }
+
+@property (nonatomic, assign) CGPoint position;
+@property (nonatomic, assign) CGSize size;
 
 @end

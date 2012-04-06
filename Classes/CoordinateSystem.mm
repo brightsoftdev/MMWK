@@ -65,7 +65,7 @@ static BOOL withinCenterOfDPad(float, float, float);
 	float radius = sqrt(pow(self.dPadWidth, 2) + pow(self.dPadHeight, 2));
 	double degrees = 0; 
 
-	DLOG("point x: %lf, point y: %lf", pointX, pointY);
+	//DLOG("point x: %lf, point y: %lf", pointX, pointY);
 	
 	NSNumber * angle = [NSNumber numberWithFloat:atan2f(pointY, pointX)];
     degrees = TO_DEGREES([angle floatValue]);
@@ -75,7 +75,7 @@ static BOOL withinCenterOfDPad(float, float, float);
 		degrees += FULL_CYCLE_IN_DEGREES;
 	}
 	
-	DLOG("Polar in degrees: ?= %lf\n", degrees);
+	//DLOG("Polar in degrees: ?= %lf\n", degrees);
 
 	if (withinCenterOfDPad(pointX, pointY, radius)) {
 		return NO_WHERE;
