@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-//forward declaration to allow recursive relabtionship
+//forward declaration to allow recursive relationship
 @class Collidable;
 
 @protocol Collidable <NSObject>

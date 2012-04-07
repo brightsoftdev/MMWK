@@ -23,21 +23,47 @@ static Node *node = nil;
 													  pathForResource:@"megamanSpSheet" 
 													  ofType:@"png"]];
 	
-	SpriteSheet *sprite = [SpriteSheet createWithTexture:texture1 
-											   numOfCols:8
-											   numOfRows:6];
+	Texture *overlayTexture = [Texture textureWithFilename:[[NSBundle mainBundle] 
+															   pathForResource:@"node" 
+															   ofType:@"png"]];
 	
-	Player *player = [Player playerAtPosition:CGPointMake(0, 0) 
-										 size:CGSizeMake(0.2, 0.2) 
-								  spriteSheet:sprite];
+	Texture *backgroundTexture = [Texture textureWithFilename:[[NSBundle mainBundle] 
+															   pathForResource:@"background" 
+															   ofType:@"png"]];
+	
+	SpriteSheet *overlaySprite = [SpriteSheet createWithTexture:overlayTexture 
+													  numOfCols:1 
+													  numOfRows:1];
+	
+	SpriteSheet *backgroundSprite = [SpriteSheet createWithTexture:backgroundTexture 
+														 numOfCols:1 
+														 numOfRows:1];
+	
+	SpriteSheet *sprite = [SpriteSheet createWithTexture:texture1 
+														 numOfCols:8 
+														 numOfRows:6];
 	
 	//take this out.
-	Player *box = [Player playerAtPosition:CGPointMake(0.5, 0) 
-									  size:CGSizeMake(0.2, 0.2) 
-							   spriteSheet:sprite];
+	Character *box = [Player characterAtPosition:CGPointMake(0.5, 0) 
+									        size:CGSizeMake(0.2, 0.2) 
+									 spriteSheet:sprite];
 	
+	Character *player = [Player characterAtPosition:CGPointMake(0.0, 0) 
+											size:CGSizeMake(0.2, 0.2) 
+								    spriteSheet:sprite];
+
+	node = [Overlay nodeAtPosition:CGPointMake(0.5, 0.5) 
+										  size:CGSizeMake(0.1, 0.1)
+								   spriteSheet:overlaySprite];
+	
+	Overlay *background = [Overlay overlayAtPosition:CGPointMake(0, 0) 
+												size:CGSizeMake(1, 1)
+										 spriteSheet:backgroundSprite];
+	
+	[[ObjectContainer singleton] addObject:background];
 	[[ObjectContainer singleton] addObject:player];
-	[[ObjectContainer singleton] addObject:box];	
+	[[ObjectContainer singleton] addObject:box];
+    [[ObjectContainer singleton] addObject:node];	
 }
 
 - (void)awakeFromNib {
@@ -70,7 +96,6 @@ static Node *node = nil;
     self.displayLink = nil;
 	
 	[GameController setupObjectsInWorld];
-	
 }
 
 - (void)dealloc
@@ -186,7 +211,11 @@ static Node *node = nil;
     // Animate and draw all objects
 	for (id<Drawable,PhysicsContext> obj in [ObjectContainer singleton].objArray) {
 		[obj update];
-		[obj resolveCollisions];
+		
+		if ([obj conformsToProtocol:@protocol(PhysicsContext)]) {
+			[obj resolveCollisions];
+		}
+		
 		[obj draw];
 	}
 

@@ -17,7 +17,8 @@
 			displayLink, 
 			currentState, 
 			physicsEngine,
-			currentDirection;
+			currentDirection,
+			currentOrientation;
 
 
 @end

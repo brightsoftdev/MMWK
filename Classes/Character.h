@@ -17,6 +17,7 @@
 	
 	PlayerState currentState;
 	Direction currentDirection;
+	Orientation currentOrientation;
 	SpriteSheet *sprite;
 	CADisplayLink *displayLink;
 	
@@ -30,6 +31,7 @@
 @property (nonatomic, assign) CADisplayLink *displayLink;
 @property (nonatomic, retain) PhysicsEngine *physicsEngine;
 @property (nonatomic, assign) Direction currentDirection;
+@property (nonatomic, assign) Orientation currentOrientation;
 
 
 @end

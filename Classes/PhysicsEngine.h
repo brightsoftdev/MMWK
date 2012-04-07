@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import "PhysicsContext.h"
-#import "Player.h"
 #import "Prop.h"
 
 @interface PhysicsEngine : NSObject {

@@ -8,8 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import "Collidable.h"
+#import "Drawable.h"
 
-@interface Prop : NSObject <Collidable> {
+@interface Prop : NSObject <Drawable, Collidable> {
 	CGPoint position;
 	CGSize  size;
 }

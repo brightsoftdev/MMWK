@@ -17,21 +17,21 @@ static NSMutableDictionary * directionToOpposite = [NSMutableDictionary new];
 
 @implementation Player
 
-@synthesize sprite, spsheetRowInd, spsheetColInd, displayLink, 
-             currentState, currentDirection, currentOrientation, physicsEngine;
-
 // Texture row indexes in the sprite sheet
 static const uint STANDING_ROW_INDEX = 0; 
 static const uint MOVEMENT_ROW_INDEX = 3;
-static const uint MAX_COLUMNS = 8;
 
 //Private method
 - (void) moveTowards:(Direction) dir{
 	[self move:cgPoints[dir]];
 }
 
-+ (Player *) playerAtPosition:(CGPoint)position size:(CGSize)size spriteSheet:(SpriteSheet *)spriteSheet {
++ (Character *) characterAtPosition:(CGPoint)position 
+							   size:(CGSize)size 
+						spriteSheet:(SpriteSheet *)spriteSheet {
+	
 	Player *player = [[Player alloc] init];
+	
 	player.position = position;
 	player.size = size;
 	player.sprite = spriteSheet;
@@ -42,6 +42,7 @@ static const uint MAX_COLUMNS = 8;
 	player.currentOrientation = ORIENTATION_FORWARD;
 	player.physicsEngine = [PhysicsEngine getInstance];
 	
+	//TODO: move to PropState.h
 	[directionToOpposite setObject:[NSNumber numberWithInt:RIGHT] 
 							forKey:[NSNumber numberWithInt:LEFT]]; 
 	
@@ -64,8 +65,8 @@ static const uint MAX_COLUMNS = 8;
 							forKey:[NSNumber numberWithInt:UP_LEFT]];
 	
 	[player startAnimation];
-		
-	//change to map?
+	
+	//TODO: change to map?
 	cgPoints[NO_WHERE]   = CGPointMake(0, 0);
 	cgPoints[RIGHT]      = CGPointMake( 0.01f, 0); 
 	cgPoints[LEFT]       = CGPointMake(-0.01f, 0); 
@@ -95,8 +96,8 @@ static const uint MAX_COLUMNS = 8;
 }
 
 -(void) update {
-
-	switch(currentState) {
+	
+	switch(self.currentState) {
 		case MOVING_STATE:
 			[self moveTowards:currentDirection];
 			[self.displayLink setFrameInterval:2];
@@ -109,7 +110,7 @@ static const uint MAX_COLUMNS = 8;
 }
 
 - (void) animate {
-	if (spsheetColInd++ >= MAX_COLUMNS - 1) {
+	if (spsheetColInd++ >= sprite.maxColumns - 1) {
 		spsheetColInd = 0;
 	}
 }
@@ -141,8 +142,8 @@ static const uint MAX_COLUMNS = 8;
 
 // physics
 - (void) resolveCollisions {
-	if([physicsEngine isTheirACollision:self 
-							  otherProp:[[ObjectContainer singleton] getObject:1]]) {
+	if([physicsEngine isTheirACollision:[[ObjectContainer singleton] getPlayer] 
+							  otherProp:[[ObjectContainer singleton] getObject:2]]) {
 		
 		[self moveTowards:(Direction)([[directionToOpposite objectForKey:[NSNumber 
 																		  numberWithInt:currentDirection]] intValue])];

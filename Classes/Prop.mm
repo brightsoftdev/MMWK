@@ -10,10 +10,20 @@
 
 @implementation Prop
 
-@synthesize position, size;
+@synthesize position,
+            size;
 
 - (BOOL) collidesWith:(Collidable *) otherObject {
 	return NO;
+}
+
+- (void) draw {
+}
+
+- (void) update {
+}
+
+- (void) animate {
 }
 
 @end
