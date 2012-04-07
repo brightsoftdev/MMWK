@@ -12,4 +12,8 @@
 
 typedef unsigned int uint;
 
+typedef struct Center {
+	float x,y;
+} Center ;
+
 #endif

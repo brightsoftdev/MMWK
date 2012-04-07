@@ -9,46 +9,45 @@
 #import "PhysicsEngine.h"
 #import "Loggers.h"
 #import "ObjectContainer.h"
-
-
-typedef struct center {
-	float x,y;
-} Center ;
-
+#import "Typedefs.h"
 
 static PhysicsEngine * physicsEngine = NULL;
 static int count = 0;
 static void debug(Center, Center, float, float, float);
 
+
 @implementation PhysicsEngine
 
-
-- (BOOL) isWithinBoundary:(float) radius1 thisProp:(Prop*) prop {
-	
-	return	prop.position.x - radius1 > -1 && 
-			prop.position.x + radius1 < 1 && 
-			prop.position.y - radius1 > -1 && 
-			prop.position.y + radius1 < 1;
-	
-	
-}
-
 + (PhysicsEngine *) getInstance {
+	
 	if (physicsEngine == NULL) {
 		physicsEngine = [[PhysicsEngine alloc] init];
 	}
 	return physicsEngine;
 }
+
+- (BOOL) isWithinBoundary:(float) radius1 
+				 thisProp:(Prop*) prop {
+	
+	return	prop.position.x - radius1 > -1 && 
+			prop.position.x + radius1 < 1  &&
+			prop.position.y - radius1 > -1 &&
+			prop.position.y + radius1 < 1;
+	
+	
+}
+
+//TODO: refactor this.
 - (BOOL) isTheirACollision:(Prop *) prop 
 				 otherProp:(Prop *) otherProp {
 	
-	Center center  =  {prop.position.x, prop.position.y};
-	Center center2 =  {otherProp.position.x, otherProp.position.y};
+	Center center  =  { prop.position.x, prop.position.y };
+	Center center2 =  { otherProp.position.x, otherProp.position.y };
 	
 	float distance = sqrt(
-						  pow((center.x - center2.x), 2) +
-						  pow((center.y - center2.y), 2)
-						 );
+						 pow((center.x - center2.x), 2) +
+						 pow((center.y - center2.y), 2)
+						);
 	
 	float radius1 = sqrt(
 						 pow((prop.size.width * 0.1f / 2.0), 2) + 

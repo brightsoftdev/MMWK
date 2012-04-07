@@ -19,19 +19,19 @@ static Program * program = [Program getProgram];
 	
 	//TODO: Move to separate game initialization code
 	Texture *texture1 = [Texture textureWithFilename:[[NSBundle mainBundle] 
-													  pathForResource:@"circlespritesheet" 
+													  pathForResource:@"megamanSpSheet" 
 													  ofType:@"png"]];
 	
 	SpriteSheet *sprite = [SpriteSheet createWithTexture:texture1 
 											   numOfCols:8
-											   numOfRows:1];
+											   numOfRows:6];
 	
-	Player *player = [Player playerAtPosition:CGPointMake(0, 0) 
-										 size:CGSizeMake(2, 2) 
-								  spriteSheet:sprite];
+	Character *player = [Player characterAtPosition:CGPointMake(0, 0) 
+											   size:CGSizeMake(2, 2) 
+										spriteSheet:sprite];
 	
 	//take this out.
-	Player *box = [Player playerAtPosition:CGPointMake(0.5, 0) 
+	Character *box = [Player characterAtPosition:CGPointMake(0.5, 0) 
 									  size:CGSizeMake(2, 2) 
 							   spriteSheet:sprite];
 	

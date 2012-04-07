@@ -20,10 +20,12 @@
 	// Size of a single image in x,y texture coords
 	GLfloat sizeTexX;
 	GLfloat sizeTexY;
+	
+	uint maxColumns;
 }
 
 @property (nonatomic, retain) Texture *sheet;
-@property (nonatomic, assign) uint sizeX, sizeY;
+@property (nonatomic, assign) uint sizeX, sizeY, maxColumns;
 @property (nonatomic, assign) GLfloat sizeTexX, sizeTexY;
 
 

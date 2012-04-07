@@ -7,11 +7,11 @@
 //
 
 #import "CoordinateSystem.h"
-#import "macros.h"
+#import "PolarCoordinates.h"
 #import "Loggers.h"
 
 @implementation CoordinateSystem
-@synthesize dPadWidth, dPadHeight;
+@synthesize width, height;
 
 static Direction indexToDirection[COMPASS_DIRECTIONS + 1];
 static BOOL withinCenterOfDPad(float, float, float);
@@ -21,11 +21,10 @@ static BOOL withinCenterOfDPad(float, float, float);
 - (id) init:(NSInteger)imgWidth imgHeight:(NSInteger)imgHeight {
 	
 	if (self = [super init]) {
-		self.dPadWidth  = imgWidth / 2;
-		self.dPadHeight = imgHeight / 2;
-		return self;
+		self.width  = imgWidth / 2;
+		self.height = imgHeight / 2;
 	}
-	return nil;
+	return self;
 	
 }
 
@@ -57,15 +56,17 @@ static BOOL withinCenterOfDPad(float, float, float);
 								yCoordinate:(float)yCoordinate {
 	
 	//normalize x to origin by subtracting it
-	float pointX = xCoordinate - self.dPadWidth;
+	float pointX = xCoordinate - self.width;
 	//normalize y to origin by flipping substraction
-	float pointY = self.dPadHeight - yCoordinate;
+	float pointY = self.height - yCoordinate;
 	
-	//find radius using pythagoras thm
-	float radius = sqrt(pow(self.dPadWidth, 2) + pow(self.dPadHeight, 2));
+	//find radius using pythag. d thm
+	float radius = sqrt(
+						pow(self.width, 2) + 
+						pow(self.height, 2)
+					   );
+	
 	double degrees = 0; 
-
-	//DLOG("point x: %lf, point y: %lf", pointX, pointY);
 	
 	NSNumber * angle = [NSNumber numberWithFloat:atan2f(pointY, pointX)];
     degrees = TO_DEGREES([angle floatValue]);
@@ -75,8 +76,6 @@ static BOOL withinCenterOfDPad(float, float, float);
 		degrees += FULL_CYCLE_IN_DEGREES;
 	}
 	
-	//DLOG("Polar in degrees: ?= %lf\n", degrees);
-
 	if (withinCenterOfDPad(pointX, pointY, radius)) {
 		return NO_WHERE;
 	} else {
@@ -89,6 +88,7 @@ static BOOL withinCenterOfDPad(float, float, float);
 @end
 
 static BOOL withinCenterOfDPad(float pointX, float pointY, float radius) {
+	
 	float radiusPrime = RADIUS_PCT_TO_STAND_STILL_IN_CENTER * radius;
 	return fabsf(pointX) < radiusPrime && fabsf(pointY) < radiusPrime;
 }

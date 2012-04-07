@@ -14,6 +14,7 @@
 	return NO;
 }
 
-@synthesize position, size;
+@synthesize position, 
+			size;
 
 @end
