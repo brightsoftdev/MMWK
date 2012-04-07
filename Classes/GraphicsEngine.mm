@@ -26,10 +26,10 @@
 			position:(CGPoint)position size:(CGSize)size orientation:(Orientation)orientation {
 		
 	static const GLfloat squareVertices[] = {
-		 -0.1f, 0.1f,
-		 0.1f, 0.1f,
-		 -0.1f, -0.1f,
-		 0.1f,  -0.1f,
+		 -1.0f, 1.0f,
+		 1.0f, 1.0f,
+		 -1.0f, -1.0f,
+		 1.0f,  -1.0f,
 	};
 	
 	GLfloat textureVertices[8];

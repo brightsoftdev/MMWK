@@ -42,7 +42,7 @@ static ObjectContainer *singleContainer;
 }
 
 - (Player *) getPlayer {
-	return [objArray objectAtIndex:1];
+	return [objArray objectAtIndex:0];
 }
 
 @end

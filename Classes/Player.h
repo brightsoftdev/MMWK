@@ -17,9 +17,16 @@
 #import "GraphicsEngine.h"
 #import "Drawable.h"
 
-@interface Player : NSObject <Drawable> {
-	CGPoint position;
-	CGSize size;
+//Under review
+#import "PhysicsContext.h"
+#import "PhysicsEngine.h"
+#import "Prop.h"
+
+@class PhysicsEngine;
+
+@interface Player : Prop <Drawable, PhysicsContext> {
+	
+	PhysicsEngine * physicsEngine;
 	
 	PlayerState currentState;
 	Direction currentDirection;
@@ -35,11 +42,10 @@
 @property (nonatomic, assign) PlayerState currentState;
 @property (nonatomic, assign) Direction currentDirection;
 @property (nonatomic, assign) Orientation currentOrientation;
-@property (nonatomic, assign) CGPoint position;
-@property (nonatomic, assign) CGSize size;
 @property (nonatomic, retain) SpriteSheet *sprite;
 @property (nonatomic, assign) uint spsheetRowInd, spsheetColInd;
-@property (nonatomic, retain) CADisplayLink *displayLink;
+@property (nonatomic, assign) CADisplayLink *displayLink;
+@property (nonatomic, retain) PhysicsEngine *physicsEngine;
 
 + (Player *) playerAtPosition:(CGPoint)position 
 						 size:(CGSize)size 
@@ -58,5 +64,5 @@
 - (void) stand;
 - (void) runTo:(Direction) dir;
 - (void) move:(CGPoint)movement;
-
+- (void) resolveCollisions;
 @end

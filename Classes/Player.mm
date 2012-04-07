@@ -9,14 +9,16 @@
 #import "Player.h"
 #import "Loggers.h"
 #import <Foundation/NSDictionary.h>
+#import "ObjectContainer.h"
 
 static CGPoint cgPoints[NUM_OF_DIRECTIONS]; 
+static NSMutableDictionary * directionToOpposite = [NSMutableDictionary new];
+
 
 @implementation Player
 
-
-@synthesize position, size, sprite, spsheetRowInd, spsheetColInd, displayLink, 
-			currentState, currentDirection, currentOrientation;
+@synthesize sprite, spsheetRowInd, spsheetColInd, displayLink, 
+             currentState, currentDirection, currentOrientation, physicsEngine;
 
 // Texture row indexes in the sprite sheet
 static const uint STANDING_ROW_INDEX = 0; 
@@ -38,10 +40,32 @@ static const uint MAX_COLUMNS = 8;
 	player.currentState = STOP_STATE;
 	player.currentDirection = RIGHT;
 	player.currentOrientation = ORIENTATION_FORWARD;
+	player.physicsEngine = [PhysicsEngine getInstance];
+	
+	[directionToOpposite setObject:[NSNumber numberWithInt:RIGHT] 
+							forKey:[NSNumber numberWithInt:LEFT]]; 
+	
+	[directionToOpposite setObject:[NSNumber numberWithInt:LEFT] 
+							forKey:[NSNumber numberWithInt:RIGHT]];
+	
+	[directionToOpposite setObject:[NSNumber numberWithInt:UP] 
+							forKey:[NSNumber numberWithInt:DOWN]]; 
+	[directionToOpposite setObject:[NSNumber numberWithInt:DOWN] 
+							forKey:[NSNumber numberWithInt:UP]]; 
+	
+	[directionToOpposite setObject:[NSNumber numberWithInt:UP_RIGHT] 
+							forKey:[NSNumber numberWithInt:DOWN_LEFT]];
+	[directionToOpposite setObject:[NSNumber numberWithInt:DOWN_LEFT] 
+							forKey:[NSNumber numberWithInt:UP_RIGHT]];
+	
+	[directionToOpposite setObject:[NSNumber numberWithInt:UP_LEFT] 
+							forKey:[NSNumber numberWithInt:DOWN_RIGHT]]; 
+	[directionToOpposite setObject:[NSNumber numberWithInt:DOWN_RIGHT] 
+							forKey:[NSNumber numberWithInt:UP_LEFT]];
 	
 	[player startAnimation];
 		
-	//change to map, and use enum.
+	//change to map?
 	cgPoints[NO_WHERE]   = CGPointMake(0, 0);
 	cgPoints[RIGHT]      = CGPointMake( 0.01f, 0); 
 	cgPoints[LEFT]       = CGPointMake(-0.01f, 0); 
@@ -59,8 +83,10 @@ static const uint MAX_COLUMNS = 8;
 	CADisplayLink *aDisplayLink = [[CADisplayLink displayLinkWithTarget:self 
 															   selector:@selector(animate)] 
 								   retain];
-	//[self.displayLink setFrameInterval:4];
-	[aDisplayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+
+	[aDisplayLink addToRunLoop:[NSRunLoop currentRunLoop] 
+					   forMode:NSDefaultRunLoopMode];
+	
 	self.displayLink = aDisplayLink;
 }
 
@@ -69,6 +95,7 @@ static const uint MAX_COLUMNS = 8;
 }
 
 -(void) update {
+
 	switch(currentState) {
 		case MOVING_STATE:
 			[self moveTowards:currentDirection];
@@ -82,7 +109,7 @@ static const uint MAX_COLUMNS = 8;
 }
 
 - (void) animate {
-	if (spsheetColInd++ >= MAX_COLUMNS) {
+	if (spsheetColInd++ >= MAX_COLUMNS - 1) {
 		spsheetColInd = 0;
 	}
 }
@@ -110,6 +137,16 @@ static const uint MAX_COLUMNS = 8;
 - (void) move:(CGPoint)movement {
 	position.x += movement.x;
 	position.y += movement.y;
+}
+
+// physics
+- (void) resolveCollisions {
+	if([physicsEngine isTheirACollision:self 
+							  otherProp:[[ObjectContainer singleton] getObject:1]]) {
+		
+		[self moveTowards:(Direction)([[directionToOpposite objectForKey:[NSNumber 
+																		  numberWithInt:currentDirection]] intValue])];
+	}
 }
 
 @end

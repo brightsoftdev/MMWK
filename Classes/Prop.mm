@@ -8,7 +8,12 @@
 
 #import "Prop.h"
 
-
 @implementation Prop
+
+@synthesize position, size;
+
+- (BOOL) collidesWith:(Collidable *) otherObject {
+	return NO;
+}
 
 @end

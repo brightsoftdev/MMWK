@@ -16,20 +16,44 @@ static Node *node = nil;
 
 @synthesize animating, context, displayLink;
 
-- (void)awakeFromNib
-{
++ (void) setupObjectsInWorld {
+	
+	//TODO: Move to separate game initialization code
+	Texture *texture1 = [Texture textureWithFilename:[[NSBundle mainBundle] 
+													  pathForResource:@"megamanSpSheet" 
+													  ofType:@"png"]];
+	
+	SpriteSheet *sprite = [SpriteSheet createWithTexture:texture1 
+											   numOfCols:8
+											   numOfRows:6];
+	
+	Player *player = [Player playerAtPosition:CGPointMake(0, 0) 
+										 size:CGSizeMake(0.2, 0.2) 
+								  spriteSheet:sprite];
+	
+	//take this out.
+	Player *box = [Player playerAtPosition:CGPointMake(0.5, 0) 
+									  size:CGSizeMake(0.2, 0.2) 
+							   spriteSheet:sprite];
+	
+	[[ObjectContainer singleton] addObject:player];
+	[[ObjectContainer singleton] addObject:box];	
+}
+
+- (void)awakeFromNib {
     EAGLContext *aContext = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
     
-    if (!aContext)
-    {
+    if (!aContext) {
 		// TODO: Throw an error, GLES1 not supported
         aContext = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES1];
     }
     
-    if (!aContext)
+    if (!aContext) {
         NSLog(@"Failed to create ES context");
-    else if (![EAGLContext setCurrentContext:aContext])
+	}
+    else if (![EAGLContext setCurrentContext:aContext]) {
         NSLog(@"Failed to set ES context current");
+	}
     
     self.context = aContext;
     [aContext release];
@@ -37,53 +61,16 @@ static Node *node = nil;
     [(EAGLView *)self.view setContext:context];
     [(EAGLView *)self.view setFramebuffer];
     
-    if ([context API] == kEAGLRenderingAPIOpenGLES2)
+    if ([context API] == kEAGLRenderingAPIOpenGLES2) {
         [self loadShaders];
+	}
     
     animating = FALSE;
     animationFrameInterval = 1;
     self.displayLink = nil;
 	
-	//TODO: Move to separate game initialization code
-	Texture *texture1 = [Texture textureWithFilename:[[NSBundle mainBundle] 
-													  pathForResource:@"megamanSpSheet" 
-													  ofType:@"png"]];
+	[GameController setupObjectsInWorld];
 	
-	Texture *overlayTexture = [Texture textureWithFilename:[[NSBundle mainBundle] 
-															pathForResource:@"node" 
-															ofType:@"png"]];
-	
-	Texture *backgroundTexture = [Texture textureWithFilename:[[NSBundle mainBundle] 
-															   pathForResource:@"background" 
-															   ofType:@"png"]];
-	
-	SpriteSheet *sprite = [SpriteSheet createWithTexture:texture1 
-											   numOfCols:8 
-											   numOfRows:6];
-	
-	SpriteSheet *overlaySprite = [SpriteSheet createWithTexture:overlayTexture 
-											   numOfCols:1 
-											   numOfRows:1];
-	
-	SpriteSheet *backgroundSprite = [SpriteSheet createWithTexture:backgroundTexture 
-													  numOfCols:1 
-													  numOfRows:1];
-	
-	Player *player = [Player playerAtPosition:CGPointMake(0, 0) 
-										 size:CGSizeMake(2, 2) 
-								         spriteSheet:sprite];
-	
-	node = [Overlay nodeAtPosition:CGPointMake(0.5, 0.5) 
-										  size:CGSizeMake(1, 1)
-								   spriteSheet:overlaySprite];
-	
-	Overlay *background = [Overlay overlayAtPosition:CGPointMake(0, 0) 
-												size:CGSizeMake(10, 10)
-										 spriteSheet:backgroundSprite];
-	
-	[[ObjectContainer singleton] addObject:background];
-	[[ObjectContainer singleton] addObject:player];
-	[[ObjectContainer singleton] addObject:node];
 }
 
 - (void)dealloc
@@ -197,9 +184,10 @@ static Node *node = nil;
     glUseProgram(program.programId);
     
     // Animate and draw all objects
-	for (id<Drawable> obj in [ObjectContainer singleton].objArray) {
-		[obj draw];   
+	for (id<Drawable,PhysicsContext> obj in [ObjectContainer singleton].objArray) {
 		[obj update];
+		[obj resolveCollisions];
+		[obj draw];
 	}
 
     
