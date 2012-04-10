@@ -22,8 +22,11 @@
 
 // Does not support UP and DOWN
 + (void) drawCharacter:(Player *) character;
-+ (void) drawTexture:(Texture *) texture texCoords:(NSArray *) texCoords
+
+// NOTE: texCoords will be modified upon each draw. Create new TexCoords for each call 
++ (void) drawTexture:(Texture *) texture texCoords:(TexCoords *) texCoords
 			position:(CGPoint)position size:(CGSize)size orientation:(Orientation)orientation;
+
 + (CGPoint) convertPointToGl:(CGPoint)point screenSize:(CGSize) screenSize;
 
 @end

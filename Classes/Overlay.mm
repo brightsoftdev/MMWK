@@ -37,7 +37,7 @@
 - (void) draw {
 	if (currentState == OVERLAY_SHOWN) {
 		[GraphicsEngine drawTexture:sprite.sheet 
-					texCoords:[Texture createDefaultTexCoords] 
+					texCoords:[TexCoords defaultTexCoords] 
 					position:position 
 					size:size
 					orientation:ORIENTATION_FORWARD];

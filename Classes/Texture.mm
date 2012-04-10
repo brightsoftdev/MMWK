@@ -64,15 +64,4 @@
 	return texture;
 }
 
-+ (NSArray *) createDefaultTexCoords {
-	NSNumber *begin = [NSNumber numberWithFloat:(0.0)];
-	NSNumber *end = [NSNumber numberWithFloat:(1.0)];
-	
-	return [NSArray arrayWithObjects:begin,begin,
-									end,begin,
-									begin,end,
-									end,end,
-									nil];
-}
-
 @end

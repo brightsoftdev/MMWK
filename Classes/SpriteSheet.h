@@ -11,6 +11,7 @@
 #import <OpenGLES/ES2/glext.h>
 #import "Texture.h"
 #import "PropState.h"
+#import "TexCoords.h"
 
 @interface SpriteSheet : NSObject {
 	// The texture containing the sprite sheet
@@ -33,7 +34,7 @@
 
 
 + (SpriteSheet *) createWithTexture:(Texture *) texture numOfCols:(uint)columns numOfRows:(uint)rows;
-- (NSArray *) getTextureCoordsWithRowInd:(uint)rowIndex colInd:(uint)colInd;
+- (TexCoords *) getTextureCoordsWithRowInd:(uint)rowIndex colInd:(uint)colInd;
 
 @end
 

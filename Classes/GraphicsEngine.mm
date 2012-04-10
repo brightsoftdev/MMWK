@@ -13,7 +13,7 @@
 + (void) drawCharacter:(Player *)character {
 
 	SpriteSheet *sprite = character.sprite;
-	NSArray *texCoords = [sprite getTextureCoordsWithRowInd:character.spsheetRowInd 
+	TexCoords *texCoords = [sprite getTextureCoordsWithRowInd:character.spsheetRowInd 
 													colInd:character.spsheetColInd];
 	
 	[self drawTexture:sprite.sheet texCoords:texCoords 
@@ -22,7 +22,7 @@
 								   orientation:character.currentOrientation];
 }
 
-+ (void) drawTexture:(Texture *) texture texCoords:(NSArray *) texCoords
++ (void) drawTexture:(Texture *) texture texCoords:(TexCoords *) texCoords
 			position:(CGPoint)position size:(CGSize)size orientation:(Orientation)orientation {
 		
 	static const GLfloat squareVertices[] = {
@@ -32,16 +32,16 @@
 		 1.0f,  -1.0f,
 	};
 	
-	GLfloat textureVertices[8];
-	for (int i = 0; i < 8; i++) {
-		textureVertices[i] = [[texCoords objectAtIndex:i] floatValue];
-	}
-	
 	// Swap left and right side 
 	if (orientation == ORIENTATION_BACKWARDS) {
-		textureVertices[0] = textureVertices[4] = [[texCoords objectAtIndex:2] floatValue];
-		textureVertices[2] = textureVertices[6] = [[texCoords objectAtIndex:0] floatValue];
+		GLfloat left = [texCoords getLeft];
+		GLfloat right = [texCoords getRight];
+		[texCoords setLeft:right];
+		[texCoords setRight:left];
 	}
+	
+	GLfloat textureVertices[8];
+	[texCoords convertToCArray:textureVertices];
 	
 	glBindTexture(GL_TEXTURE_2D, texture.textureId);
 	
