@@ -16,14 +16,14 @@
 @interface Background : NSObject <Drawable> {
 	CADisplayLink *displayLink;
 	Texture *texture;
-	GLfloat leftBoundary, rightBoundary; 
+	GLfloat rightBoundary; 
 	GLfloat scrollSpeed;
 	Direction scrollDirection;
 }
 
 @property (nonatomic, retain) CADisplayLink *displayLink;
 @property (nonatomic, retain) Texture *texture;
-@property (nonatomic, assign) GLfloat leftBoundary, rightBoundary, scrollSpeed;
+@property (nonatomic, assign) GLfloat rightBoundary, scrollSpeed;
 @property (nonatomic, assign) Direction scrollDirection;
 
 + (Background *) backgroundWithTexture:(Texture *) texture scrollSpeed:(GLfloat)scrollSpeed;

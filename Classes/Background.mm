@@ -11,7 +11,6 @@
 @implementation Background
 
 @synthesize texture, 
-			leftBoundary,
 			rightBoundary,
 			scrollSpeed,
 			scrollDirection,
@@ -87,7 +86,6 @@
 	}
 	
 	rightBoundary = [self wrapBoundary:rightBoundary];
-	DLOG("Right boundary: %f", rightBoundary);
 }
 	 
 - (void) scroll:(Direction) direction {

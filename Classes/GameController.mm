@@ -36,10 +36,6 @@ static Node *node = nil;
 													  numOfCols:1 
 													  numOfRows:1];
 	
-	SpriteSheet *backgroundSprite = [SpriteSheet createWithTexture:backgroundTexture 
-														 numOfCols:1 
-														 numOfRows:1];
-	
 	SpriteSheet *sprite = [SpriteSheet createWithTexture:texture1 
 														 numOfCols:8 
 														 numOfRows:6];
