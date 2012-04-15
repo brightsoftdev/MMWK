@@ -10,7 +10,6 @@
 #import "GameController.h"
 
 static Program * program = [Program getProgram];
-static Background *background = nil;
 static Node *node = nil;
 
 @implementation GameController
@@ -53,7 +52,7 @@ static Node *node = nil;
 										  size:CGSizeMake(0.1, 0.1)
 								   spriteSheet:overlaySprite];
 	
-	background = [Background backgroundWithTexture:backgroundTexture scrollSpeed:0.01f];
+	Background *background = [Background backgroundWithTexture:backgroundTexture scrollSpeed:0.01f];
 	
 	[[ObjectContainer singleton] addObject:background];
 	[[ObjectContainer singleton] addObject:player];
@@ -191,7 +190,7 @@ static Node *node = nil;
 		[node hide];
 	}
 	
-	[background scroll:RIGHT];
+	[[ObjectContainer singleton].background scroll:RIGHT];
 }
 
 - (void) gameLoop

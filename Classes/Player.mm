@@ -142,7 +142,7 @@ static const uint MOVEMENT_ROW_INDEX = 3;
 
 // physics
 - (void) resolveCollisions {
-	if([physicsEngine isTheirACollision:[[ObjectContainer singleton] getPlayer] 
+	if([physicsEngine isTheirACollision:[ObjectContainer singleton].player 
 							  otherProp:[[ObjectContainer singleton] getObject:2]]) {
 		
 		[self moveTowards:(Direction)([[directionToOpposite objectForKey:[NSNumber 

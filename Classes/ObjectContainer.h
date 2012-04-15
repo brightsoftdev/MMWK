@@ -8,18 +8,22 @@
 
 #import <Foundation/Foundation.h>
 #import "Player.h"
+#import "Background.h";
 
 @interface ObjectContainer : NSObject {
 	NSMutableArray *objArray;
+	Player *player;
+	Background *background;
 }
 
 @property (nonatomic, retain) NSMutableArray *objArray;
+@property (nonatomic, readonly, retain) Player *player;
+@property (nonatomic, readonly, retain) Background *background;
 
 + (ObjectContainer *) singleton;
 - (id) init;
 - (void) addObject:(id)object;
 - (id) getObject:(NSUInteger) index;
-- (Player *) getPlayer;
 
 
 @end

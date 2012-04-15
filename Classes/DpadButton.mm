@@ -44,7 +44,7 @@ static void decideHowPlayerShouldMove(CGPoint, NSInteger, NSInteger);
 		   withEvent:(UIEvent *)event {
 	
 	ObjectContainer *singleton = [ObjectContainer singleton];
-	Player *player = [singleton getPlayer];
+	Player *player = singleton.player;
 	
 	[player stand];
 }
@@ -53,7 +53,7 @@ static void decideHowPlayerShouldMove(CGPoint, NSInteger, NSInteger);
 static void decideHowPlayerShouldMove(CGPoint point, NSInteger width, NSInteger height) {
 	
 	ObjectContainer *singleton = [ObjectContainer singleton];
-	Player *player = [singleton getPlayer];
+	Player *player = singleton.player;
 	
 	CoordinateSystem * coordinateSystem = [CoordinateSystem initWithDimensions:width 
 																	 imgHeight:height];

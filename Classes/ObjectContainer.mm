@@ -10,7 +10,9 @@
 
 @implementation ObjectContainer
 
-@synthesize objArray;
+@synthesize objArray,
+			player,
+			background;
 
 static ObjectContainer *singleContainer;
 
@@ -35,14 +37,28 @@ static ObjectContainer *singleContainer;
 
 - (void) addObject:(id)object {
 	[objArray addObject:object];
+	
+	// Store player in a singleton player object
+	if ([[object class] isSubclassOfClass:[Player class]]) {
+		if (!player) {
+			player = (Player *) object;
+		} else {
+			DLOG("ERROR! More than one player!");
+		}
+	}
+	
+	// Store background in a singleton background object
+	if ([[object class] isSubclassOfClass:[Background class]]) {
+		if (!background) {
+			background = (Background *) object;
+		} else {
+			DLOG("ERROR! More than one player!");
+		}
+	}
 }
 
 - (id) getObject:(NSUInteger)index {
 	return [objArray objectAtIndex:index];
-}
-
-- (Player *) getPlayer {
-	return [objArray objectAtIndex:1];
 }
 
 @end
