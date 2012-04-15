@@ -13,17 +13,22 @@
 + (void) drawCharacter:(Player *)character {
 
 	SpriteSheet *sprite = character.sprite;
-	TexCoords *texCoords = [sprite getTextureCoordsWithRowInd:character.spsheetRowInd 
-													colInd:character.spsheetColInd];
+	NSArray *texCoordsArray = [sprite getTextureCoords:character.spsheetRowInd];
 	
-	[self drawTexture:sprite.sheet texCoords:texCoords 
-								   position:character.position
-								   size:character.size
-								   orientation:character.currentOrientation];
+	TexCoords *texCoords = [texCoordsArray objectAtIndex:character.spsheetColInd];
+	
+	[self drawTexture:sprite.sheet 
+			texCoords:texCoords 
+			 position:character.position
+				 size:character.size
+		  orientation:character.currentOrientation];
 }
 
-+ (void) drawTexture:(Texture *) texture texCoords:(TexCoords *) texCoords
-			position:(CGPoint)position size:(CGSize)size orientation:(Orientation)orientation {
++ (void) drawTexture:(Texture *) texture 
+		   texCoords:(TexCoords *) texCoordsParam
+			position:(CGPoint) position 
+				size:(CGSize) size 
+		 orientation:(Orientation) orientation {
 		
 	static const GLfloat squareVertices[] = {
 		 -1.0f, 1.0f,
@@ -31,6 +36,8 @@
 		 -1.0f, -1.0f,
 		 1.0f,  -1.0f,
 	};
+	
+	TexCoords *texCoords = [TexCoords copyOfTexCoords:texCoordsParam];
 	
 	// Swap left and right side 
 	if (orientation == ORIENTATION_BACKWARDS) {
@@ -56,7 +63,8 @@
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);	
 }
 
-+ (CGPoint) convertPointToGl:(CGPoint)point screenSize:(CGSize) screenSize {
++ (CGPoint) convertPointToGl:(CGPoint)point 
+				  screenSize:(CGSize) screenSize {
 	CGFloat halfwidth = screenSize.width/2;
 	CGFloat halfheight = screenSize.height/2;
 	CGFloat newX = (point.x - halfwidth) / halfwidth;

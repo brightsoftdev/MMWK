@@ -31,13 +31,26 @@ static Node *node = nil;
 															   pathForResource:@"background" 
 															   ofType:@"png"]];
 	
-	SpriteSheet *overlaySprite = [SpriteSheet createWithTexture:overlayTexture 
-													  numOfCols:1 
-													  numOfRows:1];
+	SpriteSheet *overlaySprite = [SpriteSheet createWithTexture:overlayTexture  
+													  numOfRows:1
+									columns:[NSArray arrayWithObjects:
+													 [NSNumber numberWithInt:1],
+													 nil
+											]
+								  ];
 	
 	SpriteSheet *sprite = [SpriteSheet createWithTexture:texture1 
-														 numOfCols:8 
-														 numOfRows:6];
+											   numOfRows:6
+									columns:[NSArray arrayWithObjects:
+													 [NSNumber numberWithInt:8],
+													 [NSNumber numberWithInt:8],
+													 [NSNumber numberWithInt:8],
+													 [NSNumber numberWithInt:8],
+													 [NSNumber numberWithInt:8],
+													 [NSNumber numberWithInt:8],
+													 nil
+											]
+						   ];
 	
 	//take this out.
 	Character *box = [Player characterAtPosition:CGPointMake(0.5, 0) 

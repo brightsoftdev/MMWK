@@ -22,6 +22,11 @@
 
 }
 
+
++ (Character *) characterAtPosition:(CGPoint)position 
+							   size:(CGSize)size 
+						spriteSheet:(SpriteSheet *)spriteSheet;
+
 - (void) startAnimation;
 - (bool) hasSprite;
 
@@ -35,10 +40,7 @@
 - (void) stand;
 - (void) runTo:(Direction) dir;
 - (void) move:(CGPoint)movement;
+- (void) attack;
 - (void) resolveCollisions;
-
-+ (Character *) characterAtPosition:(CGPoint)position 
-							   size:(CGSize)size 
-						spriteSheet:(SpriteSheet *)spriteSheet;
 
 @end

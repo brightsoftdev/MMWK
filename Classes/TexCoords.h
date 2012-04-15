@@ -20,7 +20,9 @@
 @property (nonatomic) CGPoint *textureCoords;
 
 + (TexCoords *) defaultTexCoords;
-+ (TexCoords *) texCoordsWithTopLeft:(CGPoint)topLeft bottomRight:(CGPoint)bottomRight;
++ (TexCoords *) texCoordsWithTopLeft:(CGPoint)topLeft 
+						 bottomRight:(CGPoint)bottomRight;
++ (TexCoords *) copyOfTexCoords:(TexCoords *) texCoords;
 
 - (void) setLeft:(GLfloat)x;
 - (GLfloat) getLeft;

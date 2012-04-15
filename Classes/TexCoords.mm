@@ -23,7 +23,8 @@ static const int BOTTOM_RIGHT = 3;
 	return [TexCoords texCoordsWithTopLeft:CGPointMake(0.0, 0.0) bottomRight:CGPointMake(1.0, 1.0)];
 }
 
-+ (TexCoords *) texCoordsWithTopLeft:(CGPoint)topLeft bottomRight:(CGPoint)bottomRight {
++ (TexCoords *) texCoordsWithTopLeft:(CGPoint)topLeft 
+						 bottomRight:(CGPoint)bottomRight {
 	TexCoords *texCoords = [[TexCoords alloc] init];
 	texCoords.textureCoords = new CGPoint[4];
 	texCoords.textureCoords[TOP_LEFT] = CGPointMake(topLeft.x, topLeft.y);
@@ -32,6 +33,12 @@ static const int BOTTOM_RIGHT = 3;
 	texCoords.textureCoords[BOTTOM_RIGHT] = CGPointMake(bottomRight.x, bottomRight.y);
 	
 	return texCoords;
+}
+
++ (TexCoords *) copyOfTexCoords:(TexCoords *) texCoords {
+	return [TexCoords texCoordsWithTopLeft:texCoords.textureCoords[TOP_LEFT] 
+							   bottomRight:texCoords.textureCoords[BOTTOM_RIGHT]
+			];
 }
 
 - (void) setLeft:(GLfloat)x {

@@ -96,7 +96,6 @@ static const uint MOVEMENT_ROW_INDEX = 3;
 }
 
 -(void) update {
-	
 	switch(self.currentState) {
 		case MOVING_STATE:
 			[self moveTowards:currentDirection];
@@ -110,7 +109,7 @@ static const uint MOVEMENT_ROW_INDEX = 3;
 }
 
 - (void) animate {
-	if (spsheetColInd++ >= sprite.maxColumns - 1) {
+	if (spsheetColInd++ >= [[sprite getTextureCoords:spsheetRowInd] count] - 1) {
 		spsheetColInd = 0;
 	}
 }
@@ -140,13 +139,16 @@ static const uint MOVEMENT_ROW_INDEX = 3;
 	position.y += movement.y;
 }
 
+- (void) attack {
+}
+
 // physics
 - (void) resolveCollisions {
 	if([physicsEngine isTheirACollision:[ObjectContainer singleton].player 
 							  otherProp:[[ObjectContainer singleton] getObject:2]]) {
 		
 		[self moveTowards:(Direction)([[directionToOpposite objectForKey:[NSNumber 
-																		  numberWithInt:currentDirection]] intValue])];
+														   numberWithInt:currentDirection]] intValue])];
 	}
 }
 

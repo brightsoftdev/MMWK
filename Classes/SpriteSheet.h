@@ -25,16 +25,22 @@
 	GLfloat sizeTexX;
 	GLfloat sizeTexY;
 	
-	uint maxColumns;
+	// Array of array of texture coordinates for each row
+	NSMutableArray *texCoordsArray;
 }
 
 @property (nonatomic, retain) Texture *sheet;
-@property (nonatomic, assign) uint sizeX, sizeY, maxColumns;
+@property (nonatomic, assign) uint sizeX, sizeY;
 @property (nonatomic, assign) GLfloat sizeTexX, sizeTexY;
+@property (nonatomic, retain) NSMutableArray *texCoordsArray;
 
 
-+ (SpriteSheet *) createWithTexture:(Texture *) texture numOfCols:(uint)columns numOfRows:(uint)rows;
-- (TexCoords *) getTextureCoordsWithRowInd:(uint)rowIndex colInd:(uint)colInd;
++ (SpriteSheet *) createWithTexture:(Texture *) texture 
+						  numOfRows:(uint) rows
+						    columns:(NSArray *) columns;
+
+- (void) initTexCoordsArray:(NSArray *) columns;
+- (NSArray *) getTextureCoords:(uint) rowIndex;
 
 @end
 

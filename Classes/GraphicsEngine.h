@@ -25,9 +25,13 @@
 + (void) drawCharacter:(Player *) character;
 
 // NOTE: texCoords will be modified upon each draw. Create new TexCoords for each call 
-+ (void) drawTexture:(Texture *) texture texCoords:(TexCoords *) texCoords
-			position:(CGPoint)position size:(CGSize)size orientation:(Orientation)orientation;
++ (void) drawTexture:(Texture *) texture 
+		   texCoords:(TexCoords *) texCoords
+			position:(CGPoint) position 
+				size:(CGSize) size 
+		 orientation:(Orientation) orientation;
 
-+ (CGPoint) convertPointToGl:(CGPoint)point screenSize:(CGSize) screenSize;
++ (CGPoint) convertPointToGl:(CGPoint) point 
+				  screenSize:(CGSize) screenSize;
 
 @end
