@@ -9,14 +9,15 @@
 #import <Foundation/Foundation.h>
 #import <OpenGLES/ES2/gl.h>
 #import <OpenGLES/ES2/glext.h>
+#import "Loggers.h"
 
 // A class to encapsulate texture coordinates used by OpenGL
 // Only supports square shaped ones at the moment
 @interface TexCoords : NSObject {
-	NSArray *textureCoords;
+	CGPoint *textureCoords;
 }
 
-@property (nonatomic, retain) NSArray *textureCoords;
+@property (nonatomic) CGPoint *textureCoords;
 
 + (TexCoords *) defaultTexCoords;
 + (TexCoords *) texCoordsWithTopLeft:(CGPoint)topLeft bottomRight:(CGPoint)bottomRight;

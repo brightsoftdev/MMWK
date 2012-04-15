@@ -18,61 +18,62 @@ static const int TOP_RIGHT = 1;
 static const int BOTTOM_LEFT = 2;
 static const int BOTTOM_RIGHT = 3;
 
+
 + (TexCoords *) defaultTexCoords {
 	return [TexCoords texCoordsWithTopLeft:CGPointMake(0.0, 0.0) bottomRight:CGPointMake(1.0, 1.0)];
 }
 
 + (TexCoords *) texCoordsWithTopLeft:(CGPoint)topLeft bottomRight:(CGPoint)bottomRight {
 	TexCoords *texCoords = [[TexCoords alloc] init];
-	texCoords.textureCoords = [NSArray arrayWithObjects:[NSValue valueWithCGPoint:CGPointMake(topLeft.x, topLeft.y)],
-													    [NSValue valueWithCGPoint:CGPointMake(bottomRight.x, topLeft.y)],
-														[NSValue valueWithCGPoint:CGPointMake(topLeft.x, bottomRight.y)],
-														[NSValue valueWithCGPoint:CGPointMake(bottomRight.x, bottomRight.y)],
-														nil];
+	texCoords.textureCoords = new CGPoint[4];
+	texCoords.textureCoords[TOP_LEFT] = CGPointMake(topLeft.x, topLeft.y);
+	texCoords.textureCoords[TOP_RIGHT] = CGPointMake(bottomRight.x, topLeft.y);
+	texCoords.textureCoords[BOTTOM_LEFT] = CGPointMake(topLeft.x, bottomRight.y);
+	texCoords.textureCoords[BOTTOM_RIGHT] = CGPointMake(bottomRight.x, bottomRight.y);
 	
 	return texCoords;
 }
 
 - (void) setLeft:(GLfloat)x {
-	[[textureCoords objectAtIndex:TOP_LEFT] CGPointValue].x = x;
-	[[textureCoords objectAtIndex:BOTTOM_LEFT] CGPointValue].x = x;
+	textureCoords[TOP_LEFT].x = x;
+	textureCoords[BOTTOM_LEFT].x = x;
 }
 
 - (GLfloat) getLeft {
-	return [[textureCoords objectAtIndex:TOP_LEFT] CGPointValue].x;
+	return textureCoords[TOP_LEFT].x;
 }
 
 - (void) setRight:(GLfloat)x {
-	[[textureCoords objectAtIndex:TOP_RIGHT] CGPointValue].x = x;
-	[[textureCoords objectAtIndex:BOTTOM_RIGHT] CGPointValue].x = x;
+	textureCoords[TOP_RIGHT].x = x;
+	textureCoords[BOTTOM_RIGHT].x = x;
 }
 
 - (GLfloat) getRight {
-	return [[textureCoords objectAtIndex:TOP_RIGHT] CGPointValue].x;
+	return textureCoords[TOP_RIGHT].x;
 }
 
 - (void) setTop:(GLfloat)y {
-	[[textureCoords objectAtIndex:TOP_LEFT] CGPointValue].y = y;
-	[[textureCoords objectAtIndex:TOP_RIGHT] CGPointValue].y = y;
+	textureCoords[TOP_LEFT].y = y;
+	textureCoords[TOP_RIGHT].y = y;
 }
    
 - (GLfloat) getTop {
-	return [[textureCoords objectAtIndex:TOP_LEFT] CGPointValue].y;
+	return textureCoords[TOP_LEFT].y;
 }
 	   
 - (void) setBottom:(GLfloat)y {
-	[[textureCoords objectAtIndex:BOTTOM_LEFT] CGPointValue].y = y;
-	[[textureCoords objectAtIndex:BOTTOM_RIGHT] CGPointValue].y = y;
+	textureCoords[BOTTOM_LEFT].y = y;
+	textureCoords[BOTTOM_RIGHT].y = y;
 }
    
 - (GLfloat) getBottom {
-	return [[textureCoords objectAtIndex:BOTTOM_LEFT] CGPointValue].y;
+	return textureCoords[BOTTOM_LEFT].y;
 }
 
 - (void) convertToCArray:(GLfloat *) textureVertices {
 	for (uint i = 0; i < 4; i++) {
-		textureVertices[(i*2)] = [[textureCoords objectAtIndex:i] CGPointValue].x;
-		textureVertices[(i*2)+1] = [[textureCoords objectAtIndex:i] CGPointValue].y;
+		textureVertices[(i*2)] = textureCoords[i].x;
+		textureVertices[(i*2)+1] = textureCoords[i].y;
 	}
 }
 

@@ -13,6 +13,7 @@
 #import "SpriteSheet.h"
 #import "ShaderConstants.h"
 #import "Player.h"
+#import "Loggers.h"
 
 @class Player;
 

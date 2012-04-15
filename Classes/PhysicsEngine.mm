@@ -59,7 +59,7 @@ static void debug(Center, Center, float, float, float);
 						 pow((otherProp.size.height / 2.0), 2)
 						);
 	
-	debug(center, center2, radius1, radius2, distance);
+	//debug(center, center2, radius1, radius2, distance);
 	
 	if(distance <= (radius1 + radius2)) {
 		if(count % 180 == 0) {
