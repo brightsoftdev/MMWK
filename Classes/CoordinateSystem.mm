@@ -13,7 +13,7 @@
 @implementation CoordinateSystem
 @synthesize width, height;
 
-static Direction indexToDirection[COMPASS_DIRECTIONS + 1];
+static Direction indexToDirection[MAX_DIRECTIONS + 1];
 static BOOL withinCenterOfDPad(float, float, float);
 
 //Private Method (alternative style for private fxns; although there's no clean way of doing private methods
@@ -52,21 +52,18 @@ static BOOL withinCenterOfDPad(float, float, float);
 	
 }
 
-- (Direction) decideDirectionFromCartestian:(float)xCoordinate 
-								yCoordinate:(float)yCoordinate {
+- (Direction) decideDirectionFromCartestian:(CGFloat)xCoordinate 
+								yCoordinate:(CGFloat)yCoordinate {
 	
 	//normalize x to origin by subtracting it
-	float pointX = xCoordinate - self.width;
+	CGFloat pointX = xCoordinate - self.width;
 	//normalize y to origin by flipping substraction
-	float pointY = self.height - yCoordinate;
+	CGFloat pointY = self.height - yCoordinate;
 	
 	//find radius using pythag. d thm
-	float radius = sqrt(
-						pow(self.width, 2) + 
-						pow(self.height, 2)
-					   );
+	CGFloat radius = PYTHAG(self.width, self.height);
 	
-	double degrees = 0; 
+	CGFloat degrees = 0; 
 	
 	NSNumber * angle = [NSNumber numberWithFloat:atan2f(pointY, pointX)];
     degrees = TO_DEGREES([angle floatValue]);
@@ -78,6 +75,7 @@ static BOOL withinCenterOfDPad(float, float, float);
 	
 	if (withinCenterOfDPad(pointX, pointY, radius)) {
 		return NO_WHERE;
+		
 	} else {
 		//This will find the correct direction to go to including diagonals.
 	    NSInteger index = ((int) degrees) / DEGREES_PER_DIRECTION;
@@ -87,7 +85,7 @@ static BOOL withinCenterOfDPad(float, float, float);
 
 @end
 
-static BOOL withinCenterOfDPad(float pointX, float pointY, float radius) {
+static BOOL withinCenterOfDPad(CGFloat pointX, CGFloat pointY, CGFloat radius) {
 	
 	float radiusPrime = RADIUS_PCT_TO_STAND_STILL_IN_CENTER * radius;
 	return fabsf(pointX) < radiusPrime && fabsf(pointY) < radiusPrime;

@@ -13,7 +13,16 @@
 typedef unsigned int uint;
 
 typedef struct Center {
-	float x,y;
-} Center ;
+	
+	CGPoint origin;
+	
+} Center;
+
+typedef struct Rectangle {
+	
+	CGPoint topLeft;
+	CGPoint bottomRight;
+	
+} Rectangle;
 
 #endif

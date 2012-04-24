@@ -17,15 +17,10 @@
 #import "Character.h"
 #import "GraphicsEngine.h"
 
-@interface Player : Character<PhysicsContext> {
+@interface Player : Character<Collidable> {
 	
 
 }
-
-
-+ (Character *) characterAtPosition:(CGPoint)position 
-							   size:(CGSize)size 
-						spriteSheet:(SpriteSheet *)spriteSheet;
 
 - (void) startAnimation;
 - (bool) hasSprite;
@@ -42,5 +37,13 @@
 - (void) move:(CGPoint)movement;
 - (void) attack;
 - (void) resolveCollisions;
+
+// collision reactions
+- (void) collidesWithPlayer;
+- (void) collidesWithScreen;
+
++ (Character *) characterAtPosition:(CGPoint)position 
+							   size:(CGSize)size 
+						spriteSheet:(SpriteSheet *)spriteSheet;
 
 @end

@@ -13,10 +13,6 @@
 @synthesize position,
             size;
 
-- (BOOL) collidesWith:(Collidable *) otherObject {
-	return NO;
-}
-
 - (void) draw {
 }
 
@@ -24,6 +20,9 @@
 }
 
 - (void) animate {
+}
+
+- (void) resolveCollisions {
 }
 
 @end

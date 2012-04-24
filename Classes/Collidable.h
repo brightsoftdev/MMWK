@@ -6,11 +6,17 @@
 //  Copyright 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-
-//forward declaration to allow recursive relationship
-@class Collidable;
-
 @protocol Collidable <NSObject>
-- (BOOL) collidesWith:(Collidable *) otherObject;
+
+/**
+ * Every collidable object should decide what other objects
+ * it can collide with.
+ *
+ * Please use the physicsEngine detectCollisions method
+ * for each object you decide that you can collide with.
+ *
+ * @return void
+ */
+- (void) resolveCollisions;
+
 @end

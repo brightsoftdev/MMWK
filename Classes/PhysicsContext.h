@@ -11,5 +11,4 @@
 
 @protocol PhysicsContext
 @required
-- (void) resolveCollisions;
 @end

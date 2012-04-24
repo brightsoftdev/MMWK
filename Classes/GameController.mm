@@ -52,6 +52,7 @@ static Node *node = nil;
 											]
 						   ];
 	
+	
 	//take this out.
 	Character *box = [Player characterAtPosition:CGPointMake(0.5, 0) 
 									        size:CGSizeMake(0.2, 0.2) 
@@ -217,10 +218,10 @@ static Node *node = nil;
     glUseProgram(program.programId);
     
     // Animate and draw all objects
-	for (id<Drawable,PhysicsContext> obj in [ObjectContainer singleton].objArray) {
+	for (id<Drawable,Collidable> obj in [ObjectContainer singleton].objArray) {
 		[obj update];
 		
-		if ([obj conformsToProtocol:@protocol(PhysicsContext)]) {
+		if ([obj conformsToProtocol:@protocol(Collidable)]) {
 			[obj resolveCollisions];
 		}
 		

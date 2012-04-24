@@ -11,8 +11,10 @@
 #import "Drawable.h"
 
 @interface Prop : NSObject <Drawable, Collidable> {
+	
 	CGPoint position;
 	CGSize  size;
+	
 }
 
 @property (nonatomic, assign) CGPoint position;

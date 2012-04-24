@@ -11,7 +11,7 @@
 #import <Foundation/NSDictionary.h>
 #import "ObjectContainer.h"
 
-static CGPoint cgPoints[NUM_OF_DIRECTIONS]; 
+static CGPoint cgPoints[MAX_DIRECTIONS]; 
 static NSMutableDictionary * directionToOpposite = [NSMutableDictionary new];
 
 
@@ -150,6 +150,28 @@ static const uint MOVEMENT_ROW_INDEX = 3;
 		[self moveTowards:(Direction)([[directionToOpposite objectForKey:[NSNumber 
 														   numberWithInt:currentDirection]] intValue])];
 	}
+	
+	[physicsEngine detectScreenCollision:self];
+	
+	[physicsEngine detectCircleCollision:[[ObjectContainer singleton] getPlayer] 
+							   otherProp:[[ObjectContainer singleton] getObject:2]];
+	
+	
+	
+}
+
+- (void) collidesWithPlayer {
+	[self moveTowards:(Direction)([[directionToOpposite 
+									objectForKey:[NSNumber 
+												  numberWithInt:currentDirection]] intValue])];
+	
+}
+
+- (void) collidesWithScreen {
+	[self moveTowards:(Direction)([[directionToOpposite 
+									objectForKey:[NSNumber 
+												  numberWithInt:currentDirection]] intValue])];
+	
 }
 
 @end
