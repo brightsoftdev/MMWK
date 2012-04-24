@@ -20,7 +20,8 @@ static const int BOTTOM_RIGHT = 3;
 
 
 + (TexCoords *) defaultTexCoords {
-	return [TexCoords texCoordsWithTopLeft:CGPointMake(0.0, 0.0) bottomRight:CGPointMake(1.0, 1.0)];
+	return [TexCoords texCoordsWithTopLeft:CGPointMake(0.0, 0.0) 
+							   bottomRight:CGPointMake(1.0, 1.0)];
 }
 
 + (TexCoords *) texCoordsWithTopLeft:(CGPoint)topLeft 
@@ -79,8 +80,10 @@ static const int BOTTOM_RIGHT = 3;
 
 - (void) convertToCArray:(GLfloat *) textureVertices {
 	for (uint i = 0; i < 4; i++) {
-		textureVertices[(i*2)] = textureCoords[i].x;
-		textureVertices[(i*2)+1] = textureCoords[i].y;
+		textureVertices[(i*2)] = textureCoords[i].x ;
+		textureVertices[(i*2)+1] = textureCoords[i].y ;
+		//DLOG("%lf, ", textureVertices[(i*2)], textureVertices[(i*2)+1]); 
+
 	}
 }
 

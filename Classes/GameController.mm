@@ -8,20 +8,25 @@
 
 
 #import "GameController.h"
+#import "Loggers.h"
 
 static Program * program = [Program getProgram];
 static Node *node = nil;
+
+//TODO: very bad...global variable
+NSUInteger gblTicks;
 
 @implementation GameController
 
 @synthesize animating, context, displayLink;
 
 + (void) setupObjectsInWorld {
-	
+		
 	//TODO: Move to separate game initialization code
 	Texture *texture1 = [Texture textureWithFilename:[[NSBundle mainBundle] 
 													  pathForResource:@"megamanSpSheet" 
 													  ofType:@"png"]];
+	
 	
 	Texture *overlayTexture = [Texture textureWithFilename:[[NSBundle mainBundle] 
 															   pathForResource:@"node" 
@@ -30,6 +35,10 @@ static Node *node = nil;
 	Texture *backgroundTexture = [Texture textureWithFilename:[[NSBundle mainBundle] 
 															   pathForResource:@"background" 
 															   ofType:@"png"]];
+	
+	Texture *closedTreasure = [Texture textureWithFilename:[[NSBundle mainBundle]
+															pathForResource:@"RedChest1" 
+															ofType:@"gif"]];
 	
 	SpriteSheet *overlaySprite = [SpriteSheet createWithTexture:overlayTexture  
 													  numOfRows:1
@@ -52,26 +61,55 @@ static Node *node = nil;
 											]
 						   ];
 	
+	SpriteSheet *treasureSprite = [SpriteSheet createWithTexture:closedTreasure 
+													   numOfRows:1 
+														 columns:[NSArray arrayWithObjects:
+																	[NSNumber numberWithInt:1],
+																  nil
+																  ]
+								   ];
+	
 	
 	//take this out.
-	Character *box = [Player characterAtPosition:CGPointMake(0.5, 0) 
-									        size:CGSizeMake(0.2, 0.2) 
+	Character *box = [Player characterAtPosition:CGPointMake(75, 75) 
+									        size:CGSizeMake(20, 20) 
 									 spriteSheet:sprite];
 	
-	Character *player = [Player characterAtPosition:CGPointMake(0.0, 0) 
-											size:CGSizeMake(0.2, 0.2) 
-								    spriteSheet:sprite];
+	Character *player = [Player characterAtPosition:CGPointMake(25, 25) 
+											   size:CGSizeMake(20, 20) 
+										spriteSheet:sprite];
 
-	node = [Overlay nodeAtPosition:CGPointMake(0.5, 0.5) 
-										  size:CGSizeMake(0.1, 0.1)
-								   spriteSheet:overlaySprite];
+	node = [Overlay nodeAtPosition:CGPointMake(0, 0) 
+							  size:CGSizeMake(0.1f, 0.1f)
+					   spriteSheet:overlaySprite];
 	
-	Background *background = [Background backgroundWithTexture:backgroundTexture scrollSpeed:0.01f];
+	Background *background = [Background backgroundWithTexture:backgroundTexture 
+												   scrollSpeed:1.0f];
 	
 	[[ObjectContainer singleton] addObject:background];
 	[[ObjectContainer singleton] addObject:player];
 	[[ObjectContainer singleton] addObject:box];
-    [[ObjectContainer singleton] addObject:node];	
+    [[ObjectContainer singleton] addObject:node];
+	
+	for(int i = 0; i < 100; i++) {
+		
+		Character *player3 = [Player characterAtPosition:CGPointMake(200 + (i*50), 
+																		(i % 2) ? 50 : 25) 
+													size:CGSizeMake(20, 20) 
+											 spriteSheet:sprite];
+		
+		Character *treasure = [Player characterAtPosition:CGPointMake(75 + (i*50), 25) 
+													 size:CGSizeMake(7, 7) 
+											  spriteSheet:treasureSprite];
+		
+		[[ObjectContainer singleton] addObject:player3];
+		[[ObjectContainer singleton] addObject:treasure];
+		
+	}
+
+	
+	TLOG("here");
+
 }
 
 - (void)awakeFromNib {
@@ -203,12 +241,11 @@ static Node *node = nil;
 	if ([node isPressed:glPoint]) {
 		[node hide];
 	}
-	
-	[[ObjectContainer singleton].background scroll:RIGHT];
 }
 
 - (void) gameLoop
 {
+	
     [(EAGLView *)self.view setFramebuffer];
     
     glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
@@ -219,6 +256,8 @@ static Node *node = nil;
     
     // Animate and draw all objects
 	for (id<Drawable,Collidable> obj in [ObjectContainer singleton].objArray) {
+		gblTicks++;
+
 		[obj update];
 		
 		if ([obj conformsToProtocol:@protocol(Collidable)]) {

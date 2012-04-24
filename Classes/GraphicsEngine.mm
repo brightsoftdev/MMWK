@@ -7,33 +7,25 @@
 //
 
 #import "GraphicsEngine.h"
+#import "Camera.h"
+
+static CGPoint convertGameCoordinatesToOpenGL(CGPoint gameCoordinates);
+static CGSize convertSizeToOpenGL(CGSize size);
+
+static Camera* camera = [Camera getInstance];
 
 @implementation GraphicsEngine
-
-+ (void) drawCharacter:(Player *)character {
-
-	SpriteSheet *sprite = character.sprite;
-	NSArray *texCoordsArray = [sprite getTextureCoords:character.spsheetRowInd];
-	
-	TexCoords *texCoords = [texCoordsArray objectAtIndex:character.spsheetColInd];
-	
-	[self drawTexture:sprite.sheet 
-			texCoords:texCoords 
-			 position:character.position
-				 size:character.size
-		  orientation:character.currentOrientation];
-}
 
 + (void) drawTexture:(Texture *) texture 
 		   texCoords:(TexCoords *) texCoordsParam
 			position:(CGPoint) position 
 				size:(CGSize) size 
 		 orientation:(Orientation) orientation {
-		
+	
 	static const GLfloat squareVertices[] = {
-		 -1.0f, 1.0f,
-		 1.0f, 1.0f,
-		 -1.0f, -1.0f,
+		-1.0f,   1.0f,
+		 1.0f,   1.0f,
+		-1.0f,  -1.0f,
 		 1.0f,  -1.0f,
 	};
 	
@@ -63,13 +55,83 @@
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);	
 }
 
+
++ (void) drawCharacter:(Player *)character {
+
+	SpriteSheet *sprite = character.sprite;
+	NSArray *texCoordsArray = [sprite getTextureCoords:character.spsheetRowInd];
+	
+	TexCoords *texCoords = [texCoordsArray objectAtIndex:character.spsheetColInd];
+	
+	[self drawTextureInGameCoordinates:sprite.sheet 
+			texCoords:texCoords 
+			 position:character.position
+				 size:character.size
+		  orientation:character.currentOrientation];
+}
+
++ (void) drawTextureInGameCoordinates:(Texture *) texture
+		   texCoords:(TexCoords *) texCoordsParam
+			position:(CGPoint) position
+				size:(CGSize) size 
+		 orientation:(Orientation) orientation {
+	
+	CGPoint openGLPoint = convertGameCoordinatesToOpenGL(position);
+	CGSize  openGLSize  = convertSizeToOpenGL(size); 
+	
+	[self drawTexture:texture 
+			texCoords:(TexCoords *)texCoordsParam 
+			 position:(CGPoint)openGLPoint 
+				 size:(CGSize)openGLSize
+		  orientation:orientation];
+	
+}
+
++ (void) drawTextureInOpenGLCoordinates:(Texture *) texture
+							  texCoords:(TexCoords *) texCoordsParam
+							   position:(CGPoint) position
+								   size:(CGSize) size {
+	[self drawTexture:texture
+			texCoords:texCoordsParam 
+			 position:position 
+				 size:size 
+		  orientation:ORIENTATION_FORWARD];
+	
+}
+
 + (CGPoint) convertPointToGl:(CGPoint)point 
 				  screenSize:(CGSize) screenSize {
+	
 	CGFloat halfwidth = screenSize.width/2;
 	CGFloat halfheight = screenSize.height/2;
 	CGFloat newX = (point.x - halfwidth) / halfwidth;
 	CGFloat newY = (halfheight - point.y) / halfheight;
 	return CGPointMake(newX, newY); 
 }
+
+static CGPoint convertGameCoordinatesToOpenGL(CGPoint gameCoordinates) {
+		
+	CGFloat midWay  = (camera.frameBoundary.right + camera.frameBoundary.left) / 2.0f;
+	CGFloat midHigh = camera.frameDimension.height / 2.0f;
+	
+	CGFloat openGLWidth  = (gameCoordinates.x - midWay)  / (camera.frameDimension.width / 2.0f);
+	CGFloat openGLHeight = (gameCoordinates.y - midHigh) / midHigh;
+	
+	CGPoint openGLPoint = { openGLWidth, openGLHeight };
+	
+	return openGLPoint;	
+}
+
+static CGSize convertSizeToOpenGL(CGSize size) {
+	
+	CGSize openGLSize = { 
+						  size.width  / camera.frameDimension.width, 
+						  size.height / camera.frameDimension.height 
+						};
+	
+	return openGLSize;
+	
+}
+	
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Typedefs.h"
 #import "Collidable.h"
 #import "Drawable.h"
 

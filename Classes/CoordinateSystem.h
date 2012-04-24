@@ -16,8 +16,10 @@ static const NSInteger UP_RIGHT_DIRECTION_STARTS_AT_DEGREE = 25;
 static const CGFloat RADIUS_PCT_TO_STAND_STILL_IN_CENTER   = 0.20f;
 
 @interface CoordinateSystem : NSObject {
+	
 	NSInteger width;
 	NSInteger height;
+	
 }
 
 @property (nonatomic, assign) NSInteger width;
@@ -49,8 +51,8 @@ static const CGFloat RADIUS_PCT_TO_STAND_STILL_IN_CENTER   = 0.20f;
  * @param yCoordinate - y coordinate
  * @return Direction 
  */
-- (Direction) decideDirectionFromCartestian:(CGFloat) xCoordinate
-								yCoordinate:(CGFloat) yCoordinate;
+- (Direction) decideDirectionFromCartestian:(CGFloat)xCoordinate
+								yCoordinate:(CGFloat)yCoordinate;
 
 
 @end

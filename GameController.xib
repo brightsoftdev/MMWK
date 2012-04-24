@@ -49,12 +49,13 @@
 						<reference key="NSWindow"/>
 						<bool key="IBUIAutoresizesSubviews">NO</bool>
 						<object class="IBUIAccessibilityConfiguration" key="IBUIAccessibilityConfiguration">
+							<integer value="4" key="IBUIAccessibilityTraits"/>
 							<boolean value="YES" key="IBUIIsAccessibilityElement"/>
 						</object>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<object class="NSCustomResource" key="IBUIImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">dpadNintendo.jpg</string>
+							<string key="NSResourceName">dpadNintendo.png</string>
 						</object>
 					</object>
 				</object>
@@ -152,7 +153,7 @@
 					<string>DpadButton</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<object class="NSAffineTransform">
-						<bytes key="NSTransformStruct">P4AAAL+AAABBoAAAw5YAAA</bytes>
+						<bytes key="NSTransformStruct">P4AAAL+AAABBoAAAw5cAAA</bytes>
 					</object>
 				</object>
 			</object>
@@ -412,7 +413,7 @@
 		<string key="IBDocument.LastKnownRelativeProjectPath">DragonEye.xcodeproj</string>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<object class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="NS.key.0">dpadNintendo.jpg</string>
+			<string key="NS.key.0">dpadNintendo.png</string>
 			<string key="NS.object.0">{109, 118}</string>
 		</object>
 		<string key="IBCocoaTouchPluginVersion">141</string>

@@ -18,11 +18,40 @@ typedef struct Center {
 	
 } Center;
 
+
 typedef struct Rectangle {
 	
 	CGPoint topLeft;
 	CGPoint bottomRight;
 	
 } Rectangle;
+
+/**
+ * Positive dimensions
+ */
+typedef struct PositiveDimension {
+	
+	NSUInteger width;
+	NSUInteger height;
+	
+} PositiveDimension;
+
+/**
+ * Denotes Game boundaries
+ */
+
+typedef struct Boundary {
+	
+	NSUInteger left;
+	NSUInteger right;
+	
+} Boundary;
+
+typedef struct Coordinate {
+	
+	NSInteger x;
+	NSInteger y;
+	
+} Coordinate;
 
 #endif

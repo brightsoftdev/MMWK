@@ -19,8 +19,11 @@
 
 @interface Player : Character<Collidable> {
 	
+	CGFloat distanceTraveled;
 
 }
+
+@property (nonatomic, assign) CGFloat distanceTraveled;
 
 - (void) startAnimation;
 - (bool) hasSprite;

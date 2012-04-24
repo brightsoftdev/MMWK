@@ -13,21 +13,31 @@
 
 @synthesize sprite, currentState, position, size;
 
-+ (void) initialize:(Overlay *)overlay position:(CGPoint)position size:(CGSize)size spriteSheet:(SpriteSheet *)spriteSheet {
++ (void) initialize:(Overlay *)overlay 
+		   position:(CGPoint)position 
+			   size:(CGSize)size 
+		spriteSheet:(SpriteSheet *)spriteSheet {
+	
 	overlay.position = position;
 	overlay.size = size;
 	overlay.sprite = spriteSheet;
 	overlay.currentState = OVERLAY_SHOWN;
 }
 
-+ (Overlay *) overlayAtPosition:(CGPoint)position size:(CGSize)size spriteSheet:(SpriteSheet *)spriteSheet {
++ (Overlay *) overlayAtPosition:(CGPoint)position 
+						   size:(CGSize)size 
+					spriteSheet:(SpriteSheet *)spriteSheet {
+	
 	Overlay *overlay = [[Overlay alloc] init];
 	[Overlay initialize:overlay position:position size:size spriteSheet:spriteSheet];
 	
 	return overlay;
 }
 
-+ (Node *) nodeAtPosition:(CGPoint)position size:(CGSize)size spriteSheet:(SpriteSheet *)spriteSheet {
++ (Node *) nodeAtPosition:(CGPoint)position 
+					 size:(CGSize)size 
+			  spriteSheet:(SpriteSheet *)spriteSheet {
+	
 	Node *node = [[Node alloc] init];
 	[Overlay initialize:node position:position size:size spriteSheet:spriteSheet];
 	
@@ -36,11 +46,11 @@
 
 - (void) draw {
 	if (currentState == OVERLAY_SHOWN) {
-		[GraphicsEngine drawTexture:sprite.sheet 
-					texCoords:[TexCoords defaultTexCoords] 
-					position:position 
-					size:size
-					orientation:ORIENTATION_FORWARD];
+		[GraphicsEngine drawTextureInOpenGLCoordinates:sprite.sheet 
+						  texCoords:[TexCoords defaultTexCoords] 
+						   position:position 
+							   size:size];
+		 
 	}
 }
 

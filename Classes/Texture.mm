@@ -15,6 +15,7 @@ static const UInt8 ALPHA_THRESHOLD = 99;
 
 @synthesize textureId, width, height;
 
+
 + (NSArray *) setCollisionMap:(Texture *) texture 
 				  spriteImage:(CGImageRef) spriteImage {
 	
@@ -120,9 +121,10 @@ static const UInt8 ALPHA_THRESHOLD = 99;
 	texture.width = width;
 	texture.height = height;
 	
+	/*
 	[Texture setCollisionMap:texture 
 				 spriteImage:spriteImage];
-
+	 */
 	
 	free(spriteData);        
     spriteData = NULL;

@@ -26,7 +26,8 @@
 @property (nonatomic, assign) GLfloat rightBoundary, scrollSpeed;
 @property (nonatomic, assign) Direction scrollDirection;
 
-+ (Background *) backgroundWithTexture:(Texture *) texture scrollSpeed:(GLfloat)scrollSpeed;
++ (Background *) backgroundWithTexture:(Texture *)texture 
+						   scrollSpeed:(GLfloat)scrollSpeed;
 
 - (void) startAnimation;
 - (GLfloat) wrapBoundary:(GLfloat) boundary;
