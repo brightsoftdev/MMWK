@@ -9,9 +9,10 @@
 
 #import "GameController.h"
 #import "Loggers.h"
+#import "LevelLoader.h"
+#import "LevelEnum.h"
 
 static Program * program = [Program getProgram];
-static Node *node = nil;
 
 //TODO: very bad...global variable
 NSUInteger gblTicks;
@@ -21,95 +22,10 @@ NSUInteger gblTicks;
 @synthesize animating, context, displayLink;
 
 + (void) setupObjectsInWorld {
-		
-	//TODO: Move to separate game initialization code
-	Texture *texture1 = [Texture textureWithFilename:[[NSBundle mainBundle] 
-													  pathForResource:@"megamanSpSheet" 
-													  ofType:@"png"]];
 	
+	LevelLoader * loader = [LevelLoader getInstance];
+	[loader loadLevel:LEVEL1];
 	
-	Texture *overlayTexture = [Texture textureWithFilename:[[NSBundle mainBundle] 
-															   pathForResource:@"node" 
-															   ofType:@"png"]];
-	
-	Texture *backgroundTexture = [Texture textureWithFilename:[[NSBundle mainBundle] 
-															   pathForResource:@"background" 
-															   ofType:@"png"]];
-	
-	Texture *closedTreasure = [Texture textureWithFilename:[[NSBundle mainBundle]
-															pathForResource:@"RedChest1" 
-															ofType:@"gif"]];
-	
-	SpriteSheet *overlaySprite = [SpriteSheet createWithTexture:overlayTexture  
-													  numOfRows:1
-									columns:[NSArray arrayWithObjects:
-													 [NSNumber numberWithInt:1],
-													 nil
-											]
-								  ];
-	
-	SpriteSheet *sprite = [SpriteSheet createWithTexture:texture1 
-											   numOfRows:6
-									columns:[NSArray arrayWithObjects:
-													 [NSNumber numberWithInt:8],
-													 [NSNumber numberWithInt:8],
-													 [NSNumber numberWithInt:8],
-													 [NSNumber numberWithInt:8],
-													 [NSNumber numberWithInt:8],
-													 [NSNumber numberWithInt:8],
-													 nil
-											]
-						   ];
-	
-	SpriteSheet *treasureSprite = [SpriteSheet createWithTexture:closedTreasure 
-													   numOfRows:1 
-														 columns:[NSArray arrayWithObjects:
-																	[NSNumber numberWithInt:1],
-																  nil
-																  ]
-								   ];
-	
-	
-	//take this out.
-	Character *box = [Player characterAtPosition:CGPointMake(75, 75) 
-									        size:CGSizeMake(20, 20) 
-									 spriteSheet:sprite];
-	
-	Character *player = [Player characterAtPosition:CGPointMake(25, 25) 
-											   size:CGSizeMake(20, 20) 
-										spriteSheet:sprite];
-
-	node = [Overlay nodeAtPosition:CGPointMake(0, 0) 
-							  size:CGSizeMake(0.1f, 0.1f)
-					   spriteSheet:overlaySprite];
-	
-	Background *background = [Background backgroundWithTexture:backgroundTexture 
-												   scrollSpeed:1.0f];
-	
-	[[ObjectContainer singleton] addObject:background];
-	[[ObjectContainer singleton] addObject:player];
-	[[ObjectContainer singleton] addObject:box];
-    [[ObjectContainer singleton] addObject:node];
-	
-	for(int i = 0; i < 100; i++) {
-		
-		Character *player3 = [Player characterAtPosition:CGPointMake(200 + (i*50), 
-																		(i % 2) ? 50 : 25) 
-													size:CGSizeMake(20, 20) 
-											 spriteSheet:sprite];
-		
-		Character *treasure = [Player characterAtPosition:CGPointMake(75 + (i*50), 25) 
-													 size:CGSizeMake(7, 7) 
-											  spriteSheet:treasureSprite];
-		
-		[[ObjectContainer singleton] addObject:player3];
-		[[ObjectContainer singleton] addObject:treasure];
-		
-	}
-
-	
-	TLOG("here");
-
 }
 
 - (void)awakeFromNib {
@@ -238,6 +154,8 @@ NSUInteger gblTicks;
 	CGPoint glPoint = [GraphicsEngine convertPointToGl:point 
 											screenSize:screenSize];
 	
+	Node * node = [ObjectContainer singleton].node;
+	
 	if ([node isPressed:glPoint]) {
 		[node hide];
 	}
@@ -256,6 +174,7 @@ NSUInteger gblTicks;
     
     // Animate and draw all objects
 	for (id<Drawable,Collidable> obj in [ObjectContainer singleton].objArray) {
+		
 		gblTicks++;
 
 		[obj update];
@@ -263,7 +182,6 @@ NSUInteger gblTicks;
 		if ([obj conformsToProtocol:@protocol(Collidable)]) {
 			[obj resolveCollisions];
 		}
-		
 		[obj draw];
 	}
 

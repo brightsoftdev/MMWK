@@ -12,17 +12,16 @@
 
 @synthesize objArray,
 			player,
+			node,
 			background;
 
 static ObjectContainer *singleContainer;
 
-+ (void) initialize {
-	singleContainer = [[ObjectContainer alloc] init];
-}
+//don't worry -- we will need to change this.
 
 + (ObjectContainer *) singleton {
 	if (!singleContainer) {
-		[ObjectContainer initialize];
+		singleContainer = [[ObjectContainer alloc] init];
 	}
 	
 	return singleContainer;
@@ -37,7 +36,7 @@ static ObjectContainer *singleContainer;
 
 - (void) addObject:(id)object {
 	[objArray addObject:object];
-	
+		
 	// Store player in a singleton player object
 	if ([[object class] isSubclassOfClass:[Player class]]) {
 		if (!player) {
@@ -52,8 +51,14 @@ static ObjectContainer *singleContainer;
 		if (!background) {
 			background = (Background *) object;
 		} else {
-			DLOG("ERROR! More than one player!");
+			DLOG("ERROR! More than one background!");
 		}
+	}
+	
+	if([[object class] isSubclassOfClass:[Node class]]) {
+		if (!node) {
+			node = (Node *) object;
+		} 
 	}
 }
 

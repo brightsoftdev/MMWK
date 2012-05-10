@@ -33,6 +33,7 @@ static Camera * camera = [Camera getInstance];
 }
 
 - (void) draw {
+		
 	TexCoords *texCoords = [TexCoords defaultTexCoords];
 	
 	/* PERF: Don't draw the side of the background that is not on the screen
@@ -41,21 +42,21 @@ static Camera * camera = [Camera getInstance];
 	// Drawing the left side of the background
 	NSInteger shift = rightBoundary - (camera.frameDimension.width / 2);
 	CGPoint position = CGPointMake(shift, camera.frameDimension.width / 2);
-	
-	//DLOG("rightBoundary :%lf", rightBoundary);
-	
+		
 	[GraphicsEngine drawTextureInGameCoordinates:texture 
 									   texCoords:texCoords 
 										position:position
-											size:CGSizeMake(100, 100) 
+											size:CGSizeMake(camera.frameDimension.width, 
+															camera.frameDimension.height) 
 									 orientation:ORIENTATION_FORWARD];
 	
 	// Drawing the right side of the background
-	position.x += 100;
+	position.x += camera.frameDimension.width;
 	[GraphicsEngine drawTextureInGameCoordinates:texture 
 									   texCoords:texCoords 
 										position:position 
-											size:CGSizeMake(100, 100)
+											size:CGSizeMake(camera.frameDimension.width,
+															camera.frameDimension.height)
 									 orientation:ORIENTATION_FORWARD];
 }
 
@@ -76,20 +77,9 @@ static Camera * camera = [Camera getInstance];
 	if (boundary < camera.frameBoundary.left) {
 		GLfloat shift = boundary;
 		boundary = camera.frameDimension.width + shift;
-		
-		DLOG("scroll left: wrap it by %lf !!!!!", shift);
-		DLOG("scroll left: boundary is now %lf", boundary);
 
 	} 
-	
-	/*else if (boundary > worldCoordinates.frameBoundary.right) {
-		GLfloat shift = boundary - worldCoordinates.frameBoundary.right;
-		DLOG("scroll right: wrap it by %lf !!!!!", shift);
-		boundary = worldCoordinates.frameBoundary.width + shift;
-		DLOG("scroll right: boundary is now %lf", boundary);
 
-	}	*/
-	
 	return boundary;
 }
 

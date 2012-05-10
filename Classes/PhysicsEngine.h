@@ -62,12 +62,4 @@
  */
 - (void) detectScreenCollision:(Prop *) prop;
 
-/**
- * Are we advancing in the stage
- *
- * @param prop - this would be the main player.
- */
-
-- (void) detectStageAdvance:(Prop *) prop;
-
 @end

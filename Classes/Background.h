@@ -14,11 +14,13 @@
 #import "Loggers.h"
 
 @interface Background : NSObject <Drawable> {
+	
 	CADisplayLink *displayLink;
 	Texture *texture;
 	GLfloat rightBoundary; 
 	GLfloat scrollSpeed;
 	Direction scrollDirection;
+
 }
 
 @property (nonatomic, retain) CADisplayLink *displayLink;

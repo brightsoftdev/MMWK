@@ -39,7 +39,6 @@ static Camera * camera = [Camera getInstance];
 	TLOG("radius1 %lf", radius1);
 	TLOG("radius2 %lf", radius2);
 	TLOG("distance ?= %lf", distance);
-	//TLOG("are we colliding? %d\n", distance <= (radius1 + radius2));
 	
 }
 
@@ -62,11 +61,10 @@ static Camera * camera = [Camera getInstance];
 				 
 	BOOL isWithinLevelBoundary = 
 		//TODO: this should not be radius / 2, but just radius
-		prop.position.x - (radius / 2) > camera.frameBoundary.left &&
-		//Add a way to open/close right boundary
-		//prop.position.x + radius <= 1  &&
+		prop.position.x - (radius / 2) >= camera.frameBoundary.left &&
+		prop.position.x + (radius / 2) <= camera.frameBoundary.right &&
 		prop.position.y - (radius / 2) >= 0 &&
-		prop.position.y + (radius / 2) <= 100;
+		prop.position.y + (radius / 2) <= camera.frameDimension.height;
 	
 	if (!isWithinLevelBoundary) {
 		SEL backgroundCallback = NSSelectorFromString(@"collidesWithScreen");
@@ -147,24 +145,6 @@ static Camera * camera = [Camera getInstance];
 	
 	
 	
-}
-
-
-- (void) detectStageAdvance:(Prop *)prop {
-	BOOL isScreenAdvance  = false; //prop.position.x >= [WorldCoordinates getInstance].frameBoundary.right / 2;
-	BOOL isScreenPrevious = false; //prop.position.x <= 0.0;
-	
-	
-	/*
-	if(isScreenAdvance) {
-		SEL backgroundCallback = NSSelectorFromString(@"collidesWithStageForward");
-		[prop performSelector:backgroundCallback];
-	
-	} else if(isScreenPrevious) {
-		SEL backgroundCallback = NSSelectorFromString(@"collidesWithStageReverse");
-		[prop performSelector:backgroundCallback];
-	
-	}*/
 }
 
 @end

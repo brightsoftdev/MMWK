@@ -11,7 +11,6 @@
 #import "PhysicsEngine.h"
 #import "SpriteSheet.h"
 
-
 @interface Character : Prop {
 	
 	PhysicsEngine * physicsEngine;
@@ -34,5 +33,20 @@
 @property (nonatomic, assign) Direction currentDirection;
 @property (nonatomic, assign) Orientation currentOrientation;
 
+- (id) init:(CGPoint) pos
+	   size:(CGSize) sz
+spriteSheet:(SpriteSheet *) spriteSheet;
+
+- (void) startAnimation;
+- (void) runTo:(Direction) dir;
+- (void) moveTowards:(Direction) dir;
+
+// from GraphicsContext protocol
+- (void) draw;
+- (void) update;
+- (void) animate;
+
+// Actions
+- (void) stand;
 
 @end

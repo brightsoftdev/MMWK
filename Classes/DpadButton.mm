@@ -36,8 +36,6 @@ static void decideHowPlayerShouldMove(CGPoint, NSInteger, NSInteger);
 	decideHowPlayerShouldMove(point,
 							  self.frame.size.width,
 							  self.frame.size.height);
-	
-	
 }
 
 - (void)touchesEnded:(NSSet *)touches 
@@ -49,7 +47,7 @@ static void decideHowPlayerShouldMove(CGPoint, NSInteger, NSInteger);
 	[player stand];
 }
 
-//pure C-style to how private functions within in a file.
+//pure C-style for private functions within in a file.
 static void decideHowPlayerShouldMove(CGPoint point, NSInteger width, NSInteger height) {
 	
 	ObjectContainer *singleton = [ObjectContainer singleton];
@@ -60,7 +58,6 @@ static void decideHowPlayerShouldMove(CGPoint point, NSInteger width, NSInteger 
 	
 	Direction direction = [coordinateSystem decideDirectionFromCartestian:point.x 
 															  yCoordinate:point.y];
-	
 	if (direction == NO_WHERE) {
 		[player stand];
 	} else {

@@ -29,7 +29,11 @@
 					spriteSheet:(SpriteSheet *)spriteSheet {
 	
 	Overlay *overlay = [[Overlay alloc] init];
-	[Overlay initialize:overlay position:position size:size spriteSheet:spriteSheet];
+	
+	[Overlay initialize:overlay 
+			   position:position 
+				   size:size 
+			spriteSheet:spriteSheet];
 	
 	return overlay;
 }
@@ -39,7 +43,11 @@
 			  spriteSheet:(SpriteSheet *)spriteSheet {
 	
 	Node *node = [[Node alloc] init];
-	[Overlay initialize:node position:position size:size spriteSheet:spriteSheet];
+	
+	[Overlay initialize:node 
+			   position:position 
+				   size:size 
+			spriteSheet:spriteSheet];
 	
 	return node;
 }
@@ -47,9 +55,9 @@
 - (void) draw {
 	if (currentState == OVERLAY_SHOWN) {
 		[GraphicsEngine drawTextureInOpenGLCoordinates:sprite.sheet 
-						  texCoords:[TexCoords defaultTexCoords] 
-						   position:position 
-							   size:size];
+											 texCoords:[TexCoords defaultTexCoords] 
+											  position:position 
+												  size:size];
 		 
 	}
 }

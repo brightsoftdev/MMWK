@@ -1,0 +1,27 @@
+{
+	 "Background" : "background",
+     "Title"	  : "Manifest Destiny",
+     "Player"     :
+     {
+		"Image"    : "megamanSpSheet",
+		"Position" : [25, 50],
+		"Size"     : [20, 20]
+     },
+	 "Node"		  : 
+	 {
+		"Image"	   : "node",
+		"Position" : [0, 0],
+		"Size"	   : [0.1, 0.1]
+	 },
+		
+	 "Enemies"    :
+	 [
+		{
+			"Image"	   : "megamanSpSheet",
+			"Position" : [75, 75],
+			"Size"     : [20, 20]
+		}
+	 ]
+		
+		
+}

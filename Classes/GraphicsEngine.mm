@@ -56,7 +56,7 @@ static Camera* camera = [Camera getInstance];
 }
 
 
-+ (void) drawCharacter:(Player *)character {
++ (void) drawCharacter:(Character *)character {
 
 	SpriteSheet *sprite = character.sprite;
 	NSArray *texCoordsArray = [sprite getTextureCoords:character.spsheetRowInd];
@@ -102,10 +102,11 @@ static Camera* camera = [Camera getInstance];
 + (CGPoint) convertPointToGl:(CGPoint)point 
 				  screenSize:(CGSize) screenSize {
 	
-	CGFloat halfwidth = screenSize.width/2;
-	CGFloat halfheight = screenSize.height/2;
+	CGFloat halfwidth = screenSize.width / 2;
+	CGFloat halfheight = screenSize.height / 2;
 	CGFloat newX = (point.x - halfwidth) / halfwidth;
 	CGFloat newY = (halfheight - point.y) / halfheight;
+	
 	return CGPointMake(newX, newY); 
 }
 

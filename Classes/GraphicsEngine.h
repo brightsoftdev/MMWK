@@ -22,7 +22,7 @@
 }
 
 // Does not support UP and DOWN
-+ (void) drawCharacter:(Player *) character;
++ (void) drawCharacter:(Character *) character;
 
 + (void) drawTextureInGameCoordinates:(Texture *)texture 
 							texCoords:(TexCoords *)texCoordsParam 

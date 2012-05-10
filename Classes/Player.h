@@ -10,43 +10,25 @@
 #import <OpenGLES/ES2/gl.h>
 #import <OpenGLES/ES2/glext.h>
 #import <QuartzCore/QuartzCore.h>
-#import "ShaderConstants.h"
-#import "PropState.h"
-#import "Typedefs.h"
 #import "SpriteSheet.h"
 #import "Character.h"
 #import "GraphicsEngine.h"
 
 @interface Player : Character<Collidable> {
 	
-	CGFloat distanceTraveled;
-
+	
 }
 
-@property (nonatomic, assign) CGFloat distanceTraveled;
++ (Player *) create:(CGPoint)position 
+			   size:(CGSize)size 
+		spriteSheet:(SpriteSheet *)spriteSheet;
 
-- (void) startAnimation;
-- (bool) hasSprite;
-
-// from GraphicsContext protocol
-- (void) draw;
-- (void) update;
-- (void) animate;
-
-
-// Actions
-- (void) stand;
-- (void) runTo:(Direction) dir;
-- (void) move:(CGPoint)movement;
-- (void) attack;
 - (void) resolveCollisions;
 
 // collision reactions
 - (void) collidesWithPlayer;
 - (void) collidesWithScreen;
 
-+ (Character *) characterAtPosition:(CGPoint)position 
-							   size:(CGSize)size 
-						spriteSheet:(SpriteSheet *)spriteSheet;
+
 
 @end

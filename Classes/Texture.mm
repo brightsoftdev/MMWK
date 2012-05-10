@@ -73,6 +73,8 @@ static const UInt8 ALPHA_THRESHOLD = 99;
 	return nil;
 	
 }
+
+
 + (Texture *) textureWithFilename: (NSString *)filename{
 	Texture *texture = [[Texture alloc] init];
 	

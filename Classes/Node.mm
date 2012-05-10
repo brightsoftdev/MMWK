@@ -23,7 +23,7 @@
 }
 
 - (bool) isPressed:(CGPoint)point {
-	DLOG("Touch %f, %f, center %f, %f, height %f", point.x, point.y, self.position.x, self.position.y, size.height);
+	DLOG("Touched (%f, %f), node position(%f, %f), height %f", point.x, point.y, self.position.x, self.position.y, size.height);
 	return [self distanceFrom:point to:self.position] < size.height;
 }
 
